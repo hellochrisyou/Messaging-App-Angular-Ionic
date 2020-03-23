@@ -1,0 +1,115 @@
+ion-card {
+  width: 350px;
+  margin: 0 auto;
+}
+span {
+  word-break: break-all;
+  width: 20px !important;
+}
+
+.over-flow {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+p {
+  word-wrap: normal;
+  word-break: break-all;
+  white-space: normal;
+  display: block;
+  height: auto;
+  margin: 3px auto;
+  line-height: 1.4;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+// Chat Css
+.container {
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+  padding-top: 12px;
+}
+
+.chat-bubble {
+  background: #dedede;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4em;
+  margin: 12px 24px;
+  max-width: 100%;
+  padding: 12px;
+  position: relative;
+}
+.chat-bubble::before,
+.chat-bubble::after {
+  content: "";
+  bottom: 0;
+  height: 20px;
+  left: -10px;
+  position: absolute;
+}
+.chat-bubble:before {
+  border-color: #dedede;
+  border-left-style: solid;
+  border-left-width: 20px;
+  border-bottom-right-radius: 50%;
+  z-index: -1;
+}
+.chat-bubble::after {
+  background: #ffffff;
+  border-bottom-right-radius: 50%;
+  width: 10px;
+  z-index: 1;
+}
+.chat-bubble.mine {
+  background: #3888ea;
+  color: #fff;
+  margin-left: auto;
+}
+.chat-bubble.mine::before,
+.chat-bubble.mine::after {
+  left: auto;
+  right: -10px;
+}
+.chat-bubble.mine::before {
+  border: none;
+  border-color: #3888ea;
+  border-right-style: solid;
+  border-right-width: 20px;
+  border-bottom-left-radius: 50%;
+}
+.chat-bubble.mine:after {
+  border-bottom-left-radius: 50%;
+}
+
+test::before {
+  border-color: #f3f3f3;
+  border-left-style: solid;
+  border-left-width: 20px;
+  border-bottom-right-radius: 16px 14px;
+  left: -7px;
+  z-index: -1;
+}
+
+.test::after {
+  content: "";
+  background: #ffffff;
+  left: -9px;
+  width: 9px;
+  z-index: 1;
+}
+
+.test::before,
+.test::after {
+  content: "";
+  bottom: 0px;
+  height: 20px;
+  position: absolute;
+}

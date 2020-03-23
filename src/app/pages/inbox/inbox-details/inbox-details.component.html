@@ -1,0 +1,79 @@
+<!-- <ion-card *ngFor="let message of userMessages;let i = index">
+  <ion-card-header>
+    <ion-card-subtitle><span>From: {{message.payload.doc.data().messages[0].sender}}</span>
+    </ion-card-subtitle>
+    <ion-card-title>To: {{message.payload.doc.data().messages[0].receiver}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item>
+      <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-label>Date: {{message.payload.doc.data().messages[0].date}}</ion-label>
+    </ion-item>
+    {{message.payload.doc.data().messages[0].message}}
+  </ion-card-content>
+</ion-card>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Friends</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content fullscreen="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Inbox</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" size-md="6">
+
+
+        <ion-card class="speaker-card">
+          <ion-card-header>
+            <ion-item detail="false" lines="none" class="friend-item" routerLink="/inbox/inbox-details">
+              <ion-avatar slot="start">
+                <img [src]="senderPhotoURL">
+              </ion-avatar>
+              <ion-label>
+
+                <h1>CHAT HISTORY</h1>
+                <p>{{receiver}}</p>
+                <ng-container *ngFor="let message of messages;let i = index">
+                  <div class="container">
+                    <ng-container *ngIf="message.messages[0].sender===myEmail">
+                      <div class="chat-bubble">
+                        <p class="over-flow chat-message">
+                          {{message.messages[0].date}}
+                          <br>
+                          {{message.messages[0].message}}
+                        </p>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="message.messages[0].sender===otherEmail">
+                      <div class="chat-bubble mine">
+                        <p class="over-flow chat-message">
+                          {{message.messages[0].date}}
+                          <br>
+                          {{message.messages[0].message}}
+                        </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+
+              </ion-label>
+            </ion-item>
+          </ion-card-header>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

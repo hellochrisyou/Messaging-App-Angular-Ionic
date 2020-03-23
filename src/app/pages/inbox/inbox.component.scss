@@ -1,0 +1,22 @@
+ion-list {
+  position: absolute;
+  top: 5vh;
+  width: 100vw;
+}
+
+ion-label,
+ion-item,
+ion-button {
+  margin: 0 auto;
+}
+ion-label,
+ion-item {
+  width: 100%;
+}
+ion-badge {
+  width: 20px;
+}
+
+ion-card-header {
+  height: 100%;
+}

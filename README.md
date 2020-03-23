@@ -1,2 +1,2 @@
-# Messaging-App-Angular-Ionic
+# ionic-angular-messaging-app
  

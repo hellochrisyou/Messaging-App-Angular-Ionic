@@ -1,0 +1,45 @@
+<ion-content>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="presentPopover($event)">
+          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="about-header">
+    <!-- Instead of loading an image each time the select changes, use opacity to transition them -->
+    <div class="about-image madison" [ngStyle]="location === 'madison' && {'opacity': '1'}"></div>
+    <div class="about-image austin" [ngStyle]="location === 'austin' && {'opacity': '1'}"></div>
+    <div class="about-image chicago" [ngStyle]="location === 'chicago' && {'opacity': '1'}"></div>
+    <div class="about-image seattle" [ngStyle]="location === 'seattle' && {'opacity': '1'}"></div>
+  </div>
+  <div class="fxlayout-support" fxLayout="row" fxLayoutAlign="center center">
+
+    <div class="about-info">
+      <h3 id="about-title" class="ion-padding-top ion-padding-start">About</h3>
+
+      <p class="ion-padding-start ion-padding-end">
+        <!-- The Ionic Conference is a one-day conference on {{ conferenceDate | date: 'mediumDate' }} featuring talks from the Ionic team. It is focused on Ionic applications being built with Ionic Framework. This includes migrating apps to the latest version of the framework, Angular concepts, Webpack, Sass, and many other technologies used in Ionic 2. Tickets are completely sold out, and we’re expecting more than 1000 developers – making this the largest Ionic conference ever! -->
+        <br>&nbsp;&nbsp;&nbsp;&nbsp; This App is designed for messaging between friends and others.<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp; It was developed
+        by
+        Chris You and is a side
+        project
+        in discovering how to use Ionic with Angular 2+. <br><br>&nbsp;&nbsp;&nbsp;&nbsp;In conjunction with Firebase
+        for
+        authentication,
+        this app
+        provides the ability to message, view message history, and a history of locations from where your messages were
+        sent and received.
+      </p>
+
+
+    </div>
+  </div>
+</ion-content>

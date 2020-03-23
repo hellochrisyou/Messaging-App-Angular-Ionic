@@ -104,7 +104,7 @@ export class InboxComponent implements OnInit {
                 this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].payload.doc.data().email);
                 this.messagingService.senderMessage(tmpData, this.users[index].payload.doc.data().email, this.authService.authState.email);
               }
-              window.location.reload();
+              // window.location.reload();
             }, (err => {
               // console.log('Error fetching document: ', err);
             })

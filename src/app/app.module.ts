@@ -11,28 +11,32 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
-
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CoreModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
+    CoreModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
+    IonicModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    BrowserAnimationsModule,
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
-  providers: [InAppBrowser, SplashScreen, StatusBar],
+  providers: [InAppBrowser, SplashScreen, StatusBar, Geolocation],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,6 +23,15 @@ p {
   line-height: 1.4;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+
+  .chat-bubble:hover {
+    background-color: slategray;
+  }
+}
+
+i {
+  font-size: 0.725rem;
+  color: darkgrey;
 }
 
 // Chat Css
@@ -39,7 +48,7 @@ p {
 
 .chat-bubble {
   background: #dedede;
-  border-radius: 18px;
+  border-radius: 0.4em;
   font-size: 14px;
   line-height: 1.4em;
   margin: 12px 24px;
@@ -55,18 +64,19 @@ p {
   left: -10px;
   position: absolute;
 }
-.chat-bubble:before {
-  border-color: #dedede;
-  border-left-style: solid;
-  border-left-width: 20px;
-  border-bottom-right-radius: 50%;
-  z-index: -1;
-}
 .chat-bubble::after {
-  background: #ffffff;
-  border-bottom-right-radius: 50%;
-  width: 10px;
-  z-index: 1;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: #dedede;
+  border-left: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-left: -20px;
 }
 .chat-bubble.mine {
   background: #3888ea;
@@ -78,15 +88,19 @@ p {
   left: auto;
   right: -10px;
 }
-.chat-bubble.mine::before {
-  border: none;
-  border-color: #3888ea;
-  border-right-style: solid;
-  border-right-width: 20px;
-  border-bottom-left-radius: 50%;
-}
 .chat-bubble.mine:after {
-  border-bottom-left-radius: 50%;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-left-color: #3888ea;
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-right: -20px;
 }
 
 test::before {
@@ -112,4 +126,16 @@ test::before {
   bottom: 0px;
   height: 20px;
   position: absolute;
+}
+
+ion-button {
+  margin: 0 auto;
+}
+
+p {
+  font-size: 0.7rem;
+}
+
+ion-card {
+  margin: 4vw auto 4vw;
 }

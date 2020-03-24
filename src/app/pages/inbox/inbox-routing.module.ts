@@ -7,11 +7,11 @@ import { InboxDetailsComponent } from './inbox-details/inbox-details.component';
 const routes: Routes = [
   {
     path: '',
-    component: InboxComponent
+    component: InboxComponent,
   },
   {
     path: 'inbox-details',
-    component: InboxDetailsComponent
+    component: InboxDetailsComponent,
   }
 ];
 

@@ -15,16 +15,18 @@ import { AuthService } from '../../core/service/auth.service';
   styleUrls: ['./signup.scss'],
 })
 export class SignupPage {
-  signup: UserOptions = { username: '', password: '' };
+
   submitted = false;
 
+  signup: UserOptions = { username: '', password: '' };
+
   constructor(
+    private authService: AuthService,
     public router: Router,
     public userData: UserData,
-    private authService: AuthService
   ) { }
 
-  onSignup(form: NgForm) {
+  public onSignup(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {

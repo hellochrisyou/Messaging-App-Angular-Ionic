@@ -6,6 +6,7 @@ import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
 import { AuthService } from '../../core/service/auth.service';
+import { NavController } from '@ionic/angular';
 
 
 
@@ -15,13 +16,17 @@ import { AuthService } from '../../core/service/auth.service';
   styleUrls: ['./login.scss'],
 })
 export class LoginPage {
-  login: UserOptions = { username: '', password: '' };
+
   submitted = false;
 
+  login: UserOptions = { username: '', password: '' };
+
   constructor(
-    public userData: UserData,
+    private authService: AuthService,
+    private navCtrl: NavController,
     public router: Router,
-    private authService: AuthService
+    public userData: UserData,
+
   ) { }
 
   onLogin(form: NgForm) {
@@ -30,13 +35,19 @@ export class LoginPage {
     if (form.valid) {
       this.authService.signinEmail(this.login.username, this.login.password);
       this.userData.login(this.login.username);
-      this.router.navigateByUrl('/app/tabs/friends');
+      this.navCtrl.navigateForward('/app/tabs/friends');
     }
   }
   public loginGoogle(): void {
     this.authService.signinGoogle();
   }
+  public loginFacebook(): void {
+    this.authService.signinFacebook();
+  }
+  public loginTwitter(): void {
+    this.authService.signinTwitter();
+  }
   onSignup() {
-    this.router.navigateByUrl('/signup');
+    this.navCtrl.navigateForward('/signup');
   }
 }

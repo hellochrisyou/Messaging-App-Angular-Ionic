@@ -6,7 +6,7 @@ import { AccountPage } from './account';
 const routes: Routes = [
   {
     path: '',
-    component: AccountPage
+    component: AccountPage,
   }
 ];
 

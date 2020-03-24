@@ -18,12 +18,8 @@ export interface Message {
     receiverPhotoURL?: string;
     receiver?: string;
     message?: string[];
-    latitude?: number;
-    longitude?: number;
+    lat?: number;
+    lgn?: number;
+    count?: number;
 }
 
-
-export interface CoordinatePoints {
-    latitude?: number;
-    longitude?: number;
-}

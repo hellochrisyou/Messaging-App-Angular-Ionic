@@ -12,10 +12,9 @@ export class UserService {
 
   ref: AngularFirestoreDocument<any>;
 
-
-  constructor(private afs: AngularFirestore,
+  constructor(
+    private afs: AngularFirestore,
     public emitService: EmitService,
-
   ) { }
 
   public createUser(dataArg: User): void {

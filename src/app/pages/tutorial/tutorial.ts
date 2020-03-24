@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MenuController, IonSlides } from '@ionic/angular';
+import { MenuController, IonSlides, NavController } from '@ionic/angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -16,14 +16,14 @@ export class TutorialPage {
   @ViewChild('slides', { static: true }) slides: IonSlides;
 
   constructor(
+    private navCtrl: NavController,
     public menu: MenuController,
     public router: Router,
     public storage: Storage
   ) { }
 
   startApp() {
-    this.router
-      .navigateByUrl('/login', { replaceUrl: true })
+    this.navCtrl.navigateForward('/login', { replaceUrl: true })
       .then(() => this.storage.set('ion_did_tutorial', true));
   }
 
@@ -36,7 +36,7 @@ export class TutorialPage {
   ionViewWillEnter() {
     this.storage.get('ion_did_tutorial').then(res => {
       if (res === true) {
-        this.router.navigateByUrl('/app/tabs/schedule', { replaceUrl: true });
+        this.navCtrl.navigateForward('/app/tabs/schedule', { replaceUrl: true });
       }
     });
 

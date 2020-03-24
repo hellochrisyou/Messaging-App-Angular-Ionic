@@ -1,22 +1,9 @@
 import { Message } from '../../shared/models';
 
-export const REMOVE_ME_FROM_PLAYERS = (email: string, players: any[]): any[] => {
-    players.forEach((item, index) => {
-        if (email === players[index].payload.doc.data().email) {
-            players.splice(index, 1);
-        }
-
-    });
-    return players;
-};
-
-export const REMOVE_EMPTY_MESSAGES = (players: any[]): any[] => {
-    players.forEach((item, index) => {
-        if (players[index].payload.doc.data().length === undefined) {
-            players.splice(index, 1);
-        }
-    });
-    return players;
+export const ORDER_MESSAGES = (messages: any[]): any[] => {
+    const returnMessageArr = messages.sort((n1: any, n2: any) => +new Date(n1.messages[0].date) - +new Date(n2.messages[0].date));
+    console.log('returnMessageArr', returnMessageArr);
+    return returnMessageArr;
 };
 
 export const GET_DATE = (): string => {

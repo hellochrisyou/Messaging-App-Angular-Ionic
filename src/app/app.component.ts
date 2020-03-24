@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 
-import { MenuController, Platform, ToastController } from '@ionic/angular';
+import { MenuController, Platform, ToastController, NavController } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -16,9 +16,13 @@ import { AuthService } from './core/service/auth.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
+
+  dark = false;
+  loggedIn = false;
+
   appPages = [
     {
       title: 'Inbox',
@@ -31,20 +35,19 @@ export class AppComponent implements OnInit {
       icon: 'information-circle'
     }
   ];
-  loggedIn = false;
-  dark = false;
+
 
   constructor(
-    public authService: AuthService,
     private menu: MenuController,
+    private navCtrl: NavController,
     private platform: Platform,
-    private router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
+    private userData: UserData,
+    public authService: AuthService,
   ) {
     this.initializeApp();
   }
@@ -114,6 +117,7 @@ export class AppComponent implements OnInit {
   openTutorial() {
     this.menu.enable(false);
     this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
+    this.navCtrl.navigateForward('/tutorial');
   }
+
 }

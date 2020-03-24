@@ -6,7 +6,8 @@ import { SupportPage } from './support';
 const routes: Routes = [
   {
     path: '',
-    component: SupportPage
+    component: SupportPage,
+    data: { num: '5' }
   }
 ];
 

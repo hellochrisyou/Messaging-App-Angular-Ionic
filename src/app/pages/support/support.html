@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -17,9 +17,9 @@
     <form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
       <ion-list lines="none">
         <ion-item>
-          <ion-label position="stacked" color="primary">Enter your support message below</ion-label>
-          <ion-textarea [(ngModel)]="supportMessage" name="supportQuestion" #supportQuestion="ngModel" rows="6"
-            required></ion-textarea>
+          <ion-label position="floating" color="primary">Enter your support message below</ion-label>
+          <ion-textarea [autofocus]="true" [(ngModel)]="supportMessage" name="supportQuestion"
+            #supportQuestion="ngModel" rows="6" required></ion-textarea>
         </ion-item>
       </ion-list>
 
@@ -29,8 +29,8 @@
         </p>
       </ion-text>
 
-      <div class="ion-padding">
-        <ion-button expand="block" type="submit">Submit</ion-button>
+      <div class="ion-padding" fxLayout="row" fxLayoutAlign="space-around center">
+        <ion-button shape="round" fill="outline" type="submit">Submit</ion-button>
       </div>
     </form>
   </ion-content>

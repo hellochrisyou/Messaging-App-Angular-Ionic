@@ -1,11 +1,11 @@
-import { environment } from './../../../environments/environment.prod';
-import { Component, ElementRef, Inject, ViewChild, AfterViewInit } from '@angular/core';
-import { ConferenceData } from '../../providers/conference-data';
-import { Platform } from '@ionic/angular';
 import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
+import { ConferenceData } from '../../providers/conference-data';
+
+import { environment } from './../../../environments/environment.prod';
 import { darkStyle } from './map-dark-style';
-import { Router } from '@angular/router';
-import { CoordinatePoints } from '../../shared/models';
 
 @Component({
   selector: 'page-map',
@@ -13,16 +13,25 @@ import { CoordinatePoints } from '../../shared/models';
   styleUrls: ['./map.scss']
 })
 export class MapPage implements AfterViewInit {
-  @ViewChild('mapCanvas', { static: true }) mapElement: ElementRef;
 
   lat: number;
   lgn: number;
 
+  @ViewChild('mapCanvas', { static: true }) mapElement: ElementRef;
   constructor(
     @Inject(DOCUMENT) private doc: Document,
+    private activatedRoute: ActivatedRoute,
     public confData: ConferenceData,
-    public router: Router,
-    public platform: Platform) { }
+    public platform: Platform,
+    public router: Router
+  ) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.lat = this.router.getCurrentNavigation().extras.state.lat;
+        this.lgn = this.router.getCurrentNavigation().extras.state.lgn;
+      }
+    });
+  }
 
   async ngAfterViewInit() {
 

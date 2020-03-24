@@ -14,18 +14,42 @@
 
 img {
   max-width: 50px;
+  cursor: pointer;
+}
+h4 {
+  text-align: center;
+}
+ion-content {
+  max-width: 25vw;
+}
+.fxlayout-support {
+  width: 100%;
+  height: 100%;
+}
+#social-flex {
+  margin-bottom: 4rem;
+}
+ion-button {
+  max-width: 100px;
+  margin: 0 auto;
+}
+.fa-facebook {
+  color: #3b5998;
+}
+.fa-twitter {
+  color: #08a0e9;
+}
+.fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg)
+    73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (max-width: 550px) {
   ion-content {
-    max-width: 25vw;
-  }
-  .fxlayout-support {
-    width: 100%;
-    height: 100%;
-  }
-  ion-button {
-    max-width: 100px;
-    margin: 0 auto;
+    max-width: 50vw;
   }
 }

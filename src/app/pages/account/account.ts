@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 
 import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../core/service/auth.service';
@@ -17,12 +17,12 @@ import { UserService } from '../../core/service/user.service';
 })
 export class AccountPage implements OnInit, AfterViewInit {
 
-  userRef: AngularFirestoreDocument<any>;
   photoURL: string;
-  username: string;
   title: string;
   user: any = {};
-  // tslint:disable-next-line: variable-name
+  userRef: AngularFirestoreDocument<any>;
+  username: string;
+
   private _authState: any = null;
 
   public get authState(): any {
@@ -33,12 +33,12 @@ export class AccountPage implements OnInit, AfterViewInit {
   }
 
   constructor(
-    public authService: AuthService,
+    private navCtrl: NavController,
     public alertCtrl: AlertController,
+    public authService: AuthService,
     public router: Router,
-    public userService: UserService,
     public userData: UserData,
-    private afs: AngularFirestore,
+    public userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -168,12 +168,12 @@ export class AccountPage implements OnInit, AfterViewInit {
   //   console.log('Clicked to change password');
   // }
 
-  logout() {
+  public logout() {
     this.userData.logout();
-    this.router.navigateByUrl('/login');
+    this.navCtrl.navigateForward('/login');
   }
 
-  support() {
-    this.router.navigateByUrl('/support');
+  public support() {
+    this.navCtrl.navigateForward('/support');
   }
 }

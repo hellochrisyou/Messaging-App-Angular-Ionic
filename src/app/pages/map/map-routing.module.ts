@@ -6,7 +6,7 @@ import { MapPage } from './map';
 const routes: Routes = [
   {
     path: '',
-    component: MapPage
+    component: MapPage,
   }
 ];
 

@@ -12,14 +12,15 @@ import { AuthService } from '../../core/service/auth.service';
   styleUrls: ['./support.scss'],
 })
 export class SupportPage {
+
   submitted = false;
   supportMessage: string;
 
   constructor(
+    private emailComposer: EmailComposer,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController,
     public authService: AuthService,
-    private emailComposer: EmailComposer
+    public toastCtrl: ToastController,
   ) { }
 
 

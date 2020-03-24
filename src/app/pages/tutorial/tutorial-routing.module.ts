@@ -6,7 +6,8 @@ import { TutorialPage } from './tutorial';
 const routes: Routes = [
   {
     path: '',
-    component: TutorialPage
+    component: TutorialPage,
+    data: { num: '8' }
   }
 ];
 

@@ -1,12 +1,12 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, NavController } from '@ionic/angular';
 
 @Component({
   template: `
     <ion-list>
-      <ion-item button (click)="close('https://github.com/hellochrisyou/messaging-app')">
+      <ion-item button (click)="close('https://github.com/hellochrisyou/Messaging-App-Angular-Ionic')">
         <ion-label>GitHub Repo</ion-label>
       </ion-item>
       <ion-item button (click)="support()">
@@ -16,12 +16,12 @@ import { PopoverController } from '@ionic/angular';
   `
 })
 export class PopoverPage {
-  constructor(public router: Router, public popoverCtrl: PopoverController) { }
+  constructor(private navCtrl: NavController, public router: Router, public popoverCtrl: PopoverController) { }
 
   support() {
     // this.app.getRootNavs()[0].push('/support');
     this.popoverCtrl.dismiss();
-    this.router.navigateByUrl('/support');
+    this.navCtrl.navigateForward('/support');
   }
 
   close(url: string) {

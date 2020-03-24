@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CheckTutorial } from './providers/check-tutorial.service';
+import { AuthGuard } from './core/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,19 +11,23 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule)
+    loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'inbox',
-    loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxModule)
+    loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'maps',
-    loadChildren: () => import('./pages/map/map.module').then(m => m.MapModule)
+    loadChildren: () => import('./pages/map/map.module').then(m => m.MapModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'support',
-    loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule)
+    loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -34,12 +39,14 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule)
+    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'tutorial',
     loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
-    canLoad: [CheckTutorial]
+    canLoad: [CheckTutorial],
+    canActivate: [AuthGuard]
   }
 ];
 

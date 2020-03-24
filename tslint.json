@@ -17,7 +17,7 @@
     "max-classes-per-file": false,
     "max-line-length": [
       true,
-      140
+      180
     ],
     "member-access": false,
     "member-ordering": [
@@ -70,7 +70,16 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "one-variable-per-declaration": false,
-    "component-class-suffix": [true, "Page", "Component"],
+    "variable-name": {
+      "options": [
+        "allow-leading-underscore"
+      ]
+    },
+    "component-class-suffix": [
+      true,
+      "Page",
+      "Component"
+    ],
     "directive-class-suffix": true,
     "directive-selector": [
       true,

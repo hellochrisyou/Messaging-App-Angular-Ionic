@@ -12,6 +12,10 @@
   margin-bottom: 0;
 }
 
+h4 {
+  text-align: center;
+}
+
 @media screen and (min-width: 1024px) {
   ion-content {
     max-width: 25vw;
@@ -24,4 +28,7 @@
     max-width: 100px;
     margin: 0 auto;
   }
+}
+
+@media screen and (max-width: 1023px) {
 }

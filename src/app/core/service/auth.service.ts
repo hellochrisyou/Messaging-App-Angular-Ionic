@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 import { User } from '../../shared/models';
 import { UserService } from './user.service';
 
@@ -36,6 +36,7 @@ export class AuthService {
 
   constructor(
     public router: Router,
+    private navCtrl: NavController,
     public ngZone: NgZone,
     public userService: UserService,
     public afAuth: AngularFireAuth,
@@ -69,8 +70,20 @@ export class AuthService {
 
   public async presentToast(messageArg: string) {
     const toast = await this.toastController.create({
+      header: '',
       message: messageArg,
-      duration: 2000
+      position: 'bottom',
+      duration: 2000,
+      buttons: [
+        {
+          side: 'start',
+          icon: 'star',
+          text: 'Success',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }
+      ]
     });
     toast.present();
   }
@@ -83,7 +96,7 @@ export class AuthService {
         this.presentToast('You have registered an account');
         // this.snackBar.open('Registration', 'SUCCESS', {
         // });
-        this.router.navigateByUrl('/app/tabs/inbox');
+        this.navCtrl.navigateForward('/app/tabs/inbox');
       })
       .catch(error => {
         // this.signupErrorPopup(error.message);
@@ -98,10 +111,10 @@ export class AuthService {
   }
   // Firebase Google Sign-in
   public signinGoogle() {
-    console.log('hello');
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
-      this.router.navigateByUrl('/app/tabs/inbox');
+      this.presentToast('You have signed in with your Google account');
+      this.navCtrl.navigateForward('/app/tabs/inbox');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -109,20 +122,55 @@ export class AuthService {
           this.userService.createUser(credential.user);
         } else {
           console.log('Document data:', doc.data());
-          // this.userService.updateUser(credential.user);
         }
       }, (err => {
         // console.log('Error fetching document: ', err);
       }));
     });
+  }
 
-    // return this.OAuthProvider(new this.authState.GoogleAuthProvider())
-    // .then(res => { }).catch(error => { });
+  public signinFacebook() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((credential) => {
+      this.messageRef = this.afs.doc(`users/${credential.user.email}`);
+      this.presentToast('You have signed in with your Facebook account');
+      this.navCtrl.navigateForward('/app/tabs/inbox');
+
+      this.messageRef.get().subscribe(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+          this.userService.createUser(credential.user);
+        } else {
+          console.log('Document data:', doc.data());
+        }
+      }, (err => {
+        // console.log('Error fetching document: ', err);
+      }));
+    });
+  }
+
+  public signinTwitter() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider()).then((credential) => {
+      this.messageRef = this.afs.doc(`users/${credential.user.email}`);
+      this.presentToast('You have signed in with your Twitter account');
+      this.navCtrl.navigateForward('/app/tabs/inbox');
+
+      this.messageRef.get().subscribe(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+          this.userService.createUser(credential.user);
+        } else {
+          console.log('Document data:', doc.data());
+        }
+      }, (err => {
+        // console.log('Error fetching document: ', err);
+      }));
+    });
   }
 
   public signOut() {
     this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/login']);
+      this.presentToast('You are logged out');
+      this.navCtrl.navigateForward(['/login']);
       // window.location.reload();
     });
   }
@@ -133,9 +181,9 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.presentToast('You are signed in');
+        this.presentToast('You are signed in with you email account');
         // this.checkUserExists(credential.user.email, credential.user.displayName, "https://material.angular.io/assets/img/examples/shiba2.jpg");
-        this.router.navigateByUrl('/app/tabs/inbox');
+        this.navCtrl.navigateForward('/app/tabs/inbox');
         window.location.reload();
       })
       .catch(err => { });

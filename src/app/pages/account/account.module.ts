@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AccountPage } from './account';
 import { AccountPageRoutingModule } from './account-routing.module';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @NgModule({
   imports: [
@@ -15,6 +17,9 @@ import { AccountPageRoutingModule } from './account-routing.module';
   ],
   declarations: [
     AccountPage,
+  ],
+  providers: [
+    AngularFireStorage
   ]
 })
 export class AccountModule { }

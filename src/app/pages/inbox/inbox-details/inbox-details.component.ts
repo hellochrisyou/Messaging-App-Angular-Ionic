@@ -93,15 +93,7 @@ export class InboxDetailsComponent implements AfterContentInit {
   async optionActionSheet(index: number) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
-      buttons: [{
-        text: 'Delete',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          // Write Delete function
-          console.log('Delete clicked');
-        }
-      }, {
+      buttons: [, {
         text: 'Location',
         icon: 'map',
         handler: () => {

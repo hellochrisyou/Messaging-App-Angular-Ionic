@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -17,12 +17,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CoreModule } from '@angular/flex-layout';
+import { DropzoneDirective } from './dropzone.directive';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
     CoreModule,
+    SharedModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -35,8 +38,8 @@ import { CoreModule } from '@angular/flex-layout';
     BrowserAnimationsModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent],
-  providers: [InAppBrowser, SplashScreen, StatusBar, Geolocation],
+  declarations: [AppComponent, DropzoneDirective],
+  providers: [InAppBrowser, SplashScreen, StatusBar, Geolocation, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

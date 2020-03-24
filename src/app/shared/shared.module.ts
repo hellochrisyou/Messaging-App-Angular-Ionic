@@ -1,15 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+
+import { UploaderComponent } from './component/uploader/uploader.component';
 import { MaterialModule } from './material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [UploaderComponent, UploadTaskComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -24,7 +27,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MaterialModule,
     FormsModule,
     IonicModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    UploaderComponent,
+    UploadTaskComponent
+  ],
+  providers: [
+    AngularFirestore
   ]
 })
 export class SharedModule { }

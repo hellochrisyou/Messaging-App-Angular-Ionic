@@ -1,13 +1,14 @@
-import { User } from './../../shared/models';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
 import { AlertController, NavController } from '@ionic/angular';
+import * as firebase from 'firebase';
 
-import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../core/service/auth.service';
 import { UserService } from '../../core/service/user.service';
+import { UserData } from '../../providers/user-data';
+import { User } from './../../shared/models';
 
 
 @Component({
@@ -23,6 +24,9 @@ export class AccountPage implements OnInit, AfterViewInit {
   userRef: AngularFirestoreDocument<any>;
   username: string;
 
+  file: any = {};
+
+
   private _authState: any = null;
 
   public get authState(): any {
@@ -36,13 +40,14 @@ export class AccountPage implements OnInit, AfterViewInit {
     private navCtrl: NavController,
     public alertCtrl: AlertController,
     public authService: AuthService,
+    private afStorage: AngularFireStorage,
     public router: Router,
     public userData: UserData,
     public userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    console.log('email', this.authService.authState.email);
+    this.initiateUpload();
     this.userService.getThisUser(this.authService.authState.email).get().subscribe(doc => {
       if (!doc.exists) {
         console.log('No such document!');
@@ -62,6 +67,60 @@ export class AccountPage implements OnInit, AfterViewInit {
     // this.getUsername();
     console.log('this.user', this.user);
   }
+
+  public initiateUpload() {
+    // Create a root reference
+
+    const storageRef = firebase.storage().ref();
+
+    // Create the file metadata
+    var metadata = {
+      contentType: 'image/jpeg'
+    };
+
+    // Upload file and metadata to the object 'images/mountains.jpg'
+    var uploadTask = storageRef.child('images/' + this.file.name).put(this.file, metadata);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+      function (snapshot) {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      }, function (error: any) {
+
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
+
+
+          case 'storage/unknown': ;
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+      }, function () {
+        // Upload completed successfully, now we can get the download URL
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          console.log('File available at', downloadURL);
+        });
+      });
+  }
+
 
   async updatePicture() {
     const alert = await this.alertCtrl.create({
@@ -88,6 +147,7 @@ export class AccountPage implements OnInit, AfterViewInit {
     });
     await alert.present();
   }
+
   public updateUserData(user) {
     // Sets user data to firestore on login
 
@@ -168,12 +228,14 @@ export class AccountPage implements OnInit, AfterViewInit {
   //   console.log('Clicked to change password');
   // }
 
-  public logout() {
-    this.userData.logout();
-    this.navCtrl.navigateForward('/login');
-  }
+  public logout() { }
 
   public support() {
     this.navCtrl.navigateForward('/support');
+  }
+
+  public upload(event: any) {
+    this.afStorage.upload('/upload/', event.target.files[0]);
+
   }
 }

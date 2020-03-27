@@ -28,6 +28,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'proposal',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../proposal/proposal.module').then(m => m.ProposalModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/inbox',
         pathMatch: 'full'

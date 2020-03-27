@@ -14,17 +14,35 @@
       <img [src]="this.user.photoURL" alt="avatar">
       <h2>{{this.user.displayName}}</h2>
       <h5>{{this.user.title}}</h5>
+      <p><i><u>Age: </u></i><span class="span-4em">{{this.user.age}}</span></p>
+      <p><i><u>Religion: </u></i><span class="span-2em">{{this.user.religion}}</span></p>
+      <p><i><u>Have Kids? </u></i><span>{{this.user.haveKids}}</span></p>
+      <p><i><u>Hobbies: </u></i><span class="span-2em">{{this.user.hobbies}}</span></p>
+      <p><i><u>Description: </u></i><span>{{this.user.description}}</span></p>
       <ion-list inset>
-        <ion-item>
-          <input type="file" webkitdirectory directory multiple />
+        <ion-item lines="none">
+          <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+          <ion-button color="primary" (click)="fileInput.click()">Select Photo</ion-button>
+          <ion-button color="success" (click)="onUpload()">Upload</ion-button>
         </ion-item>
         <ion-item (click)="changeUsername()">Change Username</ion-item>
         <ion-item (click)="changeTitle()">Change Title</ion-item>
+        <ion-item (click)="changeAge()">Change Age</ion-item>
+        <ion-item (click)="changeReligion()">Change Religion</ion-item>
+        <ion-item (click)="changeHaveKids()">Change Have Kids</ion-item>
+        <ion-item (click)="changeHobbies()">Change Hobbies</ion-item>
+        <ion-item (click)="changeDescription()">Change Description</ion-item>
         <ion-item (click)="support()">Support</ion-item>
         <ion-item (click)="logout()">Logout</ion-item>
 
       </ion-list>
-
+      <h1> Photos </h1>
+      <div *ngFor="let image of imageUrls;index as i">
+        <span>
+          <ion-icon name="close-outline" (click)="deleteImage(i)"></ion-icon>
+        </span>
+        <img class="all-images" [src]="image">
+      </div>
     </div>
   </ion-content>
 

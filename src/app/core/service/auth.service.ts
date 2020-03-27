@@ -6,7 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { ToastController, NavController } from '@ionic/angular';
-import { User } from '../../shared/models';
+import { User } from '../../shared/interface/models';
 import { UserService } from './user.service';
 
 @Injectable({

@@ -53,13 +53,13 @@
         </ion-item>
       </ion-item>
       <ion-item lines="none">
-        <ion-button shape="round" fill="outline" color="warning" (click)="sendMessage(i)">
+        <ion-button shape="round" fill="outline" color="warning" (click)="sendMessage()">
           Message
         </ion-button>
       </ion-item>
       <ng-container *ngFor="let message of messages;let i = index">
         <div class="container">
-          <ion-item lines="none" (click)="optionActionSheet(i)" matTooltip="Click to open options">
+          <ion-item lines="none">
             <ng-container *ngIf="message.messages[0].sender===myEmail">
               <div class="chat-bubble">
                 <p class="over-flow chat-message">

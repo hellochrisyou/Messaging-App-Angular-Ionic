@@ -1,4 +1,4 @@
-import { User } from './../../shared/models';
+import { User } from '../../shared/interface/models';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
 @Injectable({

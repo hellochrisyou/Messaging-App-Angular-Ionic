@@ -19,8 +19,17 @@
                 {{p.title}}
               </ion-label>
             </ion-item>
-
           </ion-menu-toggle>
+
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="'/proposal'" routerLinkActive="active" routerDirection="forward" detail="false">
+              <ion-icon slot="start" name="stopwatch-outline"></ion-icon>
+              <ion-label>
+                Proposals
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
         </ion-list>
 
         <ion-list *ngIf="authService.isAuthenticated" lines="none">

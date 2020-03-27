@@ -1,0 +1,48 @@
+<section>
+  <mat-form-field>
+    <mat-icon matPrefix id="search-icon">search</mat-icon>
+    <input matInput (keyup)="applyFilter($event.target.value)" />
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortDirection="asc"
+    class="mat-elevation-z8">
+    <ng-container *ngFor="let col of columnObjects" [matColumnDef]="col.columnId">
+      <th id="tableHeader" mat-header-cell *matHeaderCellDef mat-sort-header>{{col.columnId}} </th>
+      <td mat-cell *matCellDef="let dataArray; let i = index;">
+        <!-- [style.color]="setDataColor(dataArray[col.propertyName])"> -->
+
+        <ng-container *ngIf=" col.columnId==='Select'">
+          <ng-container [ngTemplateOutlet]=" optionTemplateRef"
+            [ngTemplateOutletContext]="{ $implicit: dataArray, index: dataSource.filteredData.indexOf(dataArray) }">
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf=" col.columnId==='Reject'">
+          <ng-container [ngTemplateOutlet]=" optionTemplateRef2"
+            [ngTemplateOutletContext]="{ $implicit: dataArray, index: dataSource.filteredData.indexOf(dataArray) }">
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="col.columnId!=='Select' && col.columnId!=='Reject' && !dataArray[col.propertyName]">
+          {{"-"}}
+        </ng-container>
+
+        <ng-container *ngIf="col.columnId!=='Select' && col.columnId!=='Reject' && col.columnId!=='Date'">
+          {{dataArray[col.propertyName]}}
+        </ng-container>
+
+        <ng-container *ngIf="col.columnId==='Date'">
+          {{dataArray[col.propertyName] | date: 'short'}}
+        </ng-container>
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnIds; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnIds" class="item-row" (click)="expandTeam = row"></tr>
+  </table>
+  <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[7]">
+  </mat-paginator>
+</section>
+
+<ng-template #tpl>
+
+</ng-template>

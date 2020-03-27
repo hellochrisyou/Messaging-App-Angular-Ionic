@@ -1,8 +1,8 @@
-import { User } from './../../shared/models';
+import { User } from '../../shared/interface/models';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-import { FriendMessaging } from '../../shared/models';
+import { FriendMessaging } from '../../shared/interface/models';
 import { EmitService } from './emit.service';
 
 @Injectable({
@@ -26,9 +26,17 @@ export class UserService {
         email: dataArg.email,
         photoURL: dataArg.photoURL,
         title: 'Newcomer',
-      }));
+        age: null,
+        religion: null,
+        haveKids: null,
+        hobbies: null,
+        description: null
+      }
+      ));
   }
   public updateUser(dataArg: User) {
+    console.log("updateUser -> dataArg", dataArg)
+
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${dataArg.email}`);
     if (!dataArg.title) {
       dataArg.title = 'Newcomer';
@@ -38,6 +46,11 @@ export class UserService {
         displayName: dataArg.displayName,
         photoURL: dataArg.photoURL,
         title: dataArg.title,
+        age: dataArg.age,
+        religion: dataArg.religion,
+        haveKids: dataArg.haveKids,
+        hobbies: dataArg.hobbies,
+        description: dataArg.description
       };
       console.log('refreshing from user service');
       this.emitService.refreshMessages();

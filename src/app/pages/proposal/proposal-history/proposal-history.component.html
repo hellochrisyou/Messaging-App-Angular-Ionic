@@ -1,3 +1,5 @@
-<p>
-  proposal-history works!
-</p>
+<ng-container *ngIf="this.thisProposals.length > 0">
+  <base-table [columnObjects]="HISTORY_PROPOSAL_COL_OBJ" [colDisplay]="HISTORY_PROPOSAL_DISPLAY"
+    [dataArray]="this.thisProposals">
+  </base-table>
+</ng-container>

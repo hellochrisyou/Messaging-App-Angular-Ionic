@@ -72,15 +72,15 @@
 
           <ion-card-content>
             <div fxLayout="row" fxLayoutAlign="space-around center">
-              <ng-container *ngIf="messageCount[i]!==0">
-                <span>
-                  <ion-button shape="round" fill="outline" color="primary" (click)="navigateDetails(i)">
-                    View
-                  </ion-button>
-                </span>
-              </ng-container>
               <span>
-
+                <ion-button shape="round" fill="outline" color="primary" (click)="navigateDetails(i)">
+                  Messages
+                </ion-button>
+              </span>
+              <span>
+                <ion-button shape="round" fill="outline" color="primary" (click)="navigateProfile(i)">
+                  Profile
+                </ion-button>
               </span>
             </div>
           </ion-card-content>

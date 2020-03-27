@@ -7,7 +7,7 @@ import { AuthService } from '../../core/service/auth.service';
 import { EmitService } from '../../core/service/emit.service';
 import { MessagingService } from '../../core/service/messaging.service';
 import { UserService } from '../../core/service/user.service';
-import { FriendMessaging, Message, User } from './../../shared/models';
+import { FriendMessaging, Message, User } from '../../shared/interface/models';
 import { GET_DATE } from './inbox.util';
 
 declare var google: any;
@@ -22,7 +22,7 @@ export class InboxComponent implements OnInit {
   messages: Message[] = [];
   user: User;
   users: any[];
-
+  navigationExtras: NavigationExtras;
   constructor(
     private authService: AuthService,
     private messagingService: MessagingService,
@@ -67,13 +67,20 @@ export class InboxComponent implements OnInit {
 
 
   public navigateDetails(index: number) {
-    const navigationExtras: NavigationExtras = {
+    this.navigationExtras = {
       state: {
         email: this.users[index].payload.doc.data().email,
       }
     };
-    this.navCtrl.navigateForward(['/inbox/inbox-details'], navigationExtras);
+    this.navCtrl.navigateForward(['/inbox/inbox-details'], this.navigationExtras);
   }
 
-
+  public navigateProfile(index: number) {
+    this.navigationExtras = {
+      state: {
+        email: this.users[index].payload.doc.data().email,
+      }
+    };
+    this.navCtrl.navigateForward(['/inbox/inbox-profile'], this.navigationExtras);
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FriendMessaging } from '../../shared/models';
+import { FriendMessaging } from '../../shared/interface/models';
 
 @Injectable({
   providedIn: 'root'

@@ -8,6 +8,9 @@
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
+    "types": [
+      "node"
+    ],
     "experimentalDecorators": true,
     "target": "es2015",
     "lib": [

@@ -1,0 +1,205 @@
+@import "_table";
+@import "_color";
+
+@include mat-table-cols(
+  (
+    Select: (
+      width: 1rem,
+      text-align: center,
+    ),
+    Reject: (
+      width: 1rem,
+      text-align: center,
+    ),
+    Name: (
+      width: 16rem,
+      text-align: center,
+    ),
+    Street: (
+      width: 5rem,
+      text-align: center,
+    ),
+    City: (
+      width: 5rem,
+      text-align: center,
+    ),
+    State: (
+      width: 5rem,
+      text-align: center,
+    ),
+    Zipcode: (
+      width: 5rem,
+      text-align: center,
+    ),
+    Date: (
+      width: 10rem,
+      text-align: center,
+    ),
+  )
+);
+
+section {
+  height: 100%;
+  max-width: 75vw;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  margin: 5% auto;
+}
+table {
+  max-width: 70vw;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  width: auto;
+  color: white;
+  // background-color: $control-color; <- Do not do this
+}
+mat-paginator {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  background-color: $control-color;
+}
+#search-field {
+  left: 20vw;
+  position: relative;
+}
+
+.mat-select-value {
+  color: white !important;
+}
+
+.icon-red {
+  color: $red;
+}
+
+.icon-green {
+  color: green;
+}
+
+tr.mat-header-row th {
+  color: white;
+  font-weight: 250;
+  text-align: center;
+}
+
+tr.mat-header-row {
+  // background-color:darkslateblue;
+  // background-color:slateblue;
+  // background-color: cornflowerblue;
+  background-color: $control-color; //  background-color:dodgerblue;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+mat-cell,
+.mat-cell,
+td {
+  border: 0;
+}
+
+.mat-row:nth-child(even) {
+  background-color: $table-lighter-color;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: white;
+}
+
+mat-cell,
+.mat-cell:nth-child(n + 3),
+mat-header-cell,
+.mat-header-cell:nth-child(n + 3) div.mat-sort-header-container {
+  min-height: auto; // overrides the 'inherit' that set the min height of the row
+  padding: 0;
+  text-align: center !important;
+}
+
+.mat-header-cell:nth-child(n + 3) div.mat-sort-header-container {
+  padding-left: 2rem !important;
+}
+
+mat-cell,
+.mat-cell {
+  border-color: black !important;
+}
+
+.mat-header-cell:first-child {
+  padding-left: 1rem;
+  text-align: center;
+}
+
+.mat-sort-header-button {
+  margin: 0 auto;
+}
+
+.delete-tooltip-red {
+  background: $red;
+}
+
+.add-tooltip-green {
+  background: #4bb543;
+}
+
+td {
+  text-transform: capitalize;
+}
+
+td.mat-cell {
+  border-bottom: 0;
+}
+
+#search-icon {
+  color: goldenrod;
+}
+
+.mat-input-invalid .mat-input-placeholder {
+  color: $red;
+}
+
+.mat-input-invalid .mat-input-ripple {
+  background-color: $red;
+}
+
+mat-error {
+  color: white;
+}
+.mat-select-arrow {
+  color: black !important;
+}
+mat-cell,
+.mat-cell {
+  color: black;
+}
+
+.fa-user-plus {
+  color: green;
+}
+.mat-paginator-outer-container {
+  color: black;
+  width: 100%;
+}
+@media screen and (max-width: 1024px) {
+  tr.mat-header-row {
+    background-color: transparent;
+  }
+  tr.mat-header-row th {
+    color: black;
+  }
+  table,
+  mat-paginator {
+    max-width: 100%;
+    left: 1vw;
+    color: black;
+  }
+
+  #search-field {
+    left: 1vw;
+    top: 8vh;
+  }
+}

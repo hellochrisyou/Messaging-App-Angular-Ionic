@@ -1,4 +1,4 @@
-import { User } from './../../../shared/models';
+import { User } from '../../../shared/interface/models';
 import { Component, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { ActionSheetController, AlertController, NavController, ToastController 
 
 import { MessagingService } from '../../../core/service/messaging.service';
 import { UserService } from '../../../core/service/user.service';
-import { Message, FriendMessaging } from '../../../shared/models';
+import { Message, FriendMessaging } from '../../../shared/interface/models';
 import { ORDER_MESSAGES, GET_DATE } from '../inbox.util';
 import { AuthService } from './../../../core/service/auth.service';
 import { EmitService } from './../../../core/service/emit.service';
@@ -104,7 +104,7 @@ export class InboxDetailsComponent implements AfterContentInit {
     await actionSheet.present();
   }
 
-  async sendMessage(index: number) {
+  async sendMessage() {
     this.options = {
       enableHighAccuracy: false
     };

@@ -8,11 +8,12 @@ import { UploaderComponent } from './component/uploader/uploader.component';
 import { MaterialModule } from './material.module';
 import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { TableComponent } from './component/table/table.component';
 
 
 
 @NgModule({
-  declarations: [UploaderComponent, UploadTaskComponent],
+  declarations: [UploaderComponent, UploadTaskComponent, TableComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -29,7 +30,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     IonicModule,
     FlexLayoutModule,
     UploaderComponent,
-    UploadTaskComponent
+    UploadTaskComponent,
+    TableComponent
   ],
   providers: [
     AngularFirestore

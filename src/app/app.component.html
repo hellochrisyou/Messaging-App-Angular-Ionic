@@ -10,7 +10,7 @@
       <ion-content>
         <ion-list lines="none">
           <ion-list-header>
-            Messaging
+            Dating
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="forward" detail="false">
@@ -26,6 +26,15 @@
               <ion-icon slot="start" name="stopwatch-outline"></ion-icon>
               <ion-label>
                 Proposals
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="'/people'" routerLinkActive="active" routerDirection="forward" detail="false">
+              <ion-icon slot="start" name="book-outline"></ion-icon>
+              <ion-label>
+                People
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

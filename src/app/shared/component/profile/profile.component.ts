@@ -1,23 +1,22 @@
-import { ImageUrls } from './../../../shared/interface/interface';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Proposal } from '../../interface/models';
+import { ImageUrls } from '../../interface/interface';
 import { AlertController, ToastController } from '@ionic/angular';
-import * as firebase from 'firebase';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/service/auth.service';
 import { ImageService } from '../../../core/service/image.service';
-import { ProposalService } from '../../../core/service/proposal.service';
 import { UserService } from '../../../core/service/user.service';
-import { Proposal, User } from '../../../shared/interface/models';
-import { GET_TODAY_DATE } from '../inbox.util';
+import { ProposalService } from '../../../core/service/proposal.service';
+import * as firebase from 'firebase';
+import { GET_TODAY_DATE } from '../../../pages/inbox/inbox.util';
 
 @Component({
-  selector: 'app-inbox-profile',
-  templateUrl: './inbox-profile.component.html',
-  styleUrls: ['./inbox-profile.component.scss'],
+  selector: 'shared-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
 })
-export class InboxProfileComponent implements OnInit {
+export class SharedProfilePage implements OnInit {
 
   selected = new FormControl(0);
   otherUser: any;
@@ -26,6 +25,17 @@ export class InboxProfileComponent implements OnInit {
   thisProposal: Proposal = {};
   images: any[];
   imageUrls: ImageUrls[] = [];
+
+  private _email: string;
+
+  @Input()
+  public get email(): string {
+    return this._email;
+  }
+  public set email(value: string) {
+    this._email = value;
+  }
+
 
   constructor(
     public alertCtrl: AlertController,
@@ -49,6 +59,7 @@ export class InboxProfileComponent implements OnInit {
       }
     });
   }
+
 
   ngOnInit() {
     this.loadPhotos();

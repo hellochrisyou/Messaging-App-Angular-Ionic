@@ -1,0 +1,38 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+
+  <ng-container *ngFor="let user of users;index as i">
+    <ng-container *ngIf="user.email!==this.authService.authState.email">
+      <ion-card class="speaker-card">
+        <ion-card-header>
+          <!-- <ion-item detail="false" lines="none" class="friend-item"> -->
+          <div fxLayout="row" fxLayoutAlign="space-around center">
+            <ion-avatar slot="start">
+              <img [src]="user.photoURL" [alt]="user.name + ' profile picture'">
+            </ion-avatar>
+            <span>
+              <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
+              <ion-card-title>{{user.displayName}}</ion-card-title>
+            </span>
+            <ion-badge slot="end">{{messageCount[i]}}</ion-badge>
+          </div>
+        </ion-card-header>
+
+
+        <ion-card-content>
+          <div fxLayout="row" fxLayoutAlign="space-around center">
+            <span>
+              <ion-button shape="round" fill="outline" color="primary" (click)="navigateDetails(i)">
+                Messages
+              </ion-button>
+            </span>
+            <span>
+              <ion-button shape="round" fill="outline" color="primary" (click)="navigateProfile(i)">
+                Profile
+              </ion-button>
+            </span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ng-container>
+</div>

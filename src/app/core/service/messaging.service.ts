@@ -17,7 +17,10 @@ export class MessagingService {
   public getUserMessages(email: string, receiverEmail: string): any {
     console.log('getusermessages', email, receiverEmail);
     return this.afs.collection('messaging').doc(email).collection(`messages-${receiverEmail}`).valueChanges();
+  }
 
+  public getCurrentMessages(email: string): any {
+    return this.afs.collection('messaging').doc(email).snapshotChanges();
   }
 
   public senderMessage(dataArg: FriendMessaging, senderEmail: string, receiverEmail): void {

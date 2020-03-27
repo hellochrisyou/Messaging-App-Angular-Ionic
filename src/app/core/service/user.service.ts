@@ -59,7 +59,7 @@ export class UserService {
   }
 
   public getUsers() {
-    return this.afs.collection('users').snapshotChanges();
+    return this.afs.collection('users').valueChanges();
   }
 
   public getThisUser(email: string) {

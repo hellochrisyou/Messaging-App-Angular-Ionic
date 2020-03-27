@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
+import { SharedCardPage } from './component/card/card.component';
+import { SharedProfilePage } from './component/profile/profile.component';
+import { TableComponent } from './component/table/table.component';
+import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
 import { UploaderComponent } from './component/uploader/uploader.component';
 import { MaterialModule } from './material.module';
-import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { TableComponent } from './component/table/table.component';
 
 
 
 @NgModule({
-  declarations: [UploaderComponent, UploadTaskComponent, TableComponent],
+  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, SharedProfilePage, SharedCardPage],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -31,7 +33,10 @@ import { TableComponent } from './component/table/table.component';
     FlexLayoutModule,
     UploaderComponent,
     UploadTaskComponent,
-    TableComponent
+    TableComponent,
+    SharedProfilePage,
+    SharedCardPage
+
   ],
   providers: [
     AngularFirestore

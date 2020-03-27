@@ -6,3 +6,8 @@ export interface ColumnObject {
 export interface ImageUrls {
     imagePath: string[];
 }
+
+export interface MessageCount {
+    messageNum?: number[];
+    userName?: string;
+}

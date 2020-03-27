@@ -9,6 +9,7 @@ import { MessagingService } from '../../core/service/messaging.service';
 import { UserService } from '../../core/service/user.service';
 import { FriendMessaging, Message, User } from '../../shared/interface/models';
 import { GET_DATE } from './inbox.util';
+import { MessageCount } from '../../shared/interface/interface';
 
 declare var google: any;
 @Component({
@@ -18,11 +19,10 @@ declare var google: any;
 })
 export class InboxComponent implements OnInit {
 
-  messageCount: number[] = [];
+  messageCount: MessageCount;
   messages: Message[] = [];
-  user: User;
   users: any[];
-  navigationExtras: NavigationExtras;
+
   constructor(
     private authService: AuthService,
     private messagingService: MessagingService,
@@ -42,24 +42,23 @@ export class InboxComponent implements OnInit {
 
   public getUsers() {
     // Initialize new memory
-    this.messages = [];
-    this.messageCount = [];
+    this.messageCount = {};
 
     this.userService.getUsers().subscribe(usersData => {
-
       this.users = usersData;
-      this.users.forEach((item, index) => {
-        this.messagingService
-          .getUserMessages(this.authService.authState.email, item.payload.doc.data().email)
-          .subscribe(userMessageData => {
-            if (userMessageData.length) {
-              if (item.payload.doc.data().email === userMessageData[0].messages[0].sender || item.payload.doc.data().email === userMessageData[0].messages[0].receiver) {
-                this.messageCount[index] = userMessageData.length;
-              }
-            } else {
-              this.messageCount[index] = 0;
-            }
-          });
+      this.users.forEach((user, index) => {
+        this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(message => {
+          console.log("InboxComponent -> getUsers -> message", message)
+          if (message.length > 0) {
+            this.messageCount[index] = message.length;
+            this.messageCount.userName = user.email;
+            console.log('thismessagecout', this.messageCount);
+
+          } else {
+            this.messageCount[index] = 0;
+            console.log('thismessagecout', this.messageCount);
+          }
+        });
       });
     });
   }
@@ -67,20 +66,20 @@ export class InboxComponent implements OnInit {
 
 
   public navigateDetails(index: number) {
-    this.navigationExtras = {
+    const navigationExtras = {
       state: {
         email: this.users[index].payload.doc.data().email,
       }
     };
-    this.navCtrl.navigateForward(['/inbox/inbox-details'], this.navigationExtras);
+    this.navCtrl.navigateForward(['/inbox/inbox-details'], navigationExtras);
   }
 
   public navigateProfile(index: number) {
-    this.navigationExtras = {
+    const navigationExtras = {
       state: {
         email: this.users[index].payload.doc.data().email,
       }
     };
-    this.navCtrl.navigateForward(['/inbox/inbox-profile'], this.navigationExtras);
+    this.navCtrl.navigateForward(['/shared/profile'], navigationExtras);
   }
 }

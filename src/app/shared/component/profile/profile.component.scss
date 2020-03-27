@@ -1,0 +1,36 @@
+@import "_text-margin";
+
+mat-tab-group {
+  position: absolute;
+  top: 5vh;
+  width: 100%;
+}
+
+#profile-description {
+  position: fixed;
+  top: 50vh;
+}
+
+ion-text {
+  width: 100%;
+}
+
+ion-back-button {
+  color: white;
+}
+
+section#inbox-profile-section {
+}
+
+ion-button {
+  margin-bottom: 6vw;
+}
+
+#other-profile-flex {
+  min-height: fit-content;
+}
+
+#profile-pic {
+  width: 250px;
+  margin: 0 auto;
+}

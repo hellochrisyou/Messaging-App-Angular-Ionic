@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, AlertController } from '@ionic/angular';
 import { User } from '../../shared/interface/models';
 import { UserService } from './user.service';
 
@@ -40,8 +40,7 @@ export class AuthService {
     public ngZone: NgZone,
     public userService: UserService,
     public afAuth: AngularFireAuth,
-    // private snackBar: MatSnackBar,
-    public toastController: ToastController,
+    public alertController: AlertController,
     private afs: AngularFirestore,
     // public dialog: MatDialog,
     // private httpService: HttpService
@@ -69,21 +68,10 @@ export class AuthService {
   }
 
   public async presentToast(messageArg: string) {
-    const toast = await this.toastController.create({
-      header: '',
+    const toast = await this.alertController.create({
+      header: 'Success',
       message: messageArg,
-      position: 'bottom',
-      duration: 2000,
-      buttons: [
-        {
-          side: 'start',
-          icon: 'star',
-          text: 'Success',
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        }
-      ]
+      buttons: ['OK']
     });
     toast.present();
   }
@@ -122,6 +110,11 @@ export class AuthService {
           this.userService.createUser(credential.user);
         } else {
           console.log('Document data:', doc.data());
+          this.authState.email = doc.data().email;
+          this.authState.displayName = doc.data().displayName;
+          this.authState.photoURL = doc.data().photoURL;
+          this.authState.title = doc.data().title;
+          this.authState.uId = doc.data().uId;
         }
       }, (err => {
         // console.log('Error fetching document: ', err);
@@ -143,14 +136,20 @@ export class AuthService {
           console.log('Document data:', doc.data());
         }
       }, (err => {
-        // console.log('Error fetching document: ', err);
+        console.log('Error fetching document: ', err);
       }));
-    });
+    }).catch(error => {
+      console.log('Error signing in w/ facebook: ' + error);
+      this.errorProviderAlert();
+    })
   }
 
   public signinTwitter() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider()).then((credential) => {
+
+      console.log("AuthService -> signinTwitter -> credential.user", credential.user)
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
+      console.log("AuthService -> signinTwitter -> credential.user.email", credential.user.email)
       this.presentToast('You have signed in with your Twitter account');
       this.navCtrl.navigateForward('/app/tabs/inbox');
 
@@ -201,7 +200,22 @@ export class AuthService {
   //   dialogRef.afterClosed().subscribe();
   // }
 
+  async errorProviderAlert() {
+    const alert = await this.alertController.create({
+      header: 'Email Duplicate',
+      subHeader: 'You have the same email registered w/ a different provider',
+      message: 'Please use a different provider to login.',
+      buttons: [{
+        text: 'Okay',
+        handler: () => {
+          console.log('Confirm Okay');
+        }
+      }
+      ]
+    });
 
+    await alert.present();
+  }
 
 
   get userData(): any {

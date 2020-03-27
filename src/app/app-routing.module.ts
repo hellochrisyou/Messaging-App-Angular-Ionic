@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CheckTutorial } from './providers/check-tutorial.service';
+
 import { AuthGuard } from './core/guard/auth.guard';
+import { CheckTutorial } from './providers/check-tutorial.service';
 
 const routes: Routes = [
   {
@@ -17,6 +18,16 @@ const routes: Routes = [
   {
     path: 'inbox',
     loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'shared',
+    loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'people',
+    loadChildren: () => import('./pages/people/people.module').then(m => m.PeopleModule),
     canActivate: [AuthGuard]
   },
   {

@@ -21,7 +21,6 @@ export class InboxDetailsComponent implements AfterContentInit {
 
   data: any[];
   date: string;
-  message: string;
   messages: any[] = [];
   messageRef: AngularFirestoreDocument<any>;
   myEmail: string;
@@ -171,7 +170,6 @@ export class InboxDetailsComponent implements AfterContentInit {
         {
           type: 'text',
           name: 'message',
-          value: this.message,
           placeholder: 'message'
         }
       ]

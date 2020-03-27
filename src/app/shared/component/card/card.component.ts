@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { User } from 'firebase';
 import { UserService } from '../../../core/service/user.service';
 import { MessagingService } from '../../../core/service/messaging.service';
 import { AuthService } from '../../../core/service/auth.service';
+import { MessageCount } from '../../interface/interface';
+import { User } from '../../interface/models';
 
 @Component({
   selector: 'shared-card-page',
@@ -12,33 +13,25 @@ import { AuthService } from '../../../core/service/auth.service';
 })
 export class SharedCardPage implements OnInit {
 
-  private _messageCount: number[] = [];
-  private _messages: Message[] = [];
-  private _user: User;
+  private _messageCount: MessageCount = {};
   private _users: any[];
+  private _option: string;
 
   @Input()
-  public get messageCount(): number[] {
+  public get messageCount(): MessageCount {
     return this._messageCount;
   }
-  public set messageCount(value: number[]) {
+  public set messageCount(value: MessageCount) {
     this._messageCount = value;
   }
 
   @Input()
-  public get messages(): Message[] {
-    return this._messages;
+  public get option(): string {
+    return this._option;
   }
-  public set messages(value: Message[]) {
-    this._messages = value;
-  }
-
-  @Input()
-  public get user(): User {
-    return this._user;
-  }
-  public set user(value: User) {
-    this._user = value;
+  public set option(value: string) {
+    this._option = value;
+    console.log("SharedCardPage -> setoption -> value", value)
   }
 
   @Input()
@@ -54,6 +47,36 @@ export class SharedCardPage implements OnInit {
     public authService: AuthService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit(): void {
 
+
+    this.userService.getUsers().subscribe(usersData => {
+      usersData.forEach((user: any, index: number) => {
+        this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(messages => {
+          if (messages.length > 0) {
+            this.messageCount[index] = messages.length;
+            this.messageCount.userName = user.email;
+            console.log('thismessagecout', this.messageCount);
+          } else {
+            this.messageCount[index] = 0;
+            console.log('thismessagecout', this.messageCount);
+          }
+        });
+      });
+
+      if (this._option === 'people') {
+        this._users.forEach((user: User, index: number) => {
+          if (this.messageCount[index] !== 0) {
+            this._users.splice(index, 1);
+          }
+        });
+        console.log('SharedCardPage -> sortFriends -> this._users', this._users);
+
+      } else {
+
+      }
+    });
+  }
 }
+
+

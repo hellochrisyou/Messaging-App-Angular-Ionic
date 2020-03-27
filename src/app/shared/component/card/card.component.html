@@ -1,8 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="center center">
 
   <ng-container *ngFor="let user of users;index as i">
-    <ng-container *ngIf="user.email!==this.authService.authState.email">
-      <ion-card class="speaker-card">
+    <ng-container *ngIf="user.email!==this.authService.authState.email && messageCount[i]!==0">
+      <ion-card class=" speaker-card">
         <ion-card-header>
           <!-- <ion-item detail="false" lines="none" class="friend-item"> -->
           <div fxLayout="row" fxLayoutAlign="space-around center">
@@ -13,7 +13,9 @@
               <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
               <ion-card-title>{{user.displayName}}</ion-card-title>
             </span>
-            <ion-badge slot="end">{{messageCount[i]}}</ion-badge>
+            <ng-container *ngIf="option==='inbox'">
+              <ion-badge slot="end">{{messageCount[i]}}</ion-badge>
+            </ng-container>
           </div>
         </ion-card-header>
 

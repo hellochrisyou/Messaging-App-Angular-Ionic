@@ -19,13 +19,11 @@ declare var google: any;
 })
 export class InboxComponent implements OnInit {
 
-  messageCount: MessageCount;
-  messages: Message[] = [];
   users: any[];
+  status = 'inbox';
 
   constructor(
     private authService: AuthService,
-    private messagingService: MessagingService,
     private navCtrl: NavController,
     private userService: UserService,
     public alertCtrl: AlertController,
@@ -37,33 +35,11 @@ export class InboxComponent implements OnInit {
 
   }
   ionViewDidEnter() {
-    this.getUsers();
-  }
-
-  public getUsers() {
-    // Initialize new memory
-    this.messageCount = {};
-
     this.userService.getUsers().subscribe(usersData => {
-      this.users = usersData;
-      this.users.forEach((user, index) => {
-        this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(message => {
-          console.log("InboxComponent -> getUsers -> message", message)
-          if (message.length > 0) {
-            this.messageCount[index] = message.length;
-            this.messageCount.userName = user.email;
-            console.log('thismessagecout', this.messageCount);
-
-          } else {
-            this.messageCount[index] = 0;
-            console.log('thismessagecout', this.messageCount);
-          }
-        });
-      });
+      this.users = usersData; ``
+      console.log("PeoplePage -> getUsers -> usersData", usersData)
     });
   }
-
-
 
   public navigateDetails(index: number) {
     const navigationExtras = {

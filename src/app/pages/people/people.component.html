@@ -13,6 +13,16 @@
       <ion-title size="large">Inbox</ion-title>
     </ion-toolbar>
   </ion-header>
-  <shared-card-page [users]="users">
+  <shared-card-page [users]="users" [option]="status">
+    <ng-template #messagesBtnTemplate let-i=index>
+      <mat-icon (click)="sendMessage(i)" matTooltip="Auction Player" matTooltipPosition="before">
+        add
+      </mat-icon>
+    </ng-template>
+    <ng-template #profileBtnTemplate let-i=index>
+      <mat-icon (click)="navigatePersonProfile(i)" matTooltip="View Profile" matTooltipPosition="before">
+        add
+      </mat-icon>
+    </ng-template>
   </shared-card-page>
 </ion-content>

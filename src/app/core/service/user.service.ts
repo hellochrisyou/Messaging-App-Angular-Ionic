@@ -1,9 +1,11 @@
-import { User } from '../../shared/interface/models';
+import { User, Message } from '../../shared/interface/models';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { FriendMessaging } from '../../shared/interface/models';
 import { EmitService } from './emit.service';
+import { MessagingService } from './messaging.service';
+import { MessageCount } from '../../shared/interface/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class UserService {
   constructor(
     private afs: AngularFirestore,
     public emitService: EmitService,
+    private messagingService: MessagingService
   ) { }
 
   public createUser(dataArg: User): void {
@@ -67,4 +70,13 @@ export class UserService {
   }
 
 
+  public returnUsersMessages(messages: Message[], email: string, otherEmail: string): Message[] {
+
+    this.messagingService.getUserMessages(email, otherEmail).subscribe(messagesData => {
+      console.log("messagesData", messagesData)
+      const returnMessages = messagesData;
+      return returnMessages;
+    });
+    return;
+  }
 }

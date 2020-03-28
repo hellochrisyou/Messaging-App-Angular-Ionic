@@ -4,7 +4,7 @@ export interface ColumnObject {
 }
 
 export interface ImageUrls {
-    imagePath: string[];
+    imagePath?: string[];
 }
 
 export interface MessageCount {

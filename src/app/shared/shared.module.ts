@@ -6,7 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { SharedCardPage } from './component/card/card.component';
-import { SharedProfilePage } from './component/profile/profile.component';
+import { PicModal } from './component/pic/pic.component';
+import { ProfileModal } from './component/profile/profile.component';
 import { TableComponent } from './component/table/table.component';
 import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
 import { UploaderComponent } from './component/uploader/uploader.component';
@@ -15,7 +16,7 @@ import { MaterialModule } from './material.module';
 
 
 @NgModule({
-  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, SharedProfilePage, SharedCardPage],
+  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, ProfileModal, PicModal, SharedCardPage],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -34,12 +35,16 @@ import { MaterialModule } from './material.module';
     UploaderComponent,
     UploadTaskComponent,
     TableComponent,
-    SharedProfilePage,
+    ProfileModal,
     SharedCardPage
 
   ],
   providers: [
     AngularFirestore
+  ],
+  entryComponents: [
+    ProfileModal,
+    PicModal
   ]
 })
 export class SharedModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ContentChild, TemplateRef } from '@angular/core';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { UserService } from '../../../core/service/user.service';
 import { MessagingService } from '../../../core/service/messaging.service';
@@ -41,6 +41,10 @@ export class SharedCardPage implements OnInit {
   public set users(value: any[]) {
     this._users = value;
   }
+  @ContentChild('messagesBtnTemplate', { static: false }) optionTemplateRef: TemplateRef<any>;
+  @ContentChild('profileBtnTemplate', { static: false }) optionTemplateRef2: TemplateRef<any>;
+  @ContentChild('proposalBtnTemplate', { static: false }) optionTemplateRef3: TemplateRef<any>;
+
   constructor(
     private userService: UserService,
     private messagingService: MessagingService,

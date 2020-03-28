@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SharedCardPage } from './component/card/card.component';
-import { SharedProfilePage } from './component/profile/profile.component';
+import { ProfileModal } from './component/profile/profile.component';
+import { SharedComponent } from './shared.component';
 
 
 const routes: Routes = [
   {
+    path: '',
+    component: SharedComponent
+  },
+  {
     path: 'profile',
-    component: SharedProfilePage,
+    component: ProfileModal,
   },
   {
     path: 'card',

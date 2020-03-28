@@ -11,19 +11,21 @@ mat-tab-group {
   top: 50vh;
 }
 
+ion-title {
+  color: black;
+}
+
 ion-text {
   width: 100%;
 }
-
+ion-toolbar {
+  height: 3rem;
+}
 ion-back-button {
   color: white;
 }
-
-section#inbox-profile-section {
-}
-
-ion-button {
-  margin-bottom: 6vw;
+div.modal-wrapper {
+  height: 1000px !important;
 }
 
 #other-profile-flex {

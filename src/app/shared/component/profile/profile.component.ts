@@ -1,26 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Proposal } from '../../interface/models';
-import { ImageUrls } from '../../interface/interface';
-import { AlertController, ToastController } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
+import * as firebase from 'firebase';
+
 import { AuthService } from '../../../core/service/auth.service';
 import { ImageService } from '../../../core/service/image.service';
-import { UserService } from '../../../core/service/user.service';
 import { ProposalService } from '../../../core/service/proposal.service';
-import * as firebase from 'firebase';
+import { UserService } from '../../../core/service/user.service';
 import { GET_TODAY_DATE } from '../../../pages/inbox/inbox.util';
+import { ImageUrls } from '../../interface/interface';
+import { Proposal } from '../../interface/models';
+import { PicModal } from '../pic/pic.component';
 
 @Component({
   selector: 'shared-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class SharedProfilePage implements OnInit {
+export class ProfileModal implements OnInit {
 
   selected = new FormControl(0);
   otherUser: any;
-  otherEmail: string;
   users: any[];
   thisProposal: Proposal = {};
   images: any[];
@@ -39,45 +40,52 @@ export class SharedProfilePage implements OnInit {
 
   constructor(
     public alertCtrl: AlertController,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     public imageService: ImageService,
-    private router: Router,
-    private userService: UserService,
+    public modalCtrl: ModalController,
     private proposalService: ProposalService,
     public toastController: ToastController,
-  ) {
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.otherEmail = this.router.getCurrentNavigation().extras.state.email;
+    public navParams: NavParams,
+    private userService: UserService
 
-        this.userService.getUsers().subscribe(usersData => {
-          this.users = usersData;
-          this.otherUser = this.users.find(user => user.payload.doc.data().email === this.otherEmail);
-          console.log("InboxProfileComponent -> this.otherUser", this.otherUser.payload.doc.data())
-        });
-      }
-    });
+  ) {
+    this._email = navParams.get('email');
   }
 
 
   ngOnInit() {
     this.loadPhotos();
+    this.userService.getUsers().subscribe(usersData => {
+      this.users = usersData;
+      this.users.forEach((user, index) => {
+        if (user.email === this._email) {
+          this.otherUser = user;
+          console.log("SharedProfilePage -> ngOnInit ->  this.otherUser", this.otherUser)
+        }
+      });
+    });
   }
-
+  async launchPicModal(index: number) {
+    const modal = await this.modalCtrl.create({
+      component: PicModal,
+      componentProps: {
+        'email': this.otherUser.email
+      },
+      cssClass: 'profile-modal'
+    });
+    return await modal.present();
+  }
   public loadPhotos(): void {
     this.imageService
-      .getUserImageList(this.otherEmail)
+      .getUserImageList(this._email)
       .subscribe(imagesData => {
         this.images = imagesData;
         for (const image of this.images) {
           const storage = firebase.storage();
-          const pathReference = storage.ref(`images/${this.otherEmail}/${image.images[0].photoName}`);
+          const pathReference = storage.ref(`images/${this._email}/${image.images[0].photoName}`);
 
           pathReference.getDownloadURL().then(url => {
             this.imageUrls.push(url);
-            console.log('AccountPage -> loadPhotos -> url', this.imageUrls);
-
           }).catch(function (error) {
             console.log('AccountPage -> loadPhotos -> error', error);
             // Handle any errors
@@ -86,73 +94,11 @@ export class SharedProfilePage implements OnInit {
       });
   }
 
-  async sendProposal() {
-    const todaysDate = GET_TODAY_DATE();
-
-    const alert = await this.alertCtrl.create({
-      header: 'Send Proposal to:',
-      subHeader: this.otherUser.payload.doc.data().displayName,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        },
-        {
-          text: 'Ok',
-          handler: (dataProposal: any) => {
-            this.thisProposal.select = 'select';
-            this.thisProposal.reject = 'reject';
-            this.thisProposal.street = dataProposal.street;
-            this.thisProposal.city = dataProposal.city;
-            this.thisProposal.state = dataProposal.state;
-            this.thisProposal.zipcode = dataProposal.zipcode;
-            this.thisProposal.proposalDate = dataProposal.proposalDate;
-            this.thisProposal.status = 'pending';
-            this.thisProposal.sender = this.authService.authState.email;
-            this.thisProposal.recipient = this.otherUser.payload.doc.data().email;
-
-            this.proposalService.sendProposal(this.thisProposal);
-            this.presentToast('Your proposal has been sent');
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'text',
-          name: 'street',
-          placeholder: 'Street'
-        },
-        {
-          type: 'text',
-          name: 'city',
-          placeholder: 'City'
-        },
-        {
-          type: 'text',
-          name: 'state',
-          placeholder: 'State'
-        },
-        {
-          type: 'number',
-          name: 'zipcode',
-          min: 0,
-          placeholder: 'Zipcode'
-        },
-        {
-          name: 'proposalDate',
-          type: 'date',
-          min: todaysDate,
-          // max: ''
-        },
-      ]
+  public closeModal() {
+    this.modalCtrl.dismiss({
+      'dismissed': true
     });
-    await alert.present();
   }
-
 
   public async presentToast(messageArg: string) {
     const toast = await this.toastController.create({

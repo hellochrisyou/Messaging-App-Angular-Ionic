@@ -2,11 +2,12 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from '../../core/service/user.service';
 import { MessagingService } from '../../core/service/messaging.service';
 import { AuthService } from '../../core/service/auth.service';
-import { NavController, AlertController, ToastController } from '@ionic/angular';
+import { NavController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { GET_USERS } from '../../shared/utils/user.util';
 import { MessageCount } from '../../shared/interface/interface';
 import { FriendMessaging, Message } from '../../shared/interface/models';
 import { GET_DATE } from '../inbox/inbox.util';
+import { ProfileModal } from '../../shared/component/profile/profile.component';
 
 @Component({
   selector: 'people-page',
@@ -28,6 +29,7 @@ export class PeoplePage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController,
     private messagingService: MessagingService,
+    private modalController: ModalController,
     public toastController: ToastController,
 
   ) {
@@ -50,7 +52,7 @@ export class PeoplePage implements OnInit {
     // };
     const alert = await this.alertCtrl.create({
       header: 'Send Message to:',
-      subHeader: this.users[index].payload.doc.data().displayName,
+      // subHeader: this.users[index].payload.doc.data().displayName,
       buttons: [
         {
           text: 'Cancel',
@@ -69,11 +71,11 @@ export class PeoplePage implements OnInit {
 
 
               this.thisMessage.sender = this.authService.authState.email;
-              this.thisMessage.receiver = this.users[index].payload.doc.data().email;
+              this.thisMessage.receiver = this.users[index].email;
               this.thisMessage.message = dataMessage.message;
               this.thisMessage.date = GET_DATE();
               this.thisMessage.senderPhotoUrl = this.authService.authState.photoURL;
-              this.thisMessage.receiverPhotoURL = this.users[index].payload.doc.data().photoURL;
+              this.thisMessage.receiverPhotoURL = this.users[index].photoURL;
               this.thisMessage.email = this.authService.authState.email;
 
               if (!messagesData.exists) {
@@ -82,16 +84,16 @@ export class PeoplePage implements OnInit {
                 const tmpData: FriendMessaging = {
                   messages: this.tmpMessages
                 };
-                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].payload.doc.data().email);
-                this.messagingService.senderMessage(tmpData, this.users[index].payload.doc.data().email, this.authService.authState.email);
+                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].email);
+                this.messagingService.senderMessage(tmpData, this.users[index].email, this.authService.authState.email);
               } else {
                 this.tmpMessages = messagesData.data().messages;
                 this.tmpMessages.push(this.thisMessage);
                 const tmpData: FriendMessaging = {
                   messages: this.tmpMessages
                 };
-                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].payload.doc.data().email);
-                this.messagingService.senderMessage(tmpData, this.users[index].payload.doc.data().email, this.authService.authState.email);
+                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].email);
+                this.messagingService.senderMessage(tmpData, this.users[index].email, this.authService.authState.email);
               }
 
             }, (err => {
@@ -114,13 +116,25 @@ export class PeoplePage implements OnInit {
     });
     await alert.present();
   }
-  public navigatePersonProfile(index: number) {
-    const navigationExtras = {
-      state: {
-        email: this.users[index].payload.doc.data().email,
-      }
-    };
-    this.navCtrl.navigateForward(['/shared/profile'], navigationExtras);
+  public navigateProfile(index: number) {
+    // const navigationExtras = {
+    //   state: {
+    //     email: this.users[index].email,
+    //   }
+    // };
+    // this.navCtrl.navigateForward(['/shared'], navigationExtras);
+    this.presentModal(index);
+  }
+
+  async presentModal(index: number) {
+    const modal = await this.modalController.create({
+      component: ProfileModal,
+      componentProps: {
+        'email': this.users[index].email
+      },
+      cssClass: 'profile-modal'
+    });
+    return await modal.present();
   }
 
   public async presentToast(messageArg: string) {
@@ -142,6 +156,5 @@ export class PeoplePage implements OnInit {
     });
     toast.present();
   }
-
 }
 

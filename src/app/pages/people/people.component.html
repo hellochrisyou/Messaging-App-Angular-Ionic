@@ -15,14 +15,18 @@
   </ion-header>
   <shared-card-page [users]="users" [option]="status">
     <ng-template #messagesBtnTemplate let-i=index>
-      <mat-icon (click)="sendMessage(i)" matTooltip="Auction Player" matTooltipPosition="before">
-        add
-      </mat-icon>
+      <ion-button shape="round" fill="outline" (click)="sendMessage(i)" matTooltip="Send Message"
+        matTooltipPosition="before">
+        <ion-icon name="mail-outline">
+        </ion-icon>
+      </ion-button>
     </ng-template>
     <ng-template #profileBtnTemplate let-i=index>
-      <mat-icon (click)="navigatePersonProfile(i)" matTooltip="View Profile" matTooltipPosition="before">
-        add
-      </mat-icon>
+      <ion-button shape="round" fill="outline" (click)="navigateProfile(i)" matTooltip="View Profile"
+        matTooltipPosition="after">
+        <ion-icon name="reader-outline">
+        </ion-icon>
+      </ion-button>
     </ng-template>
   </shared-card-page>
 </ion-content>

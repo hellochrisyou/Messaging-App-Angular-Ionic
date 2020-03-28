@@ -13,6 +13,26 @@
       <ion-title size="large">Inbox</ion-title>
     </ion-toolbar>
   </ion-header>
-  <shared-card-page [users]="users" [option]="status"></shared-card-page>
+  <shared-card-page [users]="users" [option]="status">
+    <ng-template #messagesBtnTemplate let-i=index>
+      <ion-button mat-button (click)="navigateMessages(i)" shape="round" fill="outline" matTooltip="View Messages"
+        matTooltipPosition="below">
+        <ion-icon matTooltip="Message" matTooltipPosition="before" name="mail-outline">
+        </ion-icon>
+      </ion-button>
+    </ng-template>
+    <ng-template #profileBtnTemplate let-i=index>
+      <ion-button mat-button (click)="navigateProfile(i)" shape="round" fill="outline" matTooltip="View Profile"
+        matTooltipPosition="below">
+        <ion-icon name="reader-outline"></ion-icon>
+      </ion-button>
+    </ng-template>
+    <ng-template #proposalBtnTemplate let-i=index>
+      <ion-button mat-button (click)="submitProposal(i)" shape="round" fill="outline" matTooltip="Submit Proposal"
+        matTooltipPosition="below">
+        <ion-icon name="bulb-outline"></ion-icon>
+      </ion-button>
+    </ng-template>
+  </shared-card-page>
 
 </ion-content>

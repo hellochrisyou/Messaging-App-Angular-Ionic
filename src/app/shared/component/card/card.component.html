@@ -14,24 +14,23 @@
               <ion-card-title>{{user.displayName}}</ion-card-title>
             </span>
             <ng-container *ngIf="option==='inbox'">
-              <ion-badge slot="end">{{messageCount[i]}}</ion-badge>
+              <ion-badge matTooltip="Number of messages" matTooltipPosition="after" slot="end">{{messageCount[i]}}
+              </ion-badge>
             </ng-container>
           </div>
         </ion-card-header>
 
-
         <ion-card-content>
           <div fxLayout="row" fxLayoutAlign="space-around center">
-            <span>
-              <ion-button shape="round" fill="outline" color="primary" (click)="navigateDetails(i)">
-                Messages
-              </ion-button>
-            </span>
-            <span>
-              <ion-button shape="round" fill="outline" color="primary" (click)="navigateProfile(i)">
-                Profile
-              </ion-button>
-            </span>
+            <ng-container [ngTemplateOutlet]=" optionTemplateRef"
+              [ngTemplateOutletContext]="{ $implicit: users, index: i }">
+            </ng-container>
+            <ng-container [ngTemplateOutlet]=" optionTemplateRef2"
+              [ngTemplateOutletContext]="{ $implicit: users, index: i  }">
+            </ng-container>
+            <ng-container [ngTemplateOutlet]=" optionTemplateRef3"
+              [ngTemplateOutletContext]="{ $implicit: users, index: i  }">
+            </ng-container>
           </div>
         </ion-card-content>
       </ion-card>

@@ -19,6 +19,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CoreModule } from '@angular/flex-layout';
 import { DropzoneDirective } from './dropzone.directive';
 import { SharedModule } from './shared/shared.module';
+import { InboxModule } from './pages/inbox/inbox.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     CoreModule,
     SharedModule,
+    InboxModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,

@@ -14,6 +14,7 @@ import { InboxProfileComponent } from './inbox-profile/inbox-profile.component';
   imports: [
     CommonModule,
     SharedModule,
+    IonicModule,
     InboxRoutingModule
   ],
   providers: [

@@ -1,35 +1,36 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button ion-button (click)="closeModal()">Close</ion-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
-<div id="other-profile-flex" fxLayout="column" fxLayoutAlign="center center">
+<div id="other-profile-flex" fxLayout="column" fxLayoutAlign="start center">
   <section id="inbox-profile-section">
     <div fxLayout="column" fxLayoutAlign="center center">
       <ion-text id=" profile-description" color="dark">
-        <img id="profile-pic" [src]="this.otherUser?.payload.doc.data().photoURL">
-        <h2>{{this.otherUser?.payload.doc.data().displayName}}</h2>
-        <h5>{{this.otherUser?.payload.doc.data().title}}</h5>
-        <p><i><u>Age: </u></i><span class="span-4em">{{this.otherUser?.payload.doc.data().age}}</span></p>
-        <p><i><u>Religion: </u></i><span class="span-2em">{{this.otherUser?.payload.doc.data().religion}}</span></p>
-        <p><i><u>Have Kids? </u></i><span>{{this.otherUser?.payload.doc.data().haveKids}}</span></p>
-        <p><i><u>Hobbies: </u></i><span class="span-2em">{{this.otherUser?.payload.doc.data().hobbies}}</span></p>
-        <p><i><u>Description: </u></i><span>{{this.otherUser?.payload.doc.data().description}}</span></p>
+        <img id="profile-pic" [src]="this.otherUser?.photoURL">
+        <h2>{{this.otherUser?.displayName}}</h2>
+        <h5>{{this.otherUser?.title}}</h5>
+        <p><i><u>Age: </u></i><span class="span-4em">{{this.otherUser?.age}}</span></p>
+        <p><i><u>Religion: </u></i><span class="span-2em">{{this.otherUser?.religion}}</span></p>
+        <p><i><u>Have Kids? </u></i><span>{{this.otherUser?.haveKids}}</span></p>
+        <p><i><u>Hobbies: </u></i><span class="span-2em">{{this.otherUser?.hobbies}}</span></p>
+        <p><i><u>Description: </u></i><span>{{this.otherUser?.description}}</span></p>
       </ion-text>
     </div>
   </section>
   <section>
     <h1> Photos </h1>
-    <div *ngFor="let image of imageUrls;index as i">
-      <img class="all-images" [src]="image">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <div *ngFor="let image of imageUrls;index as i">
+        <img class="all-images" [src]="image">
+      </div>
     </div>
   </section>
   <section fxLayout="column" fxLayoutAlign="start center">
-    <ion-button shape="round" fill="outline" color="primary" (click)="sendProposal()">
-      Submit Proposal
+    <ion-button shape="round" fill="outline" color="primary" (click)="launchPicModal()">
+      View Photos
     </ion-button>
   </section>
 </div>

@@ -69,7 +69,7 @@
                 </p>
               </div>
             </ng-container>
-            <ng-container *ngIf="message.messages[0].sender===otherUser.payload.doc.data().email">
+            <ng-container *ngIf="message.messages[0].sender===otherUser.email">
               <div class="chat-bubble mine">
                 <p class="over-flow chat-message">
                   <i>{{message.messages[0].date| date}}</i>

@@ -3,14 +3,11 @@ import { FormControl } from '@angular/forms';
 import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
 import * as firebase from 'firebase';
 
-import { AuthService } from '../../../core/service/auth.service';
 import { ImageService } from '../../../core/service/image.service';
-import { ProposalService } from '../../../core/service/proposal.service';
 import { UserService } from '../../../core/service/user.service';
-import { GET_TODAY_DATE } from '../../../pages/inbox/inbox.util';
 import { ImageUrls } from '../../interface/interface';
 import { Proposal } from '../../interface/models';
-import { PicModal } from '../pic/pic.component';
+import { PicModalPage } from './pic-modal/pic-modal.component';
 
 @Component({
   selector: 'shared-profile',
@@ -40,10 +37,9 @@ export class ProfileModal implements OnInit {
 
   constructor(
     public alertCtrl: AlertController,
-    private authService: AuthService,
+    public modalController: ModalController,
     public imageService: ImageService,
     public modalCtrl: ModalController,
-    private proposalService: ProposalService,
     public toastController: ToastController,
     public navParams: NavParams,
     private userService: UserService
@@ -65,15 +61,20 @@ export class ProfileModal implements OnInit {
       });
     });
   }
-  async launchPicModal(index: number) {
-    const modal = await this.modalCtrl.create({
-      component: PicModal,
+  async launchPicModal() {
+    const modal = await this.modalController.create({
+      component: PicModalPage,
       componentProps: {
-        'email': this.otherUser.email
-      },
-      cssClass: 'profile-modal'
+        'email': this._email
+      }
     });
     return await modal.present();
+  }
+
+  public closeModal() {
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
   public loadPhotos(): void {
     this.imageService
@@ -92,12 +93,6 @@ export class ProfileModal implements OnInit {
           });
         }
       });
-  }
-
-  public closeModal() {
-    this.modalCtrl.dismiss({
-      'dismissed': true
-    });
   }
 
   public async presentToast(messageArg: string) {

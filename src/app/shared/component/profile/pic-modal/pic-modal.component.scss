@@ -1,0 +1,17 @@
+.mat-tab-label,
+.mat-tab-label-active {
+  min-width: 0 !important;
+  padding: 3px !important;
+  margin: 3px !important;
+}
+
+mat-tab-group {
+  margin-top: 5vh;
+}
+
+@media screen and (max-width: 1024px) {
+  mat-tab-group {
+    position: absolute;
+    top: 15vh;
+  }
+}

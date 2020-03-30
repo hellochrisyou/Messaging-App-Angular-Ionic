@@ -24,15 +24,33 @@ ion-toolbar {
 ion-back-button {
   color: white;
 }
+
+ion-header {
+  box-shadow: none;
+}
+
 div.modal-wrapper {
   height: 1000px !important;
 }
 
 #other-profile-flex {
   min-height: fit-content;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 15vh;
 }
 
 #profile-pic {
   width: 250px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 1024px) {
+  #other-profile-flex {
+    top: 20vh;
+  }
+  ion-header {
+    top: 13vh;
+  }
 }

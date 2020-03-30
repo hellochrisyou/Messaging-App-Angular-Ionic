@@ -6,17 +6,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { SharedCardPage } from './component/card/card.component';
-import { PicModal } from './component/pic/pic.component';
+import { PicModalPage } from './component/profile/pic-modal/pic-modal.component';
 import { ProfileModal } from './component/profile/profile.component';
 import { TableComponent } from './component/table/table.component';
 import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
 import { UploaderComponent } from './component/uploader/uploader.component';
 import { MaterialModule } from './material.module';
+import { SharedComponent } from './shared.component';
 
 
 
 @NgModule({
-  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, ProfileModal, PicModal, SharedCardPage],
+  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, ProfileModal, PicModalPage, SharedCardPage, SharedComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -36,7 +37,8 @@ import { MaterialModule } from './material.module';
     UploadTaskComponent,
     TableComponent,
     ProfileModal,
-    SharedCardPage
+    SharedCardPage,
+    SharedComponent
 
   ],
   providers: [
@@ -44,7 +46,7 @@ import { MaterialModule } from './material.module';
   ],
   entryComponents: [
     ProfileModal,
-    PicModal
+    PicModalPage
   ]
 })
 export class SharedModule { }

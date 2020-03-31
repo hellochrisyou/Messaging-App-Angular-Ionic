@@ -10,7 +10,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { UserData } from './providers/user-data';
 
-describe('AppComponent', () => {
+fdescribe('AppComponent', () => {
   let menuSpy,
     routerSpy,
     userDataSpy,

@@ -9,13 +9,13 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "types": [
-      "node"
+      "jasmine, node"
     ],
     "experimentalDecorators": true,
     "target": "es2015",
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],  
   }
 }

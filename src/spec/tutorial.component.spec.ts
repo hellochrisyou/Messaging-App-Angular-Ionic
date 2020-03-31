@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { TestBed, async } from '@angular/core/testing';
 import { MenuController } from '@ionic/angular';
 
-import { TutorialPage } from './tutorial';
-
 import { IonicStorageModule } from '@ionic/storage';
+import { TutorialPage } from '../tutorial/tutorial';
 describe('TutorialPage', () => {
   let fixture, app;
   beforeEach(async(() => {

@@ -12,12 +12,9 @@ import { TableComponent } from './component/table/table.component';
 import { UploadTaskComponent } from './component/uploader/uploader-task/upload-task.component';
 import { UploaderComponent } from './component/uploader/uploader.component';
 import { MaterialModule } from './material.module';
-import { SharedComponent } from './shared.component';
-
-
 
 @NgModule({
-  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, ProfileModal, PicModalPage, SharedCardPage, SharedComponent],
+  declarations: [UploaderComponent, UploadTaskComponent, TableComponent, ProfileModal, PicModalPage, SharedCardPage],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -37,9 +34,7 @@ import { SharedComponent } from './shared.component';
     UploadTaskComponent,
     TableComponent,
     ProfileModal,
-    SharedCardPage,
-    SharedComponent
-
+    SharedCardPage
   ],
   providers: [
     AngularFirestore

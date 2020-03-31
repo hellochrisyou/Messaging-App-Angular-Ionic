@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
     private toastCtrl: ToastController,
     private userData: UserData,
     public authService: AuthService,
+    public router: Router
   ) {
     this.initializeApp();
   }
@@ -55,6 +56,8 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.checkLoginStatus();
     this.listenForLoginEvents();
+
+    this.router.navigateByUrl('login');
 
     this.swUpdate.available.subscribe(async res => {
       const toast = await this.toastCtrl.create({

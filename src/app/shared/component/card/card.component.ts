@@ -5,6 +5,7 @@ import { MessagingService } from '../../../core/service/messaging.service';
 import { AuthService } from '../../../core/service/auth.service';
 import { MessageCount } from '../../interface/interface';
 import { User } from '../../interface/models';
+import { UserStateService } from '../../../core/service/state/user.state.service';
 
 @Component({
   selector: 'shared-card-page',
@@ -13,16 +14,16 @@ import { User } from '../../interface/models';
 })
 export class SharedCardPage implements OnInit {
 
-  private _messageCount: MessageCount = {};
-  private _users: any[];
+  private _messageCounts: MessageCount[] = [];
+  public users: any[];
   private _option: string;
-
+  private messageCount: MessageCount = {};
   @Input()
-  public get messageCount(): MessageCount {
-    return this._messageCount;
+  public get messageCounts(): MessageCount[] {
+    return this._messageCounts;
   }
-  public set messageCount(value: MessageCount) {
-    this._messageCount = value;
+  public set messageCounts(value: MessageCount[]) {
+    this._messageCounts = value;
   }
 
   @Input()
@@ -34,13 +35,6 @@ export class SharedCardPage implements OnInit {
     console.log("SharedCardPage -> setoption -> value", value)
   }
 
-  @Input()
-  public get users(): any[] {
-    return this._users;
-  }
-  public set users(value: any[]) {
-    this._users = value;
-  }
   @ContentChild('messagesBtnTemplate', { static: false }) optionTemplateRef: TemplateRef<any>;
   @ContentChild('profileBtnTemplate', { static: false }) optionTemplateRef2: TemplateRef<any>;
   @ContentChild('proposalBtnTemplate', { static: false }) optionTemplateRef3: TemplateRef<any>;
@@ -48,37 +42,53 @@ export class SharedCardPage implements OnInit {
   constructor(
     private userService: UserService,
     private messagingService: MessagingService,
-    public authService: AuthService
+    public authService: AuthService,
+    public userStateService: UserStateService
   ) { }
 
   ngOnInit(): void {
 
 
     this.userService.getUsers().subscribe(usersData => {
-      usersData.forEach((user: any, index: number) => {
+      this.users = usersData;
+      this.users.forEach((user: any, index: number) => {
         this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(messages => {
+          this.messageCount = {};
           if (messages.length > 0) {
-            this.messageCount[index] = messages.length;
-            this.messageCount.userName = user.email;
-            console.log('thismessagecout', this.messageCount);
+            this.messageCount.messageNum = messages.length;
+
           } else {
             this.messageCount[index] = 0;
             console.log('thismessagecout', this.messageCount);
           }
+          this.messageCount.userName = user.email;
+          this.messageCount.photoURL = user.photoURL;
+          this.messageCount.title = user.title;
+          this.messageCount.displayName = user.displayName;
+          this.messageCounts.push(this.messageCount);
+          console.log('thismessagecout', this.messageCount);
+          console.log('Before', this.messageCount);
+
+          // if (this._option === 'people') {
+          //   this.messageCounts.forEach((messageCount: MessageCount) => {
+          //     if (this.messageCounts[index].messageNum !== 0) {
+          //       this.messageCounts.splice(index, 1);
+          //     }
+          //   });
+          //   console.log('SharedCardPage -> sortFriends -> this._users', this.users);
+
+          // } else {
+          //   this.messageCounts.forEach((messageCount: MessageCount) => {
+          //     if (this.messageCounts[index].messageNum === 0) {
+          //       this.messageCounts.splice(index, 1);
+          //     }
+          //   });
+          // }
         });
       });
 
-      if (this._option === 'people') {
-        this._users.forEach((user: User, index: number) => {
-          if (this.messageCount[index] !== 0) {
-            this._users.splice(index, 1);
-          }
-        });
-        console.log('SharedCardPage -> sortFriends -> this._users', this._users);
 
-      } else {
 
-      }
     });
   }
 }

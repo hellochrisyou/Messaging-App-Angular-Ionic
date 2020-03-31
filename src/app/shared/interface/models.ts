@@ -9,14 +9,9 @@ export interface User {
     haveKids?: string;
     hobbies?: string;
     description?: string;
-}
-
-export interface FriendMessaging {
-    messages: Message[];
-}
-
-export interface ImageList {
-    images: Image[];
+    images?: Image[];
+    messages?: Message[];
+    proposals?: Proposal[];
 }
 
 export interface Proposal {
@@ -28,17 +23,11 @@ export interface Proposal {
     zipcode?: number;
     proposalDate?: Date;
     status?: string;
-    sender?: string;
-    recipient?: string;
 }
 
 export interface Message {
     date?: string;
     email?: string;
-    sender?: string;
-    senderPhotoUrl?: string;
-    receiverPhotoURL?: string;
-    receiver?: string;
     message?: string[];
     lat?: number;
     lgn?: number;

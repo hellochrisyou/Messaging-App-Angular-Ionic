@@ -62,3 +62,33 @@ img.all-images {
 .profile-modal {
   height: 100%;
 }
+
+.center-alert .alert-wrapper {
+  .alert-title {
+    text-align: center;
+  }
+  .alert-sub-title {
+    text-align: center;
+  }
+
+  .alert-message {
+    text-align: center;
+  }
+
+  .alert-button-inner {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  button {
+    margin: 0 auto;
+  }
+}
+.picModal div.modal-wrapper {
+  height: 380px;
+}
+
+.profileModal div.modal-wrapper {
+  height: 1000px;
+}

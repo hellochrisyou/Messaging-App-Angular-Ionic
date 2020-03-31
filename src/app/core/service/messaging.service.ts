@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FriendMessaging } from '../../shared/interface/models';
+import { Message } from '../../shared/interface/models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +12,20 @@ export class MessagingService {
   ) { }
 
   public getMessages(email: string) {
-    return this.afs.collection('messaging').doc(email);
+    return this.afs.collection('users').doc(email).snapshotChanges();
   }
   public getUserMessages(email: string, receiverEmail: string): any {
-    return this.afs.collection('messaging').doc(email).collection(`messages-${receiverEmail}`).valueChanges();
+    return this.afs.collection('users').doc(email).collection('receiverEmail').valueChanges();
   }
 
   public getCurrentMessages(email: string): any {
-    return this.afs.collection('messaging').doc(email).snapshotChanges();
+    return this.afs.collection('users').doc(email).snapshotChanges();
   }
 
-  public senderMessage(dataArg: FriendMessaging, senderEmail: string, receiverEmail): void {
-    this.afs.collection('messaging').doc(senderEmail).collection(`messages-${receiverEmail}`).add({
-      messages: dataArg.messages,
+  public sendMessage(message: Message, senderEmail: string, receiverEmail): void {
+    this.afs.collection('users').doc(senderEmail).collection(`${receiverEmail}`).add({
+      messages: message,
     });
   }
-
-  public recipientMessage(dataArg: FriendMessaging, senderEmail: string, receiverEmail): void {
-    this.afs.collection('messaging').doc(senderEmail).collection(`messages-${receiverEmail}`).add({
-      messages: dataArg.messages,
-    });
-  }
-
 
 }

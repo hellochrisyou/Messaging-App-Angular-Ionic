@@ -3,11 +3,11 @@ export interface ColumnObject {
     propertyName: string;
 }
 
-export interface ImageUrls {
-    imagePath?: string[];
-}
 
 export interface MessageCount {
-    messageNum?: number[];
+    messageNum?: number;
     userName?: string;
+    photoURL?: string;
+    title?: string;
+    displayName?: string;
 }

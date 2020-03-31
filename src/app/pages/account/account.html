@@ -21,8 +21,16 @@
       <p><i><u>Description: </u></i><span>{{this.user.description}}</span></p>
       <ion-list inset>
         <ion-item lines="none">
-          <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-          <ion-button color="primary" (click)="fileInput.click()">Select Photo</ion-button>
+          <form>
+            <ion-button>
+              <label for="file-upload" class="custom-file-upload">
+                <i class="fa fa-cloud-upload"></i>Upload Image
+              </label>
+              <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"
+                (change)="onFileChanged($event)">
+            </ion-button>
+          </form>
+          <!-- <ion-button color=" primary" (click)="fileInput.click()">Select Photo</ion-button> -->
           <ion-button color="success" (click)="onUpload()">Upload</ion-button>
         </ion-item>
         <ion-item (click)="changeUsername()">Change Username</ion-item>
@@ -37,11 +45,18 @@
 
       </ion-list>
       <h1> Photos </h1>
-      <div *ngFor="let image of imageUrls;index as i">
-        <span>
-          <ion-icon name="close-outline" (click)="deleteImage(i)"></ion-icon>
-        </span>
-        <img class="all-images" [src]="image">
+      <section fxLayout="column" fxLayoutAlign="start center">
+        <ion-button shape="round" fill="outline" color="primary" (click)="launchPicModal()">
+          View Photos
+        </ion-button>
+      </section>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column">
+        <div *ngFor="let image of imageUrls;index as i">
+          <span>
+            <ion-icon name="close-outline" (click)="deleteImage(i)"></ion-icon>
+          </span>
+          <img class="all-images" [src]="image">
+        </div>
       </div>
     </div>
   </ion-content>

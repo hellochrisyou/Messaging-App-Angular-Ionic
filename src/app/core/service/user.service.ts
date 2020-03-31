@@ -1,11 +1,9 @@
-import { User, Message } from '../../shared/interface/models';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { AuthService } from './auth.service';
-import { FriendMessaging } from '../../shared/interface/models';
+
+import { Message, User } from '../../shared/interface/models';
 import { EmitService } from './emit.service';
 import { MessagingService } from './messaging.service';
-import { MessageCount } from '../../shared/interface/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +19,6 @@ export class UserService {
   ) { }
 
   public createUser(dataArg: User): void {
-
     this.afs.collection('users').doc(dataArg.email).set(
       Object.assign({}, {
         uId: dataArg.uid,
@@ -38,8 +35,6 @@ export class UserService {
       ));
   }
   public updateUser(dataArg: User) {
-    console.log("updateUser -> dataArg", dataArg)
-
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${dataArg.email}`);
     if (!dataArg.title) {
       dataArg.title = 'Newcomer';
@@ -55,14 +50,13 @@ export class UserService {
         hobbies: dataArg.hobbies,
         description: dataArg.description
       };
-      console.log('refreshing from user service');
       this.emitService.refreshMessages();
       return userRef.set(Object.assign({}, data), { merge: true });
     }
   }
 
   public getUsers() {
-    return this.afs.collection('users').valueChanges();
+    return this.afs.collection('users').snapshotChanges();
   }
 
   public getThisUser(email: string) {
@@ -73,7 +67,6 @@ export class UserService {
   public returnUsersMessages(messages: Message[], email: string, otherEmail: string): Message[] {
 
     this.messagingService.getUserMessages(email, otherEmail).subscribe(messagesData => {
-      console.log("messagesData", messagesData)
       const returnMessages = messagesData;
       return returnMessages;
     });

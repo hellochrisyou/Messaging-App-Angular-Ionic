@@ -1,5 +1,4 @@
 @import "_text-margin";
-
 mat-tab-group {
   position: absolute;
   top: 5vh;
@@ -28,9 +27,9 @@ ion-back-button {
 ion-header {
   box-shadow: none;
 }
-
-div.modal-wrapper {
-  height: 1000px !important;
+toolbar,
+.navbar {
+  border: 0;
 }
 
 #other-profile-flex {
@@ -38,7 +37,7 @@ div.modal-wrapper {
   position: absolute;
   width: 100%;
   left: 0;
-  top: 15vh;
+  top: 5vh;
 }
 
 #profile-pic {
@@ -48,9 +47,6 @@ div.modal-wrapper {
 
 @media screen and (max-width: 1024px) {
   #other-profile-flex {
-    top: 20vh;
-  }
-  ion-header {
-    top: 13vh;
+    top: 15vh;
   }
 }

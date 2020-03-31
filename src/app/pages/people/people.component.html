@@ -13,7 +13,7 @@
       <ion-title size="large">Inbox</ion-title>
     </ion-toolbar>
   </ion-header>
-  <shared-card-page [users]="users" [option]="status">
+  <shared-card-page [option]="status">
     <ng-template #messagesBtnTemplate let-i=index>
       <ion-button shape="round" fill="outline" (click)="sendMessage(i)" matTooltip="Send Message"
         matTooltipPosition="before">

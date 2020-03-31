@@ -5,7 +5,6 @@ import * as firebase from 'firebase';
 
 import { ImageService } from '../../../core/service/image.service';
 import { UserService } from '../../../core/service/user.service';
-import { ImageUrls } from '../../interface/interface';
 import { Proposal } from '../../interface/models';
 import { PicModalPage } from './pic-modal/pic-modal.component';
 
@@ -22,7 +21,7 @@ export class ProfileModal implements OnInit {
   users: any[];
   thisProposal: Proposal = {};
   images: any[];
-  imageUrls: ImageUrls[] = [];
+  imageUrls: string[] = [];
 
   private _email: string;
 
@@ -64,6 +63,7 @@ export class ProfileModal implements OnInit {
   async launchPicModal() {
     const modal = await this.modalController.create({
       component: PicModalPage,
+      cssClass: 'picModal',
       componentProps: {
         'email': this._email
       }

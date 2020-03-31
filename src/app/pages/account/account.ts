@@ -1,17 +1,18 @@
+import { PicModalPage } from './../../shared/component/profile/pic-modal/pic-modal.component';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ModalController } from '@ionic/angular';
 import * as firebase from 'firebase';
 
 import { AuthService } from '../../core/service/auth.service';
 import { ImageService } from '../../core/service/image.service';
 import { UserService } from '../../core/service/user.service';
 import { UserData } from '../../providers/user-data';
-import { ImageUrls } from '../../shared/interface/interface';
 import { Image, ImageList, User } from '../../shared/interface/models';
 
+declare var $: any;
 
 @Component({
   selector: 'page-account',
@@ -19,20 +20,6 @@ import { Image, ImageList, User } from '../../shared/interface/models';
   styleUrls: ['./account.scss'],
 })
 export class AccountPage implements OnInit, AfterViewInit {
-
-  user: any = {};
-  userRef: AngularFirestoreDocument<any>;
-  username: string;
-  selectedFile: File;
-  thisImage: Image = {}; messageRef: AngularFirestoreDocument<any>;
-  imageRef: AngularFirestoreDocument<any>;
-  tmpImages: any;
-  images: any[];
-  imageUrls: ImageUrls[] = [];
-  file: any = {};
-
-
-  private _authState: any = null;
 
   public get authState(): any {
     return this._authState;
@@ -51,40 +38,73 @@ export class AccountPage implements OnInit, AfterViewInit {
     public router: Router,
     public userData: UserData,
     public userService: UserService,
+    public modalController: ModalController,
   ) { }
 
-  ngOnInit(): void {
-    this.userRef = this.userService.getThisUser(this.authService.authState.email);
+  user: any = {};
+  userRef: AngularFirestoreDocument<any>;
+  username: string;
+  public selectedFile: File;
+  thisImage: Image = {};
+  messageRef: AngularFirestoreDocument<any>;
+  imageRef: AngularFirestoreDocument<any>;
+  tmpImages: any;
+  images: any[];
+  imageUrls: string[];
+  file: any = {};
 
+  private _authState: any = null;
+
+  async;
+  ngOnInit(): void {
+    $('#file-upload').change(function () {
+      const i = $(this).prev('label').clone();
+      const file = $('#file-upload')[0].files[0].name;
+      $(this).prev('label').text(file);
+    });
+
+
+
+    this.userRef = this.userService.getThisUser(this.authService.authState.email);
     this.userRef.get().subscribe(doc => {
       if (!doc.exists) {
         console.log('No such document!');
       } else {
         console.log('Document data:', doc.data());
         this.user = doc.data();
+        this.loadPhotos();
       }
     }, (err => {
       // console.log('Error fetching document: ', err);
     }));
-    this.loadPhotos();
   }
 
   ngAfterViewInit() {
     // this.getUsername();
   }
 
+  onFileChanged($event) {
+    this.selectedFile = $('#file-upload')[0].files[0];
+  }
+
+
   public loadPhotos(): void {
+    this.images = [];
+    this.imageUrls = [];
+
     this.imageService
       .getUserImageList(this.authService.authState.email)
       .subscribe(imagesData => {
         this.images = imagesData;
+        console.log("AccountPage -> loadPhotos -> imagesData", imagesData)
         for (const image of this.images) {
           const storage = firebase.storage();
           const pathReference = storage.ref(`images/${this.authService.authState.email}/${image.images[0].photoName}`);
-
           pathReference.getDownloadURL().then(url => {
-            this.imageUrls.push(url);
-            console.log('AccountPage -> loadPhotos -> url', this.imageUrls);
+            const urlExist = this.imageUrls.filter(item => url === item);
+            if (urlExist.length !== 1) {
+              this.imageUrls.push(url);
+            }
 
           }).catch(function (error) {
             console.log('AccountPage -> loadPhotos -> error', error);
@@ -114,44 +134,14 @@ export class AccountPage implements OnInit, AfterViewInit {
 
   }
 
-  public onFileChanged(event) {
-    this.selectedFile = event.target.files[0];
-  }
-
-  public onUpload(): void {
-    if (this.images.find(image => image.images[0].photoName === this.selectedFile.name)) {
-      this.existsAlert();
-      return;
-    } else {
-      const storageRef = firebase.storage().ref();
-      const uploadImagesRef = storageRef.child(`images/${this.user.email}/${this.selectedFile.name}`);
-      uploadImagesRef.put(this.selectedFile).then(snapshot => {
-        console.log('Uploaded a blob or file1 (snapshot): ', snapshot);
-      });
-
-      this.imageRef = this.imageService.getTmpImages(this.authService.authState.email);
-      this.imageRef.get().subscribe(imageData => {
-
-        this.thisImage.photoName = this.selectedFile.name;
-
-        if (!imageData.exists) {
-          this.tmpImages = [];
-          this.tmpImages.push(this.thisImage);
-          const tmpData: ImageList = {
-            images: this.tmpImages
-          };
-          this.imageService.CreateImageList(tmpData, this.authService.authState.email);
-        } else {
-          this.tmpImages = imageData.data().images;
-          this.tmpImages.push(this.thisImage);
-          const tmpData: ImageList = {
-            images: this.tmpImages
-          };
-          this.imageService.CreateImageList(tmpData, this.authService.authState.email);
-        }
-        this.loadPhotos();
-      });
-    }
+  async launchPicModal() {
+    const modal = await this.modalController.create({
+      component: PicModalPage,
+      componentProps: {
+        'email': this.authService.authState.email
+      }
+    });
+    return await modal.present();
   }
 
   async updatePicture() {
@@ -176,6 +166,52 @@ export class AccountPage implements OnInit, AfterViewInit {
       ]
     });
     await alert.present();
+  }
+
+
+  public onUpload(): void {
+    if (this.images.find(image => image.images[0].photoName === this.selectedFile.name)) {
+      this.existsAlert();
+      return;
+    } else {
+      this.tmpImages = [];
+
+      const storageRef = firebase.storage().ref();
+      const uploadImagesRef = storageRef.child(`images/${this.user.email}/${this.selectedFile.name}`);
+      uploadImagesRef.put(this.selectedFile).then(snapshot => {
+        console.log('Uploaded a blob or file1 (snapshot): ', snapshot);
+
+        this.imageRef = this.imageService.getTmpImages(this.authService.authState.email);
+        this.imageRef.get().subscribe(imageData => {
+
+          this.thisImage.photoName = this.selectedFile.name;
+
+          if (!imageData.exists) {
+            this.tmpImages.push(this.thisImage);
+            const tmpData: ImageList = {
+              images: this.tmpImages
+            };
+            this.imageService.CreateImageList(tmpData, this.authService.authState.email);
+          } else {
+            this.tmpImages = imageData.data().images;
+            this.tmpImages.push(this.thisImage);
+            const tmpData: ImageList = {
+              images: this.tmpImages
+            };
+            this.imageService.CreateImageList(tmpData, this.authService.authState.email);
+
+            const storage = firebase.storage();
+            const pathReference = storage.ref(`images/${this.authService.authState.email}/${this.selectedFile.name}`);
+            pathReference.getDownloadURL().then(url => {
+              this.imageUrls.push(url);
+            }).catch(function (error) {
+              console.log('AccountPage -> loadPhotos -> error', error);
+              // Handle any errors
+            });
+          }
+        });
+      });
+    }
   }
 
   public updateUserData(user) {

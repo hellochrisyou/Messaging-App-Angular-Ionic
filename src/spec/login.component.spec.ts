@@ -4,9 +4,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { LoginPage } from '../login/login';
-import { UserData } from '../../providers/user-data';
-import { AuthService } from '../../core/service/auth.service';
+import { LoginPage } from '../app/pages/login/login';
+import { UserData } from '../app/providers/user-data';
+import { AuthService } from '../app/core/service/auth.service';
+import { } from 'jasmine';
+
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;

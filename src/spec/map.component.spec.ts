@@ -3,8 +3,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { ConferenceData } from '../../providers/conference-data';
-import { MapPage } from '../map/map';
+import { MapPage } from '../app/pages/map/map';
+import { ConferenceData } from '../app/providers/conference-data';
+import { } from 'jasmine';
+
 describe('MapPage', () => {
   let component: MapPage;
   let fixture: ComponentFixture<MapPage>;

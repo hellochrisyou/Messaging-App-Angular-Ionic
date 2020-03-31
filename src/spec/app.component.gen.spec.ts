@@ -8,9 +8,11 @@ import { NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
-import { UserData } from './providers/user-data';
-import { AuthService } from './core/service/auth.service';
-import { AppComponent } from './app.component';
+import { AppComponent } from '../app/app.component';
+import { UserData } from '../app/providers/user-data';
+import { AuthService } from '../app/core/service/auth.service';
+import { } from 'jasmine';
+
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;

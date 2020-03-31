@@ -7,10 +7,11 @@ import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { AppComponent } from './app.component';
-import { UserData } from './providers/user-data';
+import { AppComponent } from '../app/app.component';
+import { UserData } from '../app/providers/user-data';
+import { } from 'jasmine';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let menuSpy,
     routerSpy,
     userDataSpy,

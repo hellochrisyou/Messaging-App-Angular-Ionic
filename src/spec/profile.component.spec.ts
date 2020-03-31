@@ -4,9 +4,11 @@ import { AlertController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { ImageService } from '../../../core/service/image.service';
-import { UserService } from '../../../core/service/user.service';
-import { ProfileModal } from '../profile/profile.component';
+import { ProfileModal } from '../app/shared/component/profile/profile.component';
+import { ImageService } from '../app/core/service/image.service';
+import { UserService } from '../app/core/service/user.service';
+import { } from 'jasmine';
+
 describe('ProfileModal', () => {
   let component: ProfileModal;
   let fixture: ComponentFixture<ProfileModal>;

@@ -4,10 +4,12 @@ import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
-import { PeoplePage } from '../people/people.component';
-import { UserService } from '../../core/service/user.service';
-import { MessagingService } from '../../core/service/messaging.service';
-import { AuthService } from '../../core/service/auth.service';
+import { PeoplePage } from '../app/pages/people/people.component';
+import { UserService } from '../app/core/service/user.service';
+import { MessagingService } from '../app/core/service/messaging.service';
+import { AuthService } from '../app/core/service/auth.service';
+import { } from 'jasmine';
+
 describe('PeoplePage', () => {
   let component: PeoplePage;
   let fixture: ComponentFixture<PeoplePage>;

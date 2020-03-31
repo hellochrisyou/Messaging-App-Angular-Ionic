@@ -115,6 +115,11 @@
                 "input": "src/global.scss"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            },
             "scripts": [],
             "assets": [
               {

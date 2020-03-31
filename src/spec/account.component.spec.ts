@@ -4,12 +4,12 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
-import { AccountPage } from '../account/account';
-import { AuthService } from '../../core/service/auth.service';
-import { ImageService } from '../../core/service/image.service';
-import { UserService } from '../../core/service/user.service';
-import { UserData } from '../../providers/user-data';
-
+import { AccountPage } from '../app/pages/account/account';
+import { AuthService } from '../app/core/service/auth.service';
+import { ImageService } from '../app/core/service/image.service';
+import { UserService } from '../app/core/service/user.service';
+import { UserData } from '../app/providers/user-data';
+import { } from 'jasmine';
 describe('AccountPage', () => {
   let component: AccountPage;
   let fixture: ComponentFixture<AccountPage>;

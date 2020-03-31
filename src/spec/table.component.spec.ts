@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { TableComponent } from '../table/table.component';
-import { EmitService } from '../../../core/service/emit.service';
+import { TableComponent } from '../app/shared/component/table/table.component';
+import { EmitService } from '../app/core/service/emit.service';
+import { } from 'jasmine';
+
 describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;

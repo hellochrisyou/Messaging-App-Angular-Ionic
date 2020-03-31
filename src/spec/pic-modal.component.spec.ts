@@ -2,8 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
-import { PicModalPage } from '../profile/pic-modal/pic-modal.component';
-import { ImageService } from '../../../core/service/image.service';
+import { PicModalPage } from '../app/shared/component/profile/pic-modal/pic-modal.component';
+import { ImageService } from '../app/core/service/image.service';
+import { } from 'jasmine';
+
 describe('PicModalPage', () => {
   let component: PicModalPage;
   let fixture: ComponentFixture<PicModalPage>;

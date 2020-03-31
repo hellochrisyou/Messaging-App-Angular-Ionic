@@ -5,12 +5,14 @@ import { AlertController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { InboxComponent } from '../inbox/inbox.component';
-import { AuthService } from '../../core/service/auth.service';
-import { EmitService } from '../../core/service/emit.service';
-import { MessagingService } from '../../core/service/messaging.service';
-import { ProposalService } from '../../core/service/proposal.service';
-import { UserService } from '../../core/service/user.service';
+import { InboxComponent } from '../app/pages/inbox/inbox.component';
+import { AuthService } from '../app/core/service/auth.service';
+import { EmitService } from '../app/core/service/emit.service';
+import { MessagingService } from '../app/core/service/messaging.service';
+import { ProposalService } from '../app/core/service/proposal.service';
+import { UserService } from '../app/core/service/user.service';
+import { } from 'jasmine';
+
 describe('InboxComponent', () => {
   let component: InboxComponent;
   let fixture: ComponentFixture<InboxComponent>;

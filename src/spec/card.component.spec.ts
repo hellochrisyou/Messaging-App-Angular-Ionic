@@ -4,7 +4,9 @@ import { SharedCardPage } from '../app/shared/component/card/card.component';
 import { UserService } from '../app/core/service/user.service';
 import { MessagingService } from '../app/core/service/messaging.service';
 import { AuthService } from '../app/core/service/auth.service';
-fdescribe('SharedCardPage', () => {
+import { } from 'jasmine';
+
+describe('SharedCardPage', () => {
   let component: SharedCardPage;
   let fixture: ComponentFixture<SharedCardPage>;
   beforeEach(() => {

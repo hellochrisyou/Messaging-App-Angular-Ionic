@@ -2,9 +2,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { TestBed, async } from '@angular/core/testing';
 import { MenuController } from '@ionic/angular';
+import { } from 'jasmine';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { TutorialPage } from '../tutorial/tutorial';
+import { TutorialPage } from '../app/pages/tutorial/tutorial';
 describe('TutorialPage', () => {
   let fixture, app;
   beforeEach(async(() => {

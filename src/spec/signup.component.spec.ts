@@ -3,9 +3,11 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SignupPage } from '../signup/signup';
-import { UserData } from '../../providers/user-data';
-import { AuthService } from '../../core/service/auth.service';
+import { SignupPage } from '../app/pages/signup/signup';
+import { UserData } from '../app/providers/user-data';
+import { AuthService } from '../app/core/service/auth.service';
+import { } from 'jasmine';
+
 describe('SignupPage', () => {
   let component: SignupPage;
   let fixture: ComponentFixture<SignupPage>;

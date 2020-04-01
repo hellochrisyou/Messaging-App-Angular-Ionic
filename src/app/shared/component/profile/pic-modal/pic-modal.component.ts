@@ -44,6 +44,7 @@ export class PicModalPage implements OnInit {
   }
   public loadPhotos(): void {
     this.imageUrls = [];
+    console.log('this.email', this.email);
     this.imageService
       .getUserImageList(this.email)
       .subscribe(imagesData => {
@@ -51,7 +52,7 @@ export class PicModalPage implements OnInit {
         this.images = imagesData;
         for (const image of this.images) {
           const storage = firebase.storage();
-          const pathReference = storage.ref(`images/${this.email}/${image.images[0].photoName}`);
+          const pathReference = storage.ref(`images/${this.email}/${image.image.photoName}`);
 
           pathReference.getDownloadURL().then(url => {
             this.imageUrls.push(url);

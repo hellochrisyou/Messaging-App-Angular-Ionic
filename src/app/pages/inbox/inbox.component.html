@@ -29,8 +29,8 @@
       </ion-button>
     </ng-template>
     <ng-template #proposalBtnTemplate let-i=index>
-      <ion-button mat-button (click)="submitProposal(i)" shape="round" fill="outline" matTooltip="Submit Proposal"
-        matTooltipPosition="below">
+      <ion-button mat-button (click)="submitProposal(user.displayName, user.email)" shape="round" fill="outline"
+        matTooltip="Submit Proposal" matTooltipPosition="below">
         <ion-icon name="bulb-outline"></ion-icon>
       </ion-button>
     </ng-template>

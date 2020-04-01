@@ -98,8 +98,9 @@ export class AccountPage implements OnInit, AfterViewInit {
         this.images = imagesData;
         console.log("AccountPage -> loadPhotos -> imagesData", imagesData)
         for (const image of this.images) {
+          console.log("AccountPage -> loadPhotos -> image", image)
           const storage = firebase.storage();
-          const pathReference = storage.ref(`images/${this.authService.authState.email}/${image.images[0].photoName}`);
+          const pathReference = storage.ref(`images/${this.authService.authState.email}/${image.photoName}`);
           pathReference.getDownloadURL().then(url => {
             const urlExist = this.imageUrls.filter(item => url === item);
             if (urlExist.length !== 1) {
@@ -170,7 +171,7 @@ export class AccountPage implements OnInit, AfterViewInit {
 
 
   public onUpload(): void {
-    if (this.images.find(image => image.images[0].photoName === this.selectedFile.name)) {
+    if (this.images.find(image => image.photoName === this.selectedFile.name)) {
       this.existsAlert();
       return;
     } else {
@@ -208,6 +209,10 @@ export class AccountPage implements OnInit, AfterViewInit {
               console.log('AccountPage -> loadPhotos -> error', error);
               // Handle any errors
             });
+            const tmpImg: Image = {
+              photoName: this.selectedFile.name
+            }
+            this.imageService.addImageList(tmpImg, this.authService.authState.email);
           }
         });
       });

@@ -13,14 +13,14 @@ export class ProposalService {
   ) { }
 
   public getProposals(email: string) {
-    return this.afs.collection('users').doc(email).valueChanges();
+    return this.afs.collection('users').doc(email).get();
   }
-  public getUserProposals(email: string, receiverEmail: string): any {
-    return this.afs.collection('users').doc(email).collection('receiverEmail').valueChanges();
+  public getUserProposals(email: string): any {
+    return this.afs.collection('users').doc(email).collection('proposals').valueChanges();
   }
 
   public sendProposal(proposal: Proposal, senderEmail: string, receiverEmail): void {
-    this.afs.collection('users').doc(senderEmail).collection(`${receiverEmail}`).add({
+    this.afs.collection('users').doc(senderEmail).collection('proposals').add({
       proposals: proposal,
     });
   }

@@ -15,6 +15,7 @@ export class UserStateService {
     selectedUser: User;
 
     constructor(
+        private authService: AuthService,
         public userService: UserService,
         private messagingService: MessagingService,
     ) {
@@ -49,11 +50,11 @@ export class UserStateService {
     readonly proposals$ = this._proposals.asObservable();
 
     readonly inboxUsers$ = this.users$.pipe(
-        map(users => users.filter(user => user.messageCount > 0))
+        map(users => users.filter(user => user.messageCount > 0 && user.email !== this.authService.authState.email))
     );
 
     readonly peopleUsers$ = this.users$.pipe(
-        map(users => users.filter(user => user.messageCount === 0))
+        map(users => users.filter(user => user.messageCount === 0 && user.email !== this.authService.authState.email))
     );
 
 

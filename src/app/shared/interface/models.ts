@@ -16,6 +16,8 @@ export interface User {
 
 export interface Proposal {
     select?: string;
+    sender?: string;
+    receiver?: string;
     reject?: string;
     street?: string;
     city?: string;

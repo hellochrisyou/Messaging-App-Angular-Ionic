@@ -3,14 +3,14 @@ import { Proposal } from '../../shared/interface/models';
 export const FILTER_PENDING_PROPOSALS = (proposals: any[], recipientEmail: string): any[] => {
     let returnProposals = [];
     returnProposals = proposals.filter(proposal => proposal.payload.doc.data().status === 'pending');
-    returnProposals = returnProposals.filter(proposal => proposal.payload.doc.data().recipient === recipientEmail);
+    returnProposals = returnProposals.filter(proposal => proposal.payload.doc.data().receiver === recipientEmail);
     return returnProposals;
 };
 
 export const FILTER_HISTORY_PROPOSALS = (proposals: any[], recipientEmail: string): any[] => {
     let returnProposals = [];
     returnProposals = proposals.filter(proposal =>
-        proposal.payload.doc.data().status === 'done' && proposal.payload.doc.data().recipient === recipientEmail
+        proposal.payload.doc.data().status === 'done' && proposal.payload.doc.data().receiver === recipientEmail
     );
 
     console.log("returnProposals2", returnProposals)

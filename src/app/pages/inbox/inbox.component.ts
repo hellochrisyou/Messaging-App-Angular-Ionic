@@ -41,7 +41,6 @@ export class InboxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('userinbox', this.userStateService.inboxUsers$)
   }
   ionViewDidEnter() {
 
@@ -95,12 +94,12 @@ export class InboxComponent implements OnInit {
     toast.present();
   }
 
-  async submitProposal(index: number) {
+  async submitProposal(userName: string, userEmail: string) {
     const todaysDate = GET_TODAY_DATE();
 
     const alert = await this.alertCtrl.create({
       header: 'Send Proposal to:',
-      subHeader: this.userStateService.users[index].displayName,
+      subHeader: userName,
       buttons: [
         {
           text: 'Cancel',
@@ -120,9 +119,13 @@ export class InboxComponent implements OnInit {
             this.thisProposal.state = dataProposal.state;
             this.thisProposal.zipcode = dataProposal.zipcode;
             this.thisProposal.proposalDate = dataProposal.proposalDate;
+            this.thisProposal.sender = this.authService.authState.email;
+            this.thisProposal.receiver = userEmail;
             this.thisProposal.status = 'pending';
 
-            this.proposalService.sendProposal(this.thisProposal, this.authService.authState.email, this.userStateService.users[index].email);
+            this.proposalService.sendProposal(this.thisProposal, this.authService.authState.email, userEmail);
+            this.proposalService.sendProposal(this.thisProposal, userEmail, this.authService.authState.email);
+
             this.presentToast('Your proposal has been sent');
           }
         }

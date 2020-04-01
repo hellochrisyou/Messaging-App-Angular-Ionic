@@ -7,9 +7,9 @@ import { ORDER_MESSAGES } from '../../../pages/inbox/inbox.util';
 @Injectable({ providedIn: 'root' })
 export class MessagingStateService {
 
-    private readonly _messages = new BehaviorSubject<MessageList>([]);
+    private readonly _messages = new BehaviorSubject<MessageList[]>([]);
 
-    set messages(val: MessageList) {
+    set messages(val: MessageList[]) {
         this._messages.next(val);
     }
 
@@ -18,7 +18,7 @@ export class MessagingStateService {
     constructor(private messagingService: MessagingService) { }
 
     public setMessageUser(thisEmail: string, userEmail: string) {
-        this.messagingService.getUserMessages(thisEmail, userEmail).subscribe((messagesData: any[]) => {
+        this.messagingService.getUserMessages(thisEmail, userEmail).subscribe((messagesData: Message[]) => {
             this.messages = ORDER_MESSAGES(messagesData);
         });
     }

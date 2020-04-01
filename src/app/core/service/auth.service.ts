@@ -14,13 +14,12 @@ import { UserService } from './user.service';
 })
 export class AuthService {
   // tslint:disable-next-line: variable-name
-  private _authState: any = null;
+  private _authState: User = null;
   // tslint:disable-next-line: variable-name
   private _user: Observable<User>;
 
   private messageRef: any;
 
-  private newUser: User;
   public get user(): Observable<User> {
     return this._user;
   }

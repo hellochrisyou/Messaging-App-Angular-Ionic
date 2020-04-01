@@ -14,13 +14,12 @@ import { UserService } from './user.service';
 })
 export class AuthService {
   // tslint:disable-next-line: variable-name
-  private _authState: any = null;
+  private _authState: User = null;
   // tslint:disable-next-line: variable-name
   private _user: Observable<User>;
 
   private messageRef: any;
 
-  private newUser: User;
   public get user(): Observable<User> {
     return this._user;
   }
@@ -32,6 +31,19 @@ export class AuthService {
   }
   public set authState(value: any) {
     this._authState = value;
+  }
+
+  get userData(): any {
+    return [
+      {
+        uid: this.authState.uid,
+        displayName: this.authState.displayName,
+        email: this.authState.email,
+        phoneNumber: this.authState.phoneNumber,
+        photoURL: this.authState.photoURL,
+        country: this.authState.country,
+      }
+    ];
   }
 
   constructor(
@@ -67,21 +79,14 @@ export class AuthService {
     return this.isAuthenticated ? this.authState.uid : null;
   }
 
-  public async presentToast(messageArg: string) {
-    const toast = await this.alertController.create({
-      header: 'Success',
-      message: messageArg,
-      buttons: ['OK']
-    });
-    toast.present();
-  }
+
   /* Sign up */
   public signupEmail(email: string, password: string) {
     this.afAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
-        this.presentToast('You have registered an account');
+        this.confirmToast('You have registered an account');
         // this.snackBar.open('Registration', 'SUCCESS', {
         // });
         this.navCtrl.navigateForward('/app/tabs/inbox');
@@ -101,7 +106,7 @@ export class AuthService {
   public signinGoogle() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
-      this.presentToast('You have signed in with your Google account');
+      this.confirmToast('You have signed in with your Google account');
       this.navCtrl.navigateForward('/app/tabs/inbox');
 
       this.messageRef.get().subscribe(doc => {
@@ -125,7 +130,7 @@ export class AuthService {
   public signinFacebook() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
-      this.presentToast('You have signed in with your Facebook account');
+      this.confirmToast('You have signed in with your Facebook account');
       this.navCtrl.navigateForward('/app/tabs/inbox');
 
       this.messageRef.get().subscribe(doc => {
@@ -150,7 +155,7 @@ export class AuthService {
       console.log("AuthService -> signinTwitter -> credential.user", credential.user)
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
       console.log("AuthService -> signinTwitter -> credential.user.email", credential.user.email)
-      this.presentToast('You have signed in with your Twitter account');
+      this.confirmToast('You have signed in with your Twitter account');
       this.navCtrl.navigateForward('/app/tabs/inbox');
 
       this.messageRef.get().subscribe(doc => {
@@ -168,7 +173,7 @@ export class AuthService {
 
   public signOut() {
     this.afAuth.auth.signOut().then(() => {
-      this.presentToast('You are logged out');
+      this.confirmToast('You are logged out');
       this.navCtrl.navigateForward(['/login']);
       // window.location.reload();
     });
@@ -180,7 +185,7 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.presentToast('You are signed in with you email account');
+        this.confirmToast('You are signed in with you email account');
         // this.checkUserExists(credential.user.email, credential.user.displayName, "https://material.angular.io/assets/img/examples/shiba2.jpg");
         this.navCtrl.navigateForward('/app/tabs/inbox');
         window.location.reload();
@@ -217,18 +222,14 @@ export class AuthService {
     await alert.present();
   }
 
-
-  get userData(): any {
-    return [
-      {
-        uid: this.authState.uid,
-        displayName: this.authState.displayName,
-        email: this.authState.email,
-        phoneNumber: this.authState.phoneNumber,
-        photoURL: this.authState.photoURL,
-        country: this.authState.country,
-      }
-    ];
+  public async confirmToast(messageArg: string) {
+    const toast = await this.alertController.create({
+      header: 'Success',
+      message: messageArg,
+      cssClass: 'center-alert',
+      buttons: ['OK']
+    });
+    toast.present();
   }
 
 

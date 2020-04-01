@@ -12,6 +12,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+  },
+  {
     path: 'account',
     loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule),
     canActivate: [AuthGuard]
@@ -45,10 +49,6 @@ const routes: Routes = [
     path: 'proposal',
     loadChildren: () => import('./pages/proposal/proposal.module').then(m => m.ProposalModule),
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
   {
     path: 'signup',

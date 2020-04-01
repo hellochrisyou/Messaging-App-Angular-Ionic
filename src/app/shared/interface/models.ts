@@ -9,18 +9,15 @@ export interface User {
     haveKids?: string;
     hobbies?: string;
     description?: string;
-}
-
-export interface FriendMessaging {
-    messages: Message[];
-}
-
-export interface ImageList {
-    images: Image[];
+    images?: string[];
+    messageCount?: number;
+    proposalCount?: number;
 }
 
 export interface Proposal {
     select?: string;
+    sender?: string;
+    receiver?: string;
     reject?: string;
     street?: string;
     city?: string;
@@ -28,21 +25,22 @@ export interface Proposal {
     zipcode?: number;
     proposalDate?: Date;
     status?: string;
-    sender?: string;
-    recipient?: string;
 }
 
 export interface Message {
-    date?: string;
     email?: string;
+    date?: string;
     sender?: string;
-    senderPhotoUrl?: string;
-    receiverPhotoURL?: string;
     receiver?: string;
     message?: string[];
+    photoURL?: string;
     lat?: number;
     lgn?: number;
     count?: number;
+}
+
+export interface MessageList {
+    messages?: Message;
 }
 
 export interface Image {

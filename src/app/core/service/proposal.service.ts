@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Proposal, User } from '../../shared/interface/models';
-import { rejects } from 'assert';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+import { Proposal } from '../../shared/interface/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,16 @@ export class ProposalService {
   ) { }
 
   public getProposals(email: string) {
-    return this.afs.collection('proposals').snapshotChanges();
+    return this.afs.collection('users').doc(email).get();
+  }
+  public getUserProposals(email: string): any {
+    return this.afs.collection('users').doc(email).collection('proposals').valueChanges();
   }
 
-  public sendProposal(dataArg: Proposal): void {
-    console.log('sending message', dataArg);
-    this.afs.collection('proposals').add(dataArg).then(res => { }, err => rejects(err));
+  public sendProposal(proposal: Proposal, senderEmail: string, receiverEmail): void {
+    this.afs.collection('users').doc(senderEmail).collection('proposals').add({
+      proposals: proposal,
+    });
   }
 
   public updateProposal(dataArg: Proposal, email: string) {

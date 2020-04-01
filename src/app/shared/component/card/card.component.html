@@ -1,39 +1,32 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<ng-container *ngIf="user.email!==authService.authState.email">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <ion-card class=" speaker-card">
+      <ion-card-header>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+          <ion-avatar slot="start">
+            <img [src]="user.photoURL">
+          </ion-avatar>
+          <span>
+            <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
+            <ion-card-title>{{user.displayName}}</ion-card-title>
+          </span>
+          <ng-container *ngIf="option==='inbox'">
+            <ion-badge matTooltip="Number of messages" matTooltipPosition="after" slot="end">{{user.messageCount}}
+            </ion-badge>
+          </ng-container>
+        </div>
+      </ion-card-header>
 
-  <ng-container *ngFor="let user of users;index as i">
-    <ng-container *ngIf="user.email!==this.authService.authState.email && messageCount[i]!==0">
-      <ion-card class=" speaker-card">
-        <ion-card-header>
-          <!-- <ion-item detail="false" lines="none" class="friend-item"> -->
-          <div fxLayout="row" fxLayoutAlign="space-around center">
-            <ion-avatar slot="start">
-              <img [src]="user.photoURL" [alt]="user.name + ' profile picture'">
-            </ion-avatar>
-            <span>
-              <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
-              <ion-card-title>{{user.displayName}}</ion-card-title>
-            </span>
-            <ng-container *ngIf="option==='inbox'">
-              <ion-badge matTooltip="Number of messages" matTooltipPosition="after" slot="end">{{messageCount[i]}}
-              </ion-badge>
-            </ng-container>
-          </div>
-        </ion-card-header>
-
-        <ion-card-content>
-          <div fxLayout="row" fxLayoutAlign="space-around center">
-            <ng-container [ngTemplateOutlet]=" optionTemplateRef"
-              [ngTemplateOutletContext]="{ $implicit: users, index: i }">
-            </ng-container>
-            <ng-container [ngTemplateOutlet]=" optionTemplateRef2"
-              [ngTemplateOutletContext]="{ $implicit: users, index: i  }">
-            </ng-container>
-            <ng-container [ngTemplateOutlet]=" optionTemplateRef3"
-              [ngTemplateOutletContext]="{ $implicit: users, index: i  }">
-            </ng-container>
-          </div>
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
-  </ng-container>
-</div>
+      <ion-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+          <ng-container [ngTemplateOutlet]=" optionTemplateRef">
+          </ng-container>
+          <ng-container [ngTemplateOutlet]=" optionTemplateRef2">
+          </ng-container>
+          <ng-container [ngTemplateOutlet]=" optionTemplateRef3">
+          </ng-container>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ng-container>

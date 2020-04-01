@@ -7,8 +7,10 @@ import { MessagingService } from '../../core/service/messaging.service';
 import { ProposalService } from '../../core/service/proposal.service';
 import { UserService } from '../../core/service/user.service';
 import { ProfileModal } from '../../shared/component/profile/profile.component';
-import { FriendMessaging, Message, Proposal } from '../../shared/interface/models';
+import { Message, Proposal } from '../../shared/interface/models';
 import { GET_DATE, GET_TODAY_DATE } from './inbox.util';
+import { UserStateService } from '../../core/service/state/user.state.service';
+import { MessagingStateService } from '../../core/service/state/messaging.state.service';
 
 declare var google: any;
 @Component({
@@ -19,15 +21,17 @@ declare var google: any;
 export class InboxComponent implements OnInit {
 
   thisProposal: Proposal = {};
-  users: any[];
   status = 'inbox';
   thisMessage: Message;
   tmpMessages: Message[] = [];
+
+  usersTrackFn = (i, user) => user.email;
+
   constructor(
     private authService: AuthService,
     private navCtrl: NavController,
-    private messagingService: MessagingService,
-    private userService: UserService,
+    private messagingStateService: MessagingStateService,
+    public userStateService: UserStateService,
     public alertCtrl: AlertController,
     public toastController: ToastController,
     public proposalService: ProposalService,
@@ -37,111 +41,38 @@ export class InboxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
   }
   ionViewDidEnter() {
-    this.userService.getUsers().subscribe(usersData => {
-      this.users = usersData; ``;
-      console.log('PeoplePage -> getUsers -> usersData', usersData);
-    });
+
   }
 
-  public navigateMessages(index: number) {
-
+  public navigateMessages(userEmail: string) {
+    this.messagingStateService.setMessageUser(this.authService.authState.email, userEmail);
     const navigationExtras = {
       state: {
-        email: this.users[index].email,
+        email: userEmail,
       }
     };
     this.navCtrl.navigateForward(['/inbox/inbox-details'], navigationExtras);
   }
 
-  public navigateProfile(index: number) {
-    // const navigationExtras = {
-    //   state: {
-    //     email: this.users[index].email,
-    //   }
-    // };
-    // this.navCtrl.navigateForward(['/shared'], navigationExtras);
-    this.presentModal(index);
+  public navigateProfile(userEmail: string) {
+    this.profileModal(userEmail);
   }
 
-  async presentModal(index: number) {
+  async profileModal(userEmail: string) {
+    console.log("InboxComponent -> profileModal -> userEmail", userEmail)
     const modal = await this.modalController.create({
       component: ProfileModal,
+      cssClass: 'profileModal',
       componentProps: {
-        'email': this.users[index].email
+        'email': userEmail
       },
-      cssClass: 'profile-modal'
     });
     return await modal.present();
   }
 
-  async sendMessage(index: number) {
 
-    const alert = await this.alertCtrl.create({
-      header: 'Send Message to:',
-      // subHeader: this.users[index].payload.doc.data().displayName,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        },
-        {
-          text: 'Ok',
-          handler: (dataMessage: any) => {
-
-            const messageRef = this.messagingService.getMessages(this.authService.authState.email);
-            messageRef.get().subscribe(messagesData => {
-              this.thisMessage.sender = this.authService.authState.email;
-              this.thisMessage.receiver = this.users[index].payload.doc.data().email;
-              this.thisMessage.message = dataMessage.message;
-              this.thisMessage.date = GET_DATE();
-              this.thisMessage.senderPhotoUrl = this.authService.authState.photoURL;
-              this.thisMessage.receiverPhotoURL = this.users[index].payload.doc.data().photoURL;
-              this.thisMessage.email = this.authService.authState.email;
-
-              if (!messagesData.exists) {
-                this.tmpMessages = [];
-                this.tmpMessages.push(this.thisMessage);
-                const tmpData: FriendMessaging = {
-                  messages: this.tmpMessages
-                };
-                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].payload.doc.data().email);
-                this.messagingService.senderMessage(tmpData, this.users[index].payload.doc.data().payload.doc.data().email, this.authService.authState.email);
-              } else {
-                this.tmpMessages = messagesData.data().messages;
-                this.tmpMessages.push(this.thisMessage);
-                const tmpData: FriendMessaging = {
-                  messages: this.tmpMessages
-                };
-                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].payload.doc.data().email);
-                this.messagingService.senderMessage(tmpData, this.users[index].payload.doc.data().email, this.authService.authState.email);
-              }
-            }, (err => {
-              // console.log('Error fetching document: ', err);
-            }), () => {
-              // this.messageCount[index]++;
-              this.presentToast('Your message has been sent');
-            }
-            );
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'text',
-          name: 'message',
-          placeholder: 'message'
-        }
-      ]
-    });
-    await alert.present();
-  }
 
   public async presentToast(messageArg: string) {
     const toast = await this.toastController.create({
@@ -163,12 +94,12 @@ export class InboxComponent implements OnInit {
     toast.present();
   }
 
-  async submitProposal(index: number) {
+  async submitProposal(userName: string, userEmail: string) {
     const todaysDate = GET_TODAY_DATE();
 
     const alert = await this.alertCtrl.create({
       header: 'Send Proposal to:',
-      subHeader: this.users[index].displayName,
+      subHeader: userName,
       buttons: [
         {
           text: 'Cancel',
@@ -188,11 +119,13 @@ export class InboxComponent implements OnInit {
             this.thisProposal.state = dataProposal.state;
             this.thisProposal.zipcode = dataProposal.zipcode;
             this.thisProposal.proposalDate = dataProposal.proposalDate;
-            this.thisProposal.status = 'pending';
             this.thisProposal.sender = this.authService.authState.email;
-            this.thisProposal.recipient = this.users[index].email;
+            this.thisProposal.receiver = userEmail;
+            this.thisProposal.status = 'pending';
 
-            this.proposalService.sendProposal(this.thisProposal);
+            this.proposalService.sendProposal(this.thisProposal, this.authService.authState.email, userEmail);
+            this.proposalService.sendProposal(this.thisProposal, userEmail, this.authService.authState.email);
+
             this.presentToast('Your proposal has been sent');
           }
         }

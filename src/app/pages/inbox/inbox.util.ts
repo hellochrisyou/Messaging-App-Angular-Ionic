@@ -1,8 +1,7 @@
 import { Message } from '../../shared/interface/models';
 
 export const ORDER_MESSAGES = (messages: any[]): any[] => {
-    const returnMessageArr = messages.sort((n1: any, n2: any) => +new Date(n1.messages[0].date) - +new Date(n2.messages[0].date));
-    console.log('returnMessageArr', returnMessageArr);
+    const returnMessageArr = messages.sort((n1: any, n2: any) => +new Date(n1.messages.date) - +new Date(n2.messages.date));
     return returnMessageArr;
 };
 
@@ -14,15 +13,15 @@ export const GET_DATE = (): string => {
     return dateTime;
 };
 
-export const FILTER_MESSAGES = (email: string, messages: Message[]): Message[] => {
-    const returnMessages = [];
-    messages.forEach((item, index) => {
-        if (item.receiver === email || item.sender === email) {
-            returnMessages.push(messages.splice(index, 1));
-        }
-    });
-    return returnMessages;
-};
+// export const FILTER_MESSAGES = (email: string, messages: Message[]): Message[] => {
+//     const returnMessages = [];
+//     messages.forEach((item, index) => {
+//         if (item.receiver === email || item.sender === email) {
+//             returnMessages.push(messages.splice(index, 1));
+//         }
+//     });
+//     return returnMessages;
+// };
 
 export const GET_TODAY_DATE = (): string => {
     const today = new Date();

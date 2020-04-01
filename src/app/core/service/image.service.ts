@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Proposal, ImageList } from '../../shared/interface/models';
+import { Proposal, Image } from '../../shared/interface/models';
 import { rejects } from 'assert';
 
 @Injectable({
@@ -15,26 +15,23 @@ export class ImageService {
 
 
   public getImages(userEmail: string) {
-    return this.afs.collection('images').doc(userEmail).collection(`image-list-${userEmail}`).snapshotChanges();
+    return this.afs.collection('users').doc(userEmail).collection('images').valueChanges();
   }
 
   public getTmpImages(userEmail: string) {
-    return this.afs.collection('images').doc(userEmail);
+    return this.afs.collection('users').doc(userEmail);
   }
   public getUserImageList(userEmail: string): any {
-    console.log('getusermessages', userEmail);
-    return this.afs.collection('images').doc(userEmail).collection(`image-list-${userEmail}`).valueChanges();
-
+    return this.afs.collection('users').doc(userEmail).collection('images').valueChanges();
   }
 
-  public CreateImageList(dataArg: ImageList, userEmail: string): void {
-    console.log('setting images', dataArg);
-    this.afs.collection('images').doc(userEmail).collection(`image-list-${userEmail}`).add({
-      images: dataArg.images,
+  public addImageList(img: Image, userEmail: string): void {
+    this.afs.collection('users').doc(userEmail).collection('images').add({
+      image: img,
     });
   }
 
   public deleteImage(docId: string, userEmail: string): void {
-    this.afs.collection('images').doc(userEmail).collection(`image-list-${userEmail}`).doc(docId).delete();
+    this.afs.collection('users').doc(userEmail).collection('images').doc(docId).delete();
   }
 }

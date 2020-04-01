@@ -5,9 +5,9 @@ import * as firebase from 'firebase';
 
 import { ImageService } from '../../../core/service/image.service';
 import { UserService } from '../../../core/service/user.service';
-import { ImageUrls } from '../../interface/interface';
 import { Proposal } from '../../interface/models';
 import { PicModalPage } from './pic-modal/pic-modal.component';
+import { UserStateService } from '../../../core/service/state/user.state.service';
 
 @Component({
   selector: 'shared-profile',
@@ -18,11 +18,10 @@ import { PicModalPage } from './pic-modal/pic-modal.component';
 export class ProfileModal implements OnInit {
 
   selected = new FormControl(0);
-  otherUser: any;
   users: any[];
   thisProposal: Proposal = {};
   images: any[];
-  imageUrls: ImageUrls[] = [];
+  imageUrls: string[] = [];
 
   private _email: string;
 
@@ -31,7 +30,9 @@ export class ProfileModal implements OnInit {
     return this._email;
   }
   public set email(value: string) {
+    console.log("ProfileModal -> setemail -> value", value)
     this._email = value;
+    this.userStateService.setUser(this._email);
   }
 
 
@@ -42,7 +43,8 @@ export class ProfileModal implements OnInit {
     public modalCtrl: ModalController,
     public toastController: ToastController,
     public navParams: NavParams,
-    private userService: UserService
+    private userService: UserService,
+    public userStateService: UserStateService
 
   ) {
     this._email = navParams.get('email');
@@ -50,20 +52,13 @@ export class ProfileModal implements OnInit {
 
 
   ngOnInit() {
+    console.log('selected user', this.userStateService.selectedUser);
     this.loadPhotos();
-    this.userService.getUsers().subscribe(usersData => {
-      this.users = usersData;
-      this.users.forEach((user, index) => {
-        if (user.email === this._email) {
-          this.otherUser = user;
-          console.log("SharedProfilePage -> ngOnInit ->  this.otherUser", this.otherUser)
-        }
-      });
-    });
   }
   async launchPicModal() {
     const modal = await this.modalController.create({
       component: PicModalPage,
+      cssClass: 'picModal',
       componentProps: {
         'email': this._email
       }

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
-import { ImageUrls } from '../../../interface/interface';
-import { ImageService } from '../../../../core/service/image.service';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular';
 import * as firebase from 'firebase';
+
+import { ImageService } from '../../../../core/service/image.service';
 
 @Component({
   selector: 'app-pic-modal',
@@ -15,9 +15,7 @@ export class PicModalPage implements OnInit {
   private _email: string;
 
   images: any[];
-  imageUrls: ImageUrls = {
-    imagePath: [] = []
-  };
+  imageUrls: string[];
   tabs: string[] = [];
   tabCounter = 1;
 
@@ -45,9 +43,8 @@ export class PicModalPage implements OnInit {
     });
   }
   public loadPhotos(): void {
-    this.imageUrls = {
-      imagePath: []
-    };
+    this.imageUrls = [];
+    console.log('this.email', this.email);
     this.imageService
       .getUserImageList(this.email)
       .subscribe(imagesData => {
@@ -55,10 +52,10 @@ export class PicModalPage implements OnInit {
         this.images = imagesData;
         for (const image of this.images) {
           const storage = firebase.storage();
-          const pathReference = storage.ref(`images/${this.email}/${image.images[0].photoName}`);
+          const pathReference = storage.ref(`images/${this.email}/${image.image.photoName}`);
 
           pathReference.getDownloadURL().then(url => {
-            this.imageUrls.imagePath.push(url);
+            this.imageUrls.push(url);
             this.addTab();
           }).catch(error => {
             console.log('AccountPage -> loadPhotos -> error', error);

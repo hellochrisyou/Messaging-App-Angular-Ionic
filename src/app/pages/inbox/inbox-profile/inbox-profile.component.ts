@@ -1,5 +1,4 @@
-import { ImageUrls } from './../../../shared/interface/interface';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -9,7 +8,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { ImageService } from '../../../core/service/image.service';
 import { ProposalService } from '../../../core/service/proposal.service';
 import { UserService } from '../../../core/service/user.service';
-import { Proposal, User } from '../../../shared/interface/models';
+import { Proposal } from '../../../shared/interface/models';
 import { GET_TODAY_DATE } from '../inbox.util';
 
 @Component({
@@ -25,7 +24,7 @@ export class InboxProfileComponent implements OnInit {
   users: any[];
   thisProposal: Proposal = {};
   images: any[];
-  imageUrls: ImageUrls[] = [];
+  imageUrls: string[] = [];
 
   constructor(
     public alertCtrl: AlertController,
@@ -101,10 +100,7 @@ export class InboxProfileComponent implements OnInit {
             this.thisProposal.zipcode = dataProposal.zipcode;
             this.thisProposal.proposalDate = dataProposal.proposalDate;
             this.thisProposal.status = 'pending';
-            this.thisProposal.sender = this.authService.authState.email;
-            this.thisProposal.recipient = this.otherUser.payload.doc.data().email;
-
-            this.proposalService.sendProposal(this.thisProposal);
+            // this.proposalService.sendProposal(this.thisProposal);
             this.presentToast('Your proposal has been sent');
           }
         }

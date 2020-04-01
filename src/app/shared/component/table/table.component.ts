@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Input, ChangeDetectorRef, ContentChild, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input, ChangeDetectorRef, ContentChild, TemplateRef, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { EmitService } from '../../../core/service/emit.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -8,7 +8,9 @@ import { MatPaginator } from '@angular/material/paginator';
   selector: 'base-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -32,7 +34,8 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   public set dataArray(value: any[]) {
     this._dataArray = value;
-    console.log("TableComponent -> setdataArray -> value", value)
+    console.log("TableComponent -> setdataArray -> value", value);
+    this.changeDetectorRefs.markForCheck();
     this.refresh();
   }
 

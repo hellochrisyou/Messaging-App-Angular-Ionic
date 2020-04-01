@@ -1,3 +1,4 @@
+import { MessagingStateService } from './../../../core/service/state/messaging.state.service';
 import { AfterContentInit, Component } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { ActionSheetController, AlertController, NavController, ToastController 
 
 import { MessagingService } from '../../../core/service/messaging.service';
 import { UserService } from '../../../core/service/user.service';
-import { FriendMessaging, Message, User } from '../../../shared/interface/models';
+import { Message, User } from '../../../shared/interface/models';
 import { GET_DATE, ORDER_MESSAGES } from '../inbox.util';
 import { AuthService } from './../../../core/service/auth.service';
 import { EmitService } from './../../../core/service/emit.service';
@@ -18,24 +19,22 @@ import { EmitService } from './../../../core/service/emit.service';
 })
 export class InboxDetailsComponent implements AfterContentInit {
 
+
   data: any[];
   date: string;
   messages: any[] = [];
   messageRef: AngularFirestoreDocument<any>;
-  myEmail: string;
-  options: GeolocationOptions;
-  otherUser: User;
-  receiver: string;
+  otherEmail: string;
   sender: string;
-  senderPhotoURL: string;
   thisMessage: Message = {};
   tmpMessages: Message[] = [];
   users: User[];
 
+  messagingTrackFn = (i, message) => message.email;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private navCtrl: NavController,
+    public authService: AuthService,
     private router: Router,
     public actionSheetController: ActionSheetController,
     public alertCtrl: AlertController,
@@ -44,20 +43,11 @@ export class InboxDetailsComponent implements AfterContentInit {
     public messagingService: MessagingService,
     public toastController: ToastController,
     public userService: UserService,
+    public messagingStateService: MessagingStateService
   ) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        const otherEmail = this.router.getCurrentNavigation().extras.state.email;
-        this.userService.getUsers().subscribe(usersData => {
-          this.users = usersData;
-          this.users.forEach((user, index) => {
-            if (user.email === otherEmail) {
-              this.otherUser = user;
-            }
-          });
-          console.log('InboxDetailsComponent ->  this.otherUser', this.otherUser);
-          this.getMessages(this.otherUser.email);
-        });
+        this.otherEmail = this.router.getCurrentNavigation().extras.state.email;
       }
     });
   }
@@ -66,54 +56,36 @@ export class InboxDetailsComponent implements AfterContentInit {
   }
 
   public ngAfterContentInit(): void {
-    this.myEmail = this.authService.authState.email;
-  };
-
-  public getMessages(otherEmail: string): void {
-    this.messagingService
-      .getUserMessages(this.myEmail, otherEmail)
-      .subscribe(userMessageData => {
-        this.messages = userMessageData;
-        console.log('InboxDetailsComponent -> ngAfterViewOnInit ->  this.messages', this.messages);
-        this.messages = ORDER_MESSAGES(this.messages);
-        this.date = this.messages[0].messages[0].date;
-        this.sender = this.messages[0].messages[0].sender;
-        this.receiver = this.messages[0].messages[0].receiver;
-        this.senderPhotoURL = this.messages[0].messages[0].receiverPhotoURL;
-      });
-  };
-
-  public navigateMaps(index: number) {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        lat: this.messages[index].messages[0].lat,
-        lgn: this.messages[index].messages[0].lgn
-      }
-    };
-    this.navCtrl.navigateForward(['/maps'], navigationExtras);
   }
 
-  async; async optionActionSheet(index: number) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Options',
-      buttons: [, {
-        text: 'Location',
-        icon: 'map',
-        handler: () => {
-          this.navigateMaps(index);
-        }
-      }]
-    });
-    await actionSheet.present();
-  }
+  // public navigateMaps(index: number) {
+  //   const navigationExtras: NavigationExtras = {
+  //     state: {
+  //       lat: this.messages[index].messages[0].lat,
+  //       lgn: this.messages[index].messages[0].lgn
+  //     }
+  //   };
+  //   this.navCtrl.navigateForward(['/maps'], navigationExtras);
+  // }
+  // async optionActionSheet(index: number) {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Options',
+  //     buttons: [, {
+  //       text: 'Location',
+  //       icon: 'map',
+  //       handler: () => {
+  //         this.navigateMaps(index);
+  //       }
+  //     }]
+  //   });
+  //   await actionSheet.present();
+  // }
 
   async sendMessage() {
-    this.options = {
-      enableHighAccuracy: false
-    };
+
     const alert = await this.alertCtrl.create({
       header: 'Send Message to:',
-      subHeader: this.otherUser.displayName,
+      // subHeader: this.users[index].payload.doc.data().displayName,
       buttons: [
         {
           text: 'Cancel',
@@ -126,47 +98,14 @@ export class InboxDetailsComponent implements AfterContentInit {
         {
           text: 'Ok',
           handler: (dataMessage: any) => {
-
-            this.messageRef = this.messagingService.getMessages(this.authService.authState.email);
-            this.messageRef.get().subscribe(messagesData => {
-
-              this.geolocation.getCurrentPosition(this.options).then((pos: any) => {
-                this.thisMessage.lat = pos.coords.latitude;
-                this.thisMessage.lgn = pos.coords.longitude;
-
-                this.thisMessage.sender = this.authService.authState.email;
-                this.thisMessage.receiver = this.otherUser.email;
-                this.thisMessage.message = dataMessage.message;
-                this.thisMessage.date = GET_DATE();
-                this.thisMessage.senderPhotoUrl = this.authService.authState.photoURL;
-                this.thisMessage.receiverPhotoURL = this.otherUser.photoURL;
-                this.thisMessage.email = this.authService.authState.email;
-
-                if (!messagesData.exists) {
-                  this.tmpMessages = [];
-                  this.tmpMessages.push(this.thisMessage);
-                  const tmpData: FriendMessaging = {
-                    messages: this.tmpMessages
-                  };
-                  this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.otherUser.email);
-                  this.messagingService.senderMessage(tmpData, this.otherUser.email, this.authService.authState.email);
-                } else {
-                  this.tmpMessages = messagesData.data().messages;
-                  this.tmpMessages.push(this.thisMessage);
-                  const tmpData: FriendMessaging = {
-                    messages: this.tmpMessages
-                  };
-                  this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.otherUser.email);
-                  this.messagingService.senderMessage(tmpData, this.otherUser.email, this.authService.authState.email);
-                }
-              });
-            }, (err => {
-              // console.log('Error fetching document: ', err);
-            }), () => {
-              // this.messageCount[index]++;
-              this.presentToast('Your message has been sent');
-            }
-            );
+            this.thisMessage.email = this.authService.authState.email;
+            this.thisMessage.message = dataMessage.message;
+            this.thisMessage.date = GET_DATE();
+            this.thisMessage.sender = this.authService.authState.email;
+            this.thisMessage.receiver = this.otherEmail;
+            this.messagingService.sendMessage(this.thisMessage, this.authService.authState.email, this.otherEmail);
+            this.messagingService.sendMessage(this.thisMessage, this.otherEmail, this.authService.authState.email);
+            this.successToast('Your message has been sent');
           }
         }
       ],
@@ -181,7 +120,8 @@ export class InboxDetailsComponent implements AfterContentInit {
     await alert.present();
   }
 
-  public async presentToast(messageArg: string) {
+
+  public async successToast(messageArg: string) {
     const toast = await this.toastController.create({
       header: '',
       message: messageArg,
@@ -205,7 +145,6 @@ export class InboxDetailsComponent implements AfterContentInit {
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.target.complete();
-    }, 2000)
-    this.getMessages(this.otherUser.email);
+    }, 2000);
   }
 }

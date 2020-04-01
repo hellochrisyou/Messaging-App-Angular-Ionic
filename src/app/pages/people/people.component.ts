@@ -5,9 +5,10 @@ import { AuthService } from '../../core/service/auth.service';
 import { NavController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { GET_USERS } from '../../shared/utils/user.util';
 import { MessageCount } from '../../shared/interface/interface';
-import { FriendMessaging, Message } from '../../shared/interface/models';
+import { Message } from '../../shared/interface/models';
 import { GET_DATE } from '../inbox/inbox.util';
 import { ProfileModal } from '../../shared/component/profile/profile.component';
+import { UserStateService } from '../../core/service/state/user.state.service';
 
 @Component({
   selector: 'people-page',
@@ -21,10 +22,12 @@ export class PeoplePage implements OnInit {
   messageCount: MessageCount;
   thisMessage: Message = {};
   tmpMessages: Message[] = [];
-  // options: GeolocationOptions;
+
+  usersTrackFn = (i, user) => user.email;
 
   constructor(
     public alertCtrl: AlertController,
+    public userStateService: UserStateService,
     private userService: UserService,
     private authService: AuthService,
     private navCtrl: NavController,
@@ -33,23 +36,16 @@ export class PeoplePage implements OnInit {
     public toastController: ToastController,
 
   ) {
-    this.messageCount = {};
-    this.userService.getUsers().subscribe(usersData => {
-      this.users = usersData; ``
-      console.log("PeoplePage -> getUsers -> usersData", usersData)
-    });
+
   }
 
   ngOnInit() {
 
   }
-  ionViewDidEnter() {
-  }
+  //   ionViewDidEnter() {
+  //   }
 
-  async sendMessage(index: number) {
-    // this.options = {
-    //   enableHighAccuracy: false
-    // };
+  async sendMessage(userEmail: string) {
     const alert = await this.alertCtrl.create({
       header: 'Send Message to:',
       // subHeader: this.users[index].payload.doc.data().displayName,
@@ -65,44 +61,13 @@ export class PeoplePage implements OnInit {
         {
           text: 'Ok',
           handler: (dataMessage: any) => {
-
-            const messageRef = this.messagingService.getMessages(this.authService.authState.email);
-            messageRef.get().subscribe(messagesData => {
-
-
-              this.thisMessage.sender = this.authService.authState.email;
-              this.thisMessage.receiver = this.users[index].email;
-              this.thisMessage.message = dataMessage.message;
-              this.thisMessage.date = GET_DATE();
-              this.thisMessage.senderPhotoUrl = this.authService.authState.photoURL;
-              this.thisMessage.receiverPhotoURL = this.users[index].photoURL;
-              this.thisMessage.email = this.authService.authState.email;
-
-              if (!messagesData.exists) {
-                this.tmpMessages = [];
-                this.tmpMessages.push(this.thisMessage);
-                const tmpData: FriendMessaging = {
-                  messages: this.tmpMessages
-                };
-                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].email);
-                this.messagingService.senderMessage(tmpData, this.users[index].email, this.authService.authState.email);
-              } else {
-                this.tmpMessages = messagesData.data().messages;
-                this.tmpMessages.push(this.thisMessage);
-                const tmpData: FriendMessaging = {
-                  messages: this.tmpMessages
-                };
-                this.messagingService.senderMessage(tmpData, this.authService.authState.email, this.users[index].email);
-                this.messagingService.senderMessage(tmpData, this.users[index].email, this.authService.authState.email);
-              }
-
-            }, (err => {
-              // console.log('Error fetching document: ', err);
-            }), () => {
-              // this.messageCount[index]++;
-              this.presentToast('Your message has been sent');
-            }
-            );
+            this.thisMessage.email = this.authService.authState.email;
+            this.thisMessage.message = dataMessage.message;
+            this.thisMessage.date = GET_DATE();
+            this.thisMessage.sender = this.authService.authState.email;
+            this.thisMessage.receiver = userEmail;
+            this.userStateService.sendMessage(this.thisMessage, this.authService.authState.email, userEmail);
+            this.userStateService.sendMessage(this.thisMessage, userEmail, this.authService.authState.email);
           }
         }
       ],
@@ -116,45 +81,39 @@ export class PeoplePage implements OnInit {
     });
     await alert.present();
   }
-  public navigateProfile(index: number) {
-    // const navigationExtras = {
-    //   state: {
-    //     email: this.users[index].email,
-    //   }
-    // };
-    // this.navCtrl.navigateForward(['/shared'], navigationExtras);
-    this.presentModal(index);
+  public navigateProfile(userEmail: string) {
+    this.profileModal(userEmail);
   }
 
-  async presentModal(index: number) {
+  async profileModal(userEmail: string) {
     const modal = await this.modalController.create({
       component: ProfileModal,
+      cssClass: 'profileModal',
       componentProps: {
-        'email': this.users[index].email
+        'email': userEmail
       },
-      cssClass: 'profile-modal'
     });
     return await modal.present();
   }
 
-  public async presentToast(messageArg: string) {
-    const toast = await this.toastController.create({
-      header: '',
-      message: messageArg,
-      position: 'bottom',
-      duration: 2000,
-      buttons: [
-        {
-          side: 'start',
-          icon: 'star',
-          text: 'Success',
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        }
-      ]
-    });
-    toast.present();
-  }
+  //   public async presentToast(messageArg: string) {
+  //     const toast = await this.toastController.create({
+  //       header: '',
+  //       message: messageArg,
+  //       position: 'bottom',
+  //       duration: 2000,
+  //       buttons: [
+  //         {
+  //           side: 'start',
+  //           icon: 'star',
+  //           text: 'Success',
+  //           handler: () => {
+  //             console.log('Favorite clicked');
+  //           }
+  //         }
+  //       ]
+  //     });
+  //     toast.present();
+  //   }
 }
 

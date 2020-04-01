@@ -3,12 +3,12 @@ import { ColumnObject } from '../interface/interface';
 export const PEND_PROPOSAL_COL_OBJ: ColumnObject[] = [
     { columnId: 'Select', propertyName: '' },
     { columnId: 'Reject', propertyName: '' },
+    { columnId: 'Date', propertyName: 'proposalDate' },
     { columnId: 'Name', propertyName: 'sender' },
     { columnId: 'Street', propertyName: 'street' },
     { columnId: 'City', propertyName: 'city' },
     { columnId: 'State', propertyName: 'state' },
     { columnId: 'Zipcode', propertyName: 'zipcode' },
-    { columnId: 'Date', propertyName: 'proposalDate' },
 ];
 
 export const HISTORY_PROPOSAL_COL_OBJ: ColumnObject[] = [
@@ -20,7 +20,7 @@ export const HISTORY_PROPOSAL_COL_OBJ: ColumnObject[] = [
 ];
 
 export const PEND_PROPOSAL_DISPLAY = [
-    'Select', 'Name', 'Team', 'Position', 'Min Price', 'Avg Price', 'Max Price'
+    'Select', 'Reject', 'Date', 'Name', 'Street', 'City', 'State', 'Zipcode'
 ];
 
 export const HISTORY_PROPOSAL_DISPLAY = [

@@ -35,8 +35,8 @@ export class ProposalPendingComponent implements OnInit {
 
   public getProposals() {
     this.proposalService.getProposals(this.authService.authState.email).subscribe(data => {
-      const tmpData = FILTER_PENDING_PROPOSALS(data, this.authService.authState.email);
-      this.thisProposals = SET_PROPOSAL_DATA(this.thisProposals, tmpData);
+      // const tmpData = FILTER_PENDING_PROPOSALS(data, this.authService.authState.email);
+      // this.thisProposals = SET_PROPOSAL_DATA(this.thisProposals, tmpData);
     });
   }
   public acceptProposal(index: number): void {

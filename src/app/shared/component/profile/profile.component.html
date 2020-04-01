@@ -8,14 +8,14 @@
     <section id="inbox-profile-section">
       <div fxLayout="column" fxLayoutAlign="center center">
         <ion-text id=" profile-description" color="dark">
-          <img id="profile-pic" [src]="this.otherUser?.photoURL">
-          <h2>{{this.otherUser?.displayName}}</h2>
-          <h5>{{this.otherUser?.title}}</h5>
-          <p><i><u>Age: </u></i><span class="span-4em">{{this.otherUser?.age}}</span></p>
-          <p><i><u>Religion: </u></i><span class="span-2em">{{this.otherUser?.religion}}</span></p>
-          <p><i><u>Have Kids? </u></i><span>{{this.otherUser?.haveKids}}</span></p>
-          <p><i><u>Hobbies: </u></i><span class="span-2em">{{this.otherUser?.hobbies}}</span></p>
-          <p><i><u>Description: </u></i><span>{{this.otherUser?.description}}</span></p>
+          <img id="profile-pic" [src]="userStateService.selectedUser?.photoURL">
+          <h2>{{userStateService.selectedUser?.displayName}}</h2>
+          <h5>{{userStateService.selectedUser?.title}}</h5>
+          <p><i><u>Age: </u></i><span class="span-4em">{{userStateService.selectedUser?.age}}</span></p>
+          <p><i><u>Religion: </u></i><span class="span-2em">{{userStateService.selectedUser?.religion}}</span></p>
+          <p><i><u>Have Kids? </u></i><span>{{userStateService.selectedUser?.haveKids}}</span></p>
+          <p><i><u>Hobbies: </u></i><span class="span-2em">{{userStateService.selectedUser?.hobbies}}</span></p>
+          <p><i><u>Description: </u></i><span>{{userStateService.selectedUser?.description}}</span></p>
         </ion-text>
       </div>
     </section>

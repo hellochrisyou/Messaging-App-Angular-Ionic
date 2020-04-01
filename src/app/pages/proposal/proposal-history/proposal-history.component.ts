@@ -34,10 +34,10 @@ export class ProposalHistoryComponent implements OnInit {
   }
 
   public getProposals() {
-    this.proposalService.getProposals(this.authService.authState.email).subscribe(data => {
-      const tmpData = FILTER_HISTORY_PROPOSALS(data, this.authService.authState.email);
-      this.thisProposals = SET_PROPOSAL_DATA(this.thisProposals, tmpData);
-    });
+    // this.proposalService.getProposals(this.authService.authState.email).subscribe(data => {
+    // const tmpData = FILTER_HISTORY_PROPOSALS(data, this.authService.authState.email);
+    // this.thisProposals = SET_PROPOSAL_DATA(this.thisProposals, tmpData);
+    // });
   }
 }
 

@@ -100,10 +100,7 @@ export class InboxProfileComponent implements OnInit {
             this.thisProposal.zipcode = dataProposal.zipcode;
             this.thisProposal.proposalDate = dataProposal.proposalDate;
             this.thisProposal.status = 'pending';
-            this.thisProposal.sender = this.authService.authState.email;
-            this.thisProposal.recipient = this.otherUser.payload.doc.data().email;
-
-            this.proposalService.sendProposal(this.thisProposal);
+            // this.proposalService.sendProposal(this.thisProposal);
             this.presentToast('Your proposal has been sent');
           }
         }

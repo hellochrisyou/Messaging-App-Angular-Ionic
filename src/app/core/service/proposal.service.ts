@@ -13,7 +13,7 @@ export class ProposalService {
   ) { }
 
   public getProposals(email: string) {
-    return this.afs.collection('users').doc(email);
+    return this.afs.collection('users').doc(email).valueChanges();
   }
   public getUserProposals(email: string, receiverEmail: string): any {
     return this.afs.collection('users').doc(email).collection('receiverEmail').valueChanges();

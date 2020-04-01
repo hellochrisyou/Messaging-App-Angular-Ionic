@@ -10,7 +10,7 @@ import { AuthService } from '../../core/service/auth.service';
 import { ImageService } from '../../core/service/image.service';
 import { UserService } from '../../core/service/user.service';
 import { UserData } from '../../providers/user-data';
-import { Image, ImageList, User } from '../../shared/interface/models';
+import { Image, User } from '../../shared/interface/models';
 
 declare var $: any;
 
@@ -65,7 +65,7 @@ export class AccountPage implements OnInit, AfterViewInit {
 
 
 
-    this.userRef = this.userService.getThisUser(this.authService.authState.email);
+    this.userRef = this.userService.getUser(this.authService.authState.email);
     this.userRef.get().subscribe(doc => {
       if (!doc.exists) {
         console.log('No such document!');
@@ -187,18 +187,18 @@ export class AccountPage implements OnInit, AfterViewInit {
           this.thisImage.photoName = this.selectedFile.name;
 
           if (!imageData.exists) {
-            this.tmpImages.push(this.thisImage);
-            const tmpData: ImageList = {
-              images: this.tmpImages
-            };
-            this.imageService.CreateImageList(tmpData, this.authService.authState.email);
+            // this.tmpImages.push(this.thisImage);
+            // const tmpData: ImageList = {
+            //   images: this.tmpImages
+            // };
+            // this.imageService.CreateImageList(tmpData, this.authService.authState.email);
           } else {
-            this.tmpImages = imageData.data().images;
-            this.tmpImages.push(this.thisImage);
-            const tmpData: ImageList = {
-              images: this.tmpImages
-            };
-            this.imageService.CreateImageList(tmpData, this.authService.authState.email);
+            // this.tmpImages = imageData.data().images;
+            // this.tmpImages.push(this.thage);
+            // const tmpData: ImageList = {
+            //   images: this.tmpImages
+            // };
+            // this.imageService.CreateImagisImeList(tmpData, this.authService.authState.email);
 
             const storage = firebase.storage();
             const pathReference = storage.ref(`images/${this.authService.authState.email}/${this.selectedFile.name}`);

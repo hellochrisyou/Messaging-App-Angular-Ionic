@@ -14,10 +14,11 @@ import { UserStateService } from '../../../core/service/state/user.state.service
 })
 export class SharedCardPage implements OnInit {
 
+  @Input() user: User;
+
+
   private _messageCounts: MessageCount[] = [];
-  public users: any[];
   private _option: string;
-  private messageCount: MessageCount = {};
   @Input()
   public get messageCounts(): MessageCount[] {
     return this._messageCounts;
@@ -32,7 +33,6 @@ export class SharedCardPage implements OnInit {
   }
   public set option(value: string) {
     this._option = value;
-    console.log("SharedCardPage -> setoption -> value", value)
   }
 
   @ContentChild('messagesBtnTemplate', { static: false }) optionTemplateRef: TemplateRef<any>;
@@ -41,55 +41,14 @@ export class SharedCardPage implements OnInit {
 
   constructor(
     private userService: UserService,
-    private messagingService: MessagingService,
     public authService: AuthService,
     public userStateService: UserStateService
   ) { }
 
   ngOnInit(): void {
+    // this.userStateService.users
 
-
-    this.userService.getUsers().subscribe(usersData => {
-      this.users = usersData;
-      this.users.forEach((user: any, index: number) => {
-        this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(messages => {
-          this.messageCount = {};
-          if (messages.length > 0) {
-            this.messageCount.messageNum = messages.length;
-
-          } else {
-            this.messageCount[index] = 0;
-            console.log('thismessagecout', this.messageCount);
-          }
-          this.messageCount.userName = user.email;
-          this.messageCount.photoURL = user.photoURL;
-          this.messageCount.title = user.title;
-          this.messageCount.displayName = user.displayName;
-          this.messageCounts.push(this.messageCount);
-          console.log('thismessagecout', this.messageCount);
-          console.log('Before', this.messageCount);
-
-          // if (this._option === 'people') {
-          //   this.messageCounts.forEach((messageCount: MessageCount) => {
-          //     if (this.messageCounts[index].messageNum !== 0) {
-          //       this.messageCounts.splice(index, 1);
-          //     }
-          //   });
-          //   console.log('SharedCardPage -> sortFriends -> this._users', this.users);
-
-          // } else {
-          //   this.messageCounts.forEach((messageCount: MessageCount) => {
-          //     if (this.messageCounts[index].messageNum === 0) {
-          //       this.messageCounts.splice(index, 1);
-          //     }
-          //   });
-          // }
-        });
-      });
-
-
-
-    });
+    this.userService.getUsers().subscribe();
   }
 }
 

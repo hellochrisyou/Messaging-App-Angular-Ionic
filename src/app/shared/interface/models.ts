@@ -9,9 +9,9 @@ export interface User {
     haveKids?: string;
     hobbies?: string;
     description?: string;
-    images?: Image[];
-    messages?: Message[];
-    proposals?: Proposal[];
+    images?: string[];
+    messageCount?: number;
+    proposalCount?: number;
 }
 
 export interface Proposal {
@@ -26,12 +26,19 @@ export interface Proposal {
 }
 
 export interface Message {
-    date?: string;
     email?: string;
+    date?: string;
+    sender?: string;
+    receiver?: string;
     message?: string[];
+    photoURL?: string;
     lat?: number;
     lgn?: number;
     count?: number;
+}
+
+export interface MessageList {
+    messages?: Message;
 }
 
 export interface Image {

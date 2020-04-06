@@ -11,6 +11,7 @@ import { Message, User } from '../../../shared/interface/models';
 import { GET_DATE, ORDER_MESSAGES } from '../inbox.util';
 import { AuthService } from './../../../core/service/auth.service';
 import { EmitService } from './../../../core/service/emit.service';
+import { UserStateService } from '../../../core/service/state/user.state.service';
 
 @Component({
   selector: 'app-inbox-details',
@@ -36,6 +37,7 @@ export class InboxDetailsComponent implements AfterContentInit {
     private activatedRoute: ActivatedRoute,
     public authService: AuthService,
     private router: Router,
+    private userStateService: UserStateService,
     public actionSheetController: ActionSheetController,
     public alertCtrl: AlertController,
     public emitService: EmitService,
@@ -53,6 +55,7 @@ export class InboxDetailsComponent implements AfterContentInit {
   }
 
   public ionViewDidEnter(): void {
+    this.messagingStateService.setMessageUser(this.authService.authState.email, this.otherEmail);
   }
 
   public ngAfterContentInit(): void {
@@ -105,6 +108,8 @@ export class InboxDetailsComponent implements AfterContentInit {
             this.thisMessage.receiver = this.otherEmail;
             this.messagingService.sendMessage(this.thisMessage, this.authService.authState.email, this.otherEmail);
             this.messagingService.sendMessage(this.thisMessage, this.otherEmail, this.authService.authState.email);
+            this.userStateService.setPartitionedUsers();
+
             this.successToast('Your message has been sent');
           }
         }

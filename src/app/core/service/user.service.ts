@@ -32,7 +32,6 @@ export class UserService {
         haveKids: null,
         hobbies: null,
         description: null,
-        messageCount: 0,
         images: [],
         proposalCount: 0
       }
@@ -52,7 +51,6 @@ export class UserService {
       haveKids: dataArg.haveKids,
       hobbies: dataArg.hobbies,
       description: dataArg.description,
-      messageCount: dataArg.messageCount,
       images: dataArg.images,
       proposalCount: dataArg.proposalCount
     };

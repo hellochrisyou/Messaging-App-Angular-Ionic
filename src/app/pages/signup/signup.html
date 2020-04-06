@@ -17,13 +17,13 @@
     <form #signupForm="ngForm" novalidate>
       <ion-list lines="none">
         <ion-item>
-          <ion-label position="floating" color="primary">Username</ion-label>
-          <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
+          <ion-label position="floating" color="primary">Email</ion-label>
+          <ion-input [(ngModel)]="signup.email" name="email" type="text" #username="ngModel" required>
           </ion-input>
         </ion-item>
         <ion-text color="danger">
           <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
-            Username is required
+            Email is required
           </p>
         </ion-text>
 

@@ -19,20 +19,38 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'about',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../about/about.module').then(m => m.AboutModule)
-          }
-        ]
-      },
-      {
         path: 'proposal',
         children: [
           {
             path: '',
             loadChildren: () => import('../proposal/proposal.module').then(m => m.ProposalModule)
+          }
+        ]
+      },
+      {
+        path: 'people',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../people/people.module').then(m => m.PeopleModule)
+          }
+        ]
+      },
+      {
+        path: 'account',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../account/account.module').then(m => m.AccountModule)
+          }
+        ]
+      },
+      {
+        path: 'support',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../support/support.module').then(m => m.SupportModule)
           }
         ]
       },

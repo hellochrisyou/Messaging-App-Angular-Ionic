@@ -16,12 +16,6 @@
           </ng-container>
         </ng-container>
 
-        <ng-container *ngIf=" col.columnId==='Reject'">
-          <ng-container [ngTemplateOutlet]=" optionTemplateRef2"
-            [ngTemplateOutletContext]="{ $implicit: dataArray, index: dataSource.filteredData.indexOf(dataArray) }">
-          </ng-container>
-        </ng-container>
-
         <ng-container *ngIf="col.columnId!=='Select' && col.columnId!=='Reject' && col.columnId!=='Date'">
           {{dataArray[col.propertyName]}}
         </ng-container>
@@ -29,8 +23,6 @@
         <!-- <ng-container *ngIf="col.columnId!=='Select' && col.columnId!=='Reject' && !dataArray[col.propertyName]">
           {{"-"}}
         </ng-container> -->
-
-
 
         <ng-container *ngIf="col.columnId==='Date'">
           {{dataArray[col.propertyName] | date: 'short'}}

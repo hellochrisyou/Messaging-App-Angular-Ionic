@@ -41,6 +41,7 @@ export class InboxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
   }
   ionViewDidEnter() {
 
@@ -113,18 +114,17 @@ export class InboxComponent implements OnInit {
           text: 'Ok',
           handler: (dataProposal: any) => {
             this.thisProposal.select = 'select';
-            this.thisProposal.reject = 'reject';
             this.thisProposal.street = dataProposal.street;
             this.thisProposal.city = dataProposal.city;
             this.thisProposal.state = dataProposal.state;
             this.thisProposal.zipcode = dataProposal.zipcode;
             this.thisProposal.proposalDate = dataProposal.proposalDate;
             this.thisProposal.sender = this.authService.authState.email;
-            this.thisProposal.receiver = userEmail;
             this.thisProposal.status = 'pending';
 
-            this.proposalService.sendProposal(this.thisProposal, this.authService.authState.email, userEmail);
-            this.proposalService.sendProposal(this.thisProposal, userEmail, this.authService.authState.email);
+            // this.proposalService.sendProposal(this.thisProposal, this.authService.authState.email);
+            this.proposalService.sendProposal(this.thisProposal, userEmail);
+            this.userStateService.setPartitionedUsers();
 
             this.presentToast('Your proposal has been sent');
           }

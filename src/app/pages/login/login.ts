@@ -19,7 +19,7 @@ export class LoginPage {
 
   submitted = false;
 
-  login: UserOptions = { username: '', password: '' };
+  login: UserOptions = { email: '', password: '' };
 
   constructor(
     private authService: AuthService,
@@ -33,9 +33,8 @@ export class LoginPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.authService.signinEmail(this.login.username, this.login.password);
-      this.userData.login(this.login.username);
-      this.navCtrl.navigateForward('/app/tabs/friends');
+      this.userData.login(this.login.email);
+      this.authService.signinEmail(this.login.email, this.login.password);
     }
   }
   public loginGoogle(): void {

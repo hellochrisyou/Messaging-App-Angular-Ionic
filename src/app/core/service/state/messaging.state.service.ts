@@ -19,6 +19,7 @@ export class MessagingStateService {
 
     public setMessageUser(thisEmail: string, userEmail: string) {
         this.messagingService.getUserMessages(thisEmail, userEmail).subscribe((messagesData: Message[]) => {
+            console.log("MessagingStateService -> setMessageUser -> messagesData", messagesData)
             this.messages = ORDER_MESSAGES(messagesData);
         });
     }

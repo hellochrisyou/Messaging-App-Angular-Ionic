@@ -18,7 +18,7 @@ export class SignupPage {
 
   submitted = false;
 
-  signup: UserOptions = { username: '', password: '' };
+  signup: UserOptions = { email: '', password: '' };
 
   constructor(
     private authService: AuthService,
@@ -31,7 +31,7 @@ export class SignupPage {
 
     if (form.valid) {
       // this.userData.signup(this.signup.username);
-      this.authService.signupEmail(this.signup.username, this.signup.password);
+      this.authService.signupEmail(this.signup.email, this.signup.password);
     }
   }
 }

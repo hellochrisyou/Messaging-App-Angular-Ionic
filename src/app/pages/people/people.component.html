@@ -10,7 +10,7 @@
 <ion-content fullscreen="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Inbox</ion-title>
+      <ion-title size="large">People</ion-title>
     </ion-toolbar>
   </ion-header>
   <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"

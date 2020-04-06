@@ -10,15 +10,12 @@ export interface User {
     hobbies?: string;
     description?: string;
     images?: string[];
-    messageCount?: number;
     proposalCount?: number;
 }
 
 export interface Proposal {
     select?: string;
     sender?: string;
-    receiver?: string;
-    reject?: string;
     street?: string;
     city?: string;
     state?: string;

@@ -68,6 +68,7 @@ export class PeoplePage implements OnInit {
             this.thisMessage.receiver = userEmail;
             this.userStateService.sendMessage(this.thisMessage, this.authService.authState.email, userEmail);
             this.userStateService.sendMessage(this.thisMessage, userEmail, this.authService.authState.email);
+            this.userStateService.setPartitionedUsers();
           }
         }
       ],

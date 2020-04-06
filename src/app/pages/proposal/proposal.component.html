@@ -1,8 +1,19 @@
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab label="Pending Proposals">
-    <proposal-pending></proposal-pending>
-  </mat-tab>
-  <mat-tab label="Proposal History">
-    <proposal-history></proposal-history>
-  </mat-tab>
-</mat-tab-group>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Proposals</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ng-container *ngIf="pendingProposals.length > 0">
+  <base-table [columnObjects]="PEND_PROPOSAL_COL_OBJ" [colDisplay]="PEND_PROPOSAL_DISPLAY"
+    [dataArray]="pendingProposals">
+    <ng-template #buttonTemplate let-i=index>
+      <mat-icon id="accept-icon" (click)="actionProposal(i)" matTooltip="Act on Proposal" matTooltipPosition="before">
+        arrow_right_alt
+      </mat-icon>
+    </ng-template>
+  </base-table>
+</ng-container>

@@ -8,14 +8,13 @@ import * as firebase from 'firebase';
 import { ToastController, NavController, AlertController } from '@ionic/angular';
 import { User } from '../../shared/interface/models';
 import { UserService } from './user.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // tslint:disable-next-line: variable-name
   private _authState: User = null;
-  // tslint:disable-next-line: variable-name
   private _user: Observable<User>;
 
   private messageRef: any;
@@ -86,14 +85,42 @@ export class AuthService {
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
+        console.log('res', res);
+        this.messageRef = this.afs.doc(`users/${res.user.email}`);
+
+        this.messageRef.get().subscribe(doc => {
+          if (!doc.exists) {
+            console.log('No such document!');
+            this.userService.createUser(res.user);
+          } else {
+            console.log('Document data:', doc.data());
+            this.authState.email = doc.data().email;
+            this.authState.displayName = doc.data().displayName;
+            this.authState.photoURL = doc.data().photoURL;
+            this.authState.title = doc.data().title;
+            this.authState.uId = doc.data().uId;
+          }
+        }, (err => {
+          console.log('Error fetching document: ', err);
+
+        }));
         this.confirmToast('You have registered an account');
-        // this.snackBar.open('Registration', 'SUCCESS', {
-        // });
-        this.navCtrl.navigateForward('/app/tabs/inbox');
+        this.navCtrl.navigateForward('/app/tabs/people');
       })
       .catch(error => {
-        // this.signupErrorPopup(error.message);
+        this.signupErrorPopup(error);
       });
+  }
+
+  async signupErrorPopup(errorMsg: string) {
+    const alert = await this.alertController.create({
+      header: 'Sign Up Error',
+      cssClass: 'globalAlert',
+      message: errorMsg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   private OAuthProvider(provider) {
@@ -107,7 +134,7 @@ export class AuthService {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
       this.confirmToast('You have signed in with your Google account');
-      this.navCtrl.navigateForward('/app/tabs/inbox');
+      this.navCtrl.navigateForward('/app/tabs/people');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -131,7 +158,7 @@ export class AuthService {
     this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
       this.confirmToast('You have signed in with your Facebook account');
-      this.navCtrl.navigateForward('/app/tabs/inbox');
+      this.navCtrl.navigateForward('/app/tabs/people');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -152,11 +179,9 @@ export class AuthService {
   public signinTwitter() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider()).then((credential) => {
 
-      console.log("AuthService -> signinTwitter -> credential.user", credential.user)
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
-      console.log("AuthService -> signinTwitter -> credential.user.email", credential.user.email)
       this.confirmToast('You have signed in with your Twitter account');
-      this.navCtrl.navigateForward('/app/tabs/inbox');
+      this.navCtrl.navigateForward('/app/tabs/people');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -185,25 +210,13 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.confirmToast('You are signed in with you email account');
+        console.log("AuthService -> signinEmail -> credential", credential)
+        this.confirmToast('You are signed in with your email account');
         // this.checkUserExists(credential.user.email, credential.user.displayName, "https://material.angular.io/assets/img/examples/shiba2.jpg");
-        this.navCtrl.navigateForward('/app/tabs/inbox');
-        window.location.reload();
+        this.navCtrl.navigateForward('/app/tabs/people');
       })
       .catch(err => { });
   }
-
-  // public signupErrorPopup(message: string): void {
-  //   const dialogRef = this.dialog.open(ConfirmComponent, {
-  //     width: '25vw',
-  //     data: {
-  //       title: 'Error',
-  //       subTitle: 'Signup Failed',
-  //       text: message
-  //     }
-  //   });
-  //   dialogRef.afterClosed().subscribe();
-  // }
 
   async errorProviderAlert() {
     const alert = await this.alertController.create({
@@ -232,26 +245,6 @@ export class AuthService {
     toast.present();
   }
 
-
-  public checkUserExists(argEmail: string, argDisplayName: string, argPhotoUrl: string): void {
-    console.log('begin, check user exists');
-
-    // this.httpService.post(APIURL.BACKENDCALL + '/user/existsByEmail/', argEmail).subscribe((data) => {
-    //   console.log('existsbyemail1', data);
-    //   // if (data !== true) {
-    //   this.newUser = {
-    //     uId: '',
-    //     displayName: argDisplayName,
-    //     email: argEmail,
-    //     photoURL: argPhotoUrl
-    //   };
-    //   console.log('existsby email', data);
-    //   this.httpService.post(APIURL.BACKENDCALL + '/user/createUser/', this.newUser).subscribe(x => {
-    //     console.log('create data returned: ', x);
-    //   });
-    //   // }
-    // });
-  }
 }
 
 // https://stackoverflow.com/questions/42073340/angular2-firebase-get-current-user

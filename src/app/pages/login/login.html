@@ -15,7 +15,8 @@
     </div>
     <h4>Social Media Sign in</h4>
 
-    <div id="social-flex" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
+    <div id="social-flex" fxShow.md="false" fxShow.sm="false" fxShow.xs="false" fxShow fxLayout="row"
+      fxLayoutAlign="center center" fxLayoutGap="1em">
       <i class="fab fa-google fa-3x" (click)="loginGoogle()"></i>
       <i class="fab fa-facebook fa-3x" (click)="loginFacebook()"></i>
       <i class="fab fa-twitter fa-3x" (click)="loginTwitter()"></i>
@@ -25,8 +26,8 @@
       <h4>Email Sign in</h4>
       <ion-list>
         <ion-item>
-          <ion-label position="floating" color="primary">Username</ion-label>
-          <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false"
+          <ion-label position="floating" color="primary">Email</ion-label>
+          <ion-input [(ngModel)]="login.email" name="email" type="text" #username="ngModel" spellcheck="false"
             autocapitalize="off" required>
           </ion-input>
         </ion-item>

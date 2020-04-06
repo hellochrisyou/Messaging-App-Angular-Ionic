@@ -238,9 +238,37 @@ export class AccountPage implements OnInit, AfterViewInit {
   // Present an alert with the current username populated
   // clicking OK will update the username and display it
   // clicking Cancel will close the alert and do nothing
+
+  async changeAvatar() {
+    const alert = await this.alertCtrl.create({
+      header: 'Change Profile Picture',
+      cssClass: 'globalAlert',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Ok',
+          handler: (data: any) => {
+            this.user.photoURL = data.url;
+            this.updateUserData(this.user);
+            this.getUsername();
+          }
+        }
+      ],
+      inputs: [
+        {
+          type: 'text',
+          name: 'url',
+          placeholder: 'url'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   async changeUsername() {
     const alert = await this.alertCtrl.create({
       header: 'Change Username',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {
@@ -265,6 +293,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async changeTitle() {
     const alert = await this.alertCtrl.create({
       header: 'Change Title',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {
@@ -290,6 +319,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async changeAge() {
     const alert = await this.alertCtrl.create({
       header: 'Change Age',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {
@@ -314,6 +344,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async changeReligion() {
     const alert = await this.alertCtrl.create({
       header: 'Change Religion',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {
@@ -338,6 +369,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async changeHaveKids() {
     const alert = await this.alertCtrl.create({
       header: 'Change Have Kids',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {
@@ -362,6 +394,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async changeHobbies() {
     const alert = await this.alertCtrl.create({
       header: 'Change Hobbies',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {
@@ -386,6 +419,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async changeDescription() {
     const alert = await this.alertCtrl.create({
       header: 'Change Description',
+      cssClass: 'globalAlert',
       buttons: [
         'Cancel',
         {

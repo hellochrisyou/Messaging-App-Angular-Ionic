@@ -1,0 +1,26 @@
+{
+    "declarations": {
+        "use_frameworks!": {
+            "declaration": "use_frameworks!",
+            "count": 1
+        }
+    },
+    "sources": {
+        "https://cdn.cocoapods.org/": {
+            "source": "https://cdn.cocoapods.org/",
+            "count": 1
+        }
+    },
+    "libraries": {
+        "GoogleSignIn": {
+            "name": "GoogleSignIn",
+            "spec": "~> 5.0.2",
+            "count": 1
+        },
+        "GoogleUtilities": {
+            "name": "GoogleUtilities",
+            "spec": "~> 6.5.1",
+            "count": 1
+        }
+    }
+}

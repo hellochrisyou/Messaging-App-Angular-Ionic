@@ -7,12 +7,12 @@
             <img [src]="user.photoURL">
           </ion-avatar>
           <span>
-            <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
             <ion-card-title>{{user.displayName}}</ion-card-title>
+            <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
+
+            <div>{{user.email}}</div>
           </span>
           <ng-container *ngIf="option==='inbox'">
-            <ion-badge matTooltip="Number of messages" matTooltipPosition="after" slot="end">{{user.messageCount}}
-            </ion-badge>
           </ng-container>
         </div>
       </ion-card-header>

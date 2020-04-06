@@ -6,11 +6,10 @@ import { IonAvatar, IonicModule } from '@ionic/angular';
 import { SharedModule } from '../../shared/shared.module';
 import { InboxDetailsComponent } from './inbox-details/inbox-details.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { InboxProfileComponent } from './inbox-profile/inbox-profile.component';
 
 
 @NgModule({
-  declarations: [InboxComponent, InboxDetailsComponent, InboxProfileComponent],
+  declarations: [InboxComponent, InboxDetailsComponent],
   imports: [
     CommonModule,
     SharedModule,

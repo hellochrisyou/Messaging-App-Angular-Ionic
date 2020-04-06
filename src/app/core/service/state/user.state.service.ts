@@ -39,38 +39,68 @@ export class UserStateService {
         this._proposals.next(val);
     }
 
+    set inboxUsers(val) {
+        this._inboxUsers.next(val)
+    }
+
+    set peopleUsers(val) {
+        this._peopleUsers.next(val);
+    }
+
     private readonly _users = new BehaviorSubject<User[]>([]);
     private readonly _messages = new BehaviorSubject<Message[]>([]);
     private readonly _images = new BehaviorSubject<Image[]>([]);
     private readonly _proposals = new BehaviorSubject<Proposal[]>([]);
+    private readonly _inboxUsers = new BehaviorSubject<User[]>([]);
+    private readonly _peopleUsers = new BehaviorSubject<User[]>([]);
+
 
     readonly users$ = this._users.asObservable();
+    readonly inboxUsers$ = this._inboxUsers.asObservable();
+    readonly peopleUsers$ = this._peopleUsers.asObservable();
+
     readonly messages$ = this._messages.asObservable();
     readonly images$ = this._images.asObservable();
     readonly proposals$ = this._proposals.asObservable();
 
-    readonly inboxUsers$ = this.users$.pipe(
-        map(users => users.filter(user => user.messageCount > 0 && user.email !== this.authService.authState.email))
-    );
+    //  = this.users$.pipe(
+    //     map(users => users.filter(user => user.messageCount > 0 && user.email !== this.authService.authState.email))
+    // );
 
-    readonly peopleUsers$ = this.users$.pipe(
-        map(users => users.filter(user => user.messageCount === 0 && user.email !== this.authService.authState.email))
-    );
+    //  = this.users$.pipe(
+    //     map(users => users.filter(user => user.messageCount === 0 && user.email !== this.authService.authState.email))
+    // );
 
 
     public setUser(userEmail: string) {
-        console.log("UserStateService -> setUser -> userEmail", userEmail)
         this._users.forEach((users: any) => {
-            console.log('user 111', users)
-            this.selectedUser = users.find(user => userEmail === user.email)
+            this.selectedUser = users.find(user => userEmail === user.email);
         });
         console.log('selecteduser', this.selectedUser);
+    }
+
+    public setPartitionedUsers() {
+        this.inboxUsers = [];
+        this.peopleUsers = [];
+        const tmpInboxArr = [];
+        const tmpPeopleArr = [];
+        this._users.forEach(users => users.forEach(user => {
+            this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(userDocuments => {
+                if (userDocuments.length !== 0) {
+                    tmpInboxArr.push(user);
+                } else {
+                    tmpPeopleArr.push(user);
+                }
+            });
+        }));
+        this.inboxUsers = tmpInboxArr;
+        this.peopleUsers = tmpPeopleArr;
     }
 
     public setMessageUser(userEmail: string) {
         this.messagingService.getMessages(userEmail).subscribe((messagesData: any[]) => {
             this.messages = messagesData;
-        })
+        });
     }
 
     public addUser(user: User) {
@@ -94,7 +124,6 @@ export class UserStateService {
             if (doc.exists) {
                 console.log('Document data:', doc.data());
                 const tmpUser: User = doc.data();
-                tmpUser.messageCount = tmpUser.messageCount + 1;
                 this.userService.updateUser(tmpUser);
             } else {
                 console.log('No such document!');
@@ -125,8 +154,8 @@ export class UserStateService {
 
     async fetchAll() {
         this.userService.getUsers().subscribe((usersData: any[]) => {
-            console.log('UserStateService -> fetchAll -> usersData', usersData);
             this.users = usersData;
+            this.setPartitionedUsers();
         });
     }
 }

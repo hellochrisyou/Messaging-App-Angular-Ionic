@@ -91,6 +91,7 @@ export class AuthService {
         this.messageRef.get().subscribe(doc => {
           if (!doc.exists) {
             console.log('No such document!');
+            res.user.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
             this.userService.createUser(res.user);
           } else {
             console.log('Document data:', doc.data());
@@ -99,6 +100,9 @@ export class AuthService {
             this.authState.photoURL = doc.data().photoURL;
             this.authState.title = doc.data().title;
             this.authState.uId = doc.data().uId;
+            if (doc.data().photoUrl === undefined) {
+              this.authState.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+            }
           }
         }, (err => {
           console.log('Error fetching document: ', err);
@@ -139,6 +143,9 @@ export class AuthService {
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
           console.log('No such document!');
+          if (credential.user.photoURL === undefined) {
+            credential.user.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+          }
           this.userService.createUser(credential.user);
         } else {
           console.log('Document data:', doc.data());
@@ -147,6 +154,9 @@ export class AuthService {
           this.authState.photoURL = doc.data().photoURL;
           this.authState.title = doc.data().title;
           this.authState.uId = doc.data().uId;
+          if (doc.data().photoUrl === undefined) {
+            this.authState.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+          }
         }
       }, (err => {
         // console.log('Error fetching document: ', err);
@@ -163,9 +173,20 @@ export class AuthService {
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
           console.log('No such document!');
+          if (credential.user.photoURL === undefined) {
+            credential.user.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+          }
           this.userService.createUser(credential.user);
         } else {
           console.log('Document data:', doc.data());
+          this.authState.email = doc.data().email;
+          this.authState.displayName = doc.data().displayName;
+          this.authState.photoURL = doc.data().photoURL;
+          this.authState.title = doc.data().title;
+          this.authState.uId = doc.data().uId;
+          if (doc.data().photoUrl === undefined) {
+            this.authState.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+          }
         }
       }, (err => {
         console.log('Error fetching document: ', err);
@@ -186,9 +207,20 @@ export class AuthService {
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
           console.log('No such document!');
+          if (credential.user.photoURL === undefined) {
+            credential.user.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+          }
           this.userService.createUser(credential.user);
         } else {
           console.log('Document data:', doc.data());
+          this.authState.email = doc.data().email;
+          this.authState.displayName = doc.data().displayName;
+          this.authState.photoURL = doc.data().photoURL;
+          this.authState.title = doc.data().title;
+          this.authState.uId = doc.data().uId;
+          if (doc.data().photoUrl === undefined) {
+            this.authState.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+          }
         }
       }, (err => {
         // console.log('Error fetching document: ', err);
@@ -200,7 +232,6 @@ export class AuthService {
     this.afAuth.auth.signOut().then(() => {
       this.confirmToast('You are logged out');
       this.navCtrl.navigateForward(['/login']);
-      // window.location.reload();
     });
   }
 
@@ -210,9 +241,7 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        console.log("AuthService -> signinEmail -> credential", credential)
         this.confirmToast('You are signed in with your email account');
-        // this.checkUserExists(credential.user.email, credential.user.displayName, "https://material.angular.io/assets/img/examples/shiba2.jpg");
         this.navCtrl.navigateForward('/app/tabs/people');
       })
       .catch(err => { });

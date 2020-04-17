@@ -3,31 +3,29 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Inbox</ion-title>
+    <ion-title>Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">People</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"
-    [user]="user">
-    <ng-template #messagesBtnTemplate let-i=index>
-      <ion-button shape="round" fill="outline" (click)="sendMessage(user.email)" matTooltip="Send Message"
-        matTooltipPosition="before">
-        <ion-icon name="mail-outline">
-        </ion-icon>
-      </ion-button>
-    </ng-template>
-    <ng-template #profileBtnTemplate let-i=index>
-      <ion-button shape="round" fill="outline" (click)="navigateProfile(user.email)" matTooltip="View Profile"
-        matTooltipPosition="after">
-        <ion-icon name="reader-outline">
-        </ion-icon>
-      </ion-button>
-    </ng-template>
-  </shared-card-page>
+  <h4>People</h4>
+  <div class="flex-container" fxLayout="row wrap" fxLayout.lt-sm="column">
+    <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"
+      [user]="user">
+      <ng-template #messagesBtnTemplate let-i=index>
+        <ion-button shape="round" fill="outline" (click)="sendMessage(user.email)" matTooltip="Send Message"
+          matTooltipPosition="before">
+          <ion-icon name="mail-outline">
+          </ion-icon>
+        </ion-button>
+      </ng-template>
+      <ng-template #profileBtnTemplate let-i=index>
+        <ion-button shape="round" fill="outline" (click)="navigateProfile(user.email)" matTooltip="View Profile"
+          matTooltipPosition="after">
+          <ion-icon name="reader-outline">
+          </ion-icon>
+        </ion-button>
+      </ng-template>
+    </shared-card-page>
+  </div>
 </ion-content>

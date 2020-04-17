@@ -41,9 +41,9 @@ export class InboxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
   }
   ionViewDidEnter() {
+    console.log("InboxComponent -> ngOnInit -> userStateService.inboxUsers$", this.userStateService.inboxUsers$)
 
   }
 

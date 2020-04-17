@@ -44,7 +44,6 @@ export class PicModalPage implements OnInit {
   }
   public loadPhotos(): void {
     this.imageUrls = [];
-    console.log('this.email', this.email);
     this.imageService
       .getUserImageList(this.email)
       .subscribe(imagesData => {

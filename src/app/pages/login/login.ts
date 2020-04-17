@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -15,21 +16,31 @@ import { NavController } from '@ionic/angular';
   templateUrl: 'login.html',
   styleUrls: ['./login.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
 
   submitted = false;
 
   login: UserOptions = { email: '', password: '' };
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private navCtrl: NavController,
     public router: Router,
+    public afAuth: AngularFireAuth,
     public userData: UserData,
+  ) {
+    console.log("InboxComponent -> ngOnInit -> this.authService.isAuthenticated", this.authService.isAuthenticated)
+  }
 
-  ) { }
+  public ngOnInit(): void {
+    if (this.authService.isAuthenticated !== false) {
+      this.router.navigateByUrl('/people');
+    } else {
+      this.afAuth.auth.signOut();
+    }
+  }
 
-  onLogin(form: NgForm) {
+  public onLogin(form: NgForm): void {
     this.submitted = true;
 
     if (form.valid) {
@@ -46,7 +57,7 @@ export class LoginPage {
   public loginTwitter(): void {
     this.authService.signinTwitter();
   }
-  onSignup() {
+  public onSignup(): void {
     this.navCtrl.navigateForward('/signup');
   }
 }

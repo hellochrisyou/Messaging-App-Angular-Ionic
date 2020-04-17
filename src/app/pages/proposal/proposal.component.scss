@@ -1,3 +1,5 @@
+@import "_title-text";
+
 base-table {
     position: absolute;
     top: 10vh;
@@ -6,4 +8,8 @@ base-table {
 
 mat-icon {
     color: green;
+}
+
+ion-title {
+    color: white;
 }

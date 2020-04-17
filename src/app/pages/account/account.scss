@@ -1,8 +1,13 @@
 @import "_text-margin";
+@import "_button";
 
 img {
   max-width: 140px;
   border-radius: 50%;
+}
+
+h3 {
+  margin: 0 auto;
 }
 
 ion-content {
@@ -48,6 +53,10 @@ label {
   }
 }
 
+.span-info {
+  float: right;
+}
+
 progress::-webkit-progress-value {
   transition: width 0.1s ease;
 }
@@ -56,14 +65,20 @@ p {
   text-align: left;
 }
 
-ion-icon {
+.cancel-icon {
   color: crimson;
+  cursor: pointer;
 }
 
 .custom-file-upload {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
+}
+
+a.btn {
+  font-size: 0.625rem;
+  width: 10rem;
 }
 
 @media screen and (max-width: 812px) {

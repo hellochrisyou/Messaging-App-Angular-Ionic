@@ -1,10 +1,9 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-buttons slot="start">
+    <ion-buttons [hidden]="!authService.isAuthenticated" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-
-    <ion-title>Login</ion-title>
+    <ion-title>Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
 <div class="fxlayout-support" fxLayout="row" fxLayoutAlign="center center">
@@ -13,17 +12,16 @@
     <div class="login-logo">
       <img src="assets/img/appicon.svg" alt="Ionic logo">
     </div>
-    <h4>Social Media Sign in</h4>
+    <h4>Social Media</h4>
 
-    <div id="social-flex" fxShow.md="false" fxShow.sm="false" fxShow.xs="false" fxShow fxLayout="row"
-      fxLayoutAlign="center center" fxLayoutGap="1em">
+    <div id="social-flex" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
       <i class="fab fa-google fa-3x" (click)="loginGoogle()"></i>
       <i class="fab fa-facebook fa-3x" (click)="loginFacebook()"></i>
       <i class="fab fa-twitter fa-3x" (click)="loginTwitter()"></i>
 
     </div>
     <form #loginForm="ngForm" novalidate>
-      <h4>Email Sign in</h4>
+      <h4>Email</h4>
       <ion-list>
         <ion-item>
           <ion-label position="floating" color="primary">Email</ion-label>
@@ -51,15 +49,19 @@
         </ion-text>
       </ion-list>
 
-      <ion-row>
-        <ion-col fxLayout="row" fxLayoutAlign="space-around center">
-          <ion-button (click)="onLogin(loginForm)" type="submit" shape="round" fill="outline">
-            Login</ion-button>
-        </ion-col>
-        <ion-col fxLayout="row" fxLayoutAlign="space-around center">
-          <ion-button (click)="onSignup()" color="medium" shape="round" fill="outline">Signup</ion-button>
-        </ion-col>
-      </ion-row>
+      <div class="buttons">
+        <ion-row>
+          <ion-col fxLayout="row" fxLayoutAlign="space-around center">
+            <a class="btn btn-primary button-hover" (click)="onLogin(loginForm)" type="submit" shape="round"
+              fill="outline">
+              Login</a>
+          </ion-col>
+          <ion-col fxLayout="row" fxLayoutAlign="space-around center">
+            <a class="btn btn-secondary button-hover" (click)="onSignup()" color="medium" shape="round"
+              fill="outline">Signup</a>
+          </ion-col>
+        </ion-row>
+      </div>
     </form>
 
   </ion-content>

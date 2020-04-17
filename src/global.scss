@@ -48,7 +48,9 @@ h4 {
   text-align: center;
   font-weight: 100;
 }
-
+ion-title.title-padding {
+  padding-right: 6.5vw;
+}
 ion-title {
   color: whitesmoke;
   top: 0;
@@ -135,6 +137,6 @@ img.all-images {
 }
 
 .flex-container {
-  height: 100%;
+  height: 70vh;
   width: 100vw;
 }

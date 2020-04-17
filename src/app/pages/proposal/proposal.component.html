@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Dating App</ion-title>
+    <ion-title class="title-padding">Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
 <div class="flex-container" fxLayout="column" fxLayoutAlign="center center">
@@ -13,12 +13,14 @@
   </ng-container>
 </div>
 <ng-container *ngIf="pendingProposals.length > 0">
-  <base-table [columnObjects]="PEND_PROPOSAL_COL_OBJ" [colDisplay]="PEND_PROPOSAL_DISPLAY"
-    [dataArray]="pendingProposals">
-    <ng-template #buttonTemplate let-i=index>
-      <mat-icon id="accept-icon" (click)="actionProposal(i)" matTooltip="Act on Proposal" matTooltipPosition="before">
-        arrow_right_alt
-      </mat-icon>
-    </ng-template>
-  </base-table>
+  <div class="flex-container" fxLayout="column" fxLayoutAlign="center center">
+    <base-table [columnObjects]="PEND_PROPOSAL_COL_OBJ" [colDisplay]="PEND_PROPOSAL_DISPLAY"
+      [dataArray]="pendingProposals">
+      <ng-template #buttonTemplate let-i=index>
+        <mat-icon id="accept-icon" (click)="actionProposal(i)" matTooltip="Act on Proposal" matTooltipPosition="before">
+          arrow_right_alt
+        </mat-icon>
+      </ng-template>
+    </base-table>
+  </div>
 </ng-container>

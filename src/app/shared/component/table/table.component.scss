@@ -1,42 +1,46 @@
 @import "_table";
 @import "_color";
 
-@include mat-table-cols(
-  (
-    Select: (
-      width: 1rem,
-      text-align: center,
-    ),
-    Reject: (
-      width: 1rem,
-      text-align: center,
-    ),
-    Name: (
-      width: 16rem,
-      text-align: center,
-    ),
-    Street: (
-      width: 5rem,
-      text-align: center,
-    ),
-    City: (
-      width: 5rem,
-      text-align: center,
-    ),
-    State: (
-      width: 5rem,
-      text-align: center,
-    ),
-    Zipcode: (
-      width: 5rem,
-      text-align: center,
-    ),
-    Date: (
-      width: 10rem,
-      text-align: center,
-    ),
-  )
-);
+// @include mat-table-cols(
+//   (
+//     Select: (
+//       width: 1rem,
+//       text-align: center,
+//     ),
+//     Reject: (
+//       width: 1rem,
+//       text-align: center,
+//     ),
+//     Name: (
+//       width: 16rem,
+//       text-align: center,
+//     ),
+//     Street: (
+//       width: 5rem,
+//       text-align: center,
+//     ),
+//     City: (
+//       width: 5rem,
+//       text-align: center,
+//     ),
+//     State: (
+//       width: 5rem,
+//       text-align: center,
+//     ),
+//     Zipcode: (
+//       width: 5rem,
+//       text-align: center,
+//     ),
+//     Date: (
+//       width: 10rem,
+//       text-align: center,
+//     ),
+//   )
+// );
+
+table td:nth-child(2) {
+  padding-left: 1.1em;
+}
 
 section {
   height: 100%;
@@ -180,10 +184,20 @@ mat-cell,
 .fa-user-plus {
   color: green;
 }
+
 .mat-paginator-outer-container {
   color: black;
   width: 100%;
 }
+
+.icon-pending {
+  color: grey;
+}
+
+.icon-accepted {
+  color: crimson;
+}
+
 @media screen and (max-width: 1024px) {
   tr.mat-header-row {
     background-color: transparent;
@@ -201,5 +215,11 @@ mat-cell,
   #search-field {
     left: 1vw;
     top: 8vh;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  tr td.mat-cell {
+    font-size: 0.7rem;
   }
 }

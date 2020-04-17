@@ -63,7 +63,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ContentChild('buttonTemplate', { static: false }) optionTemplateRef: TemplateRef<any>;
   @ContentChild('buttonTemplate2', { static: false }) optionTemplateRef2: TemplateRef<any>;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   public ngOnInit(): void {
@@ -85,7 +84,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public refresh(): void {
     this.dataSource = new MatTableDataSource<any>(this.dataArray);
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     // if (!this.changeDetectorRefs['destroyed']) {
     //   this.changeDetectorRefs.detectChangeChanges();
@@ -101,19 +99,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // public setDataColor(value: number | string) {
-  //   if (value >= 1) {
-  //     return '#4bb543';
-
-  //   } else if (value < 1) {
-  //     return '#dd0031';
-  //   } else {
-  //     return;
-  //   }
-  // }
-
-  public openBidDialog() {
-
+  public toggleStatus(index: number): void {
+    // TO DO
   }
-
 }

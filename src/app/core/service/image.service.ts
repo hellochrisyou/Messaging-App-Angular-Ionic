@@ -15,7 +15,7 @@ export class ImageService {
 
 
   public getImages(userEmail: string) {
-    return this.afs.collection('users').doc(userEmail).collection('images').valueChanges();
+    return this.afs.collection('users').doc(userEmail).collection('images').snapshotChanges();
   }
 
   public getTmpImages(userEmail: string) {

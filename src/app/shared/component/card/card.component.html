@@ -1,32 +1,28 @@
-<ng-container *ngIf="user.email!==authService.authState.email">
-  <div fxLayout="column" fxLayoutAlign="center center">
-    <ion-card class=" speaker-card">
-      <ion-card-header>
-        <div fxLayout="row" fxLayoutAlign="space-around center">
-          <ion-avatar slot="start">
-            <img [src]="user.photoURL">
-          </ion-avatar>
-          <span>
-            <ion-card-title>{{user.displayName}}</ion-card-title>
-            <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <ion-card class=" speaker-card">
+    <ion-card-header>
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <ion-avatar slot="start">
+          <img [src]="user.photoURL">
+        </ion-avatar>
+        <span>
+          <ion-card-title>{{user.displayName}}</ion-card-title>
+          <ion-card-subtitle>{{user.title}}</ion-card-subtitle>
 
-            <div>{{user.email}}</div>
-          </span>
-          <ng-container *ngIf="option==='inbox'">
-          </ng-container>
-        </div>
-      </ion-card-header>
+          <div id="user-email">{{user.email}}</div>
+        </span>
+      </div>
+    </ion-card-header>
 
-      <ion-card-content>
-        <div fxLayout="row" fxLayoutAlign="space-around center">
-          <ng-container [ngTemplateOutlet]=" optionTemplateRef">
-          </ng-container>
-          <ng-container [ngTemplateOutlet]=" optionTemplateRef2">
-          </ng-container>
-          <ng-container [ngTemplateOutlet]=" optionTemplateRef3">
-          </ng-container>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
-</ng-container>
+    <ion-card-content>
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <ng-container [ngTemplateOutlet]=" optionTemplateRef">
+        </ng-container>
+        <ng-container [ngTemplateOutlet]=" optionTemplateRef2">
+        </ng-container>
+        <ng-container [ngTemplateOutlet]=" optionTemplateRef3">
+        </ng-container>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

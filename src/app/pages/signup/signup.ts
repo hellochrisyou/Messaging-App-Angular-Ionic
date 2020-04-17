@@ -34,4 +34,8 @@ export class SignupPage {
       this.authService.signupEmail(this.signup.email, this.signup.password);
     }
   }
+
+  public navigateLogin(): void {
+    this.router.navigateByUrl('/login');
+  }
 }

@@ -1,6 +1,6 @@
 import { PicModalPage } from './../../shared/component/profile/pic-modal/pic-modal.component';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestoreDocument, DocumentChangeAction } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { AlertController, NavController, ModalController } from '@ionic/angular';
@@ -11,6 +11,8 @@ import { ImageService } from '../../core/service/image.service';
 import { UserService } from '../../core/service/user.service';
 import { UserData } from '../../providers/user-data';
 import { Image, User } from '../../shared/interface/models';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 declare var $: any;
 
@@ -20,6 +22,42 @@ declare var $: any;
   styleUrls: ['./account.scss'],
 })
 export class AccountPage implements OnInit, AfterViewInit {
+
+  ages: number[] = [];
+  religions: string[] = ['Atheism', 'Buddhism', 'Christianity', 'Catholicism', 'Hinduism', 'Islam', 'Judaism', 'Other'];
+  kidsOptions: string[] = ['Yes', 'No', 'Maybe', 'No opinion'];
+  compareWith: any;
+  user: any = {};
+  userRef: AngularFirestoreDocument<any>;
+  username: string;
+  public selectedFile: File;
+  thisImage: Image = {};
+  messageRef: AngularFirestoreDocument<any>;
+  imageRef: AngularFirestoreDocument<any>;
+  tmpImages: any;
+  images: any[] = [];
+  imageUrls: string[];
+  file: any = {};
+  selectedAge: number;
+  selectedReligion: string;
+  selectedKids: string;
+  imageNameRef: any;
+
+  private _authState: any = null;
+
+  imagesTrackFn = (i, image) => image;
+
+
+  ageActionSheetOptions: any = {
+    header: 'Select your age'
+  };
+  religionActionSheetOptions: any = {
+    header: 'Select your religion'
+  };
+  kidsActionSheetOptions: any = {
+    header: 'Select your religion'
+  };
+
 
   public get authState(): any {
     return this._authState;
@@ -41,21 +79,6 @@ export class AccountPage implements OnInit, AfterViewInit {
     public modalController: ModalController,
   ) { }
 
-  user: any = {};
-  userRef: AngularFirestoreDocument<any>;
-  username: string;
-  public selectedFile: File;
-  thisImage: Image = {};
-  messageRef: AngularFirestoreDocument<any>;
-  imageRef: AngularFirestoreDocument<any>;
-  tmpImages: any;
-  images: any[];
-  imageUrls: string[];
-  file: any = {};
-
-  private _authState: any = null;
-
-  async;
   ngOnInit(): void {
     $('#file-upload').change(function () {
       const i = $(this).prev('label').clone();
@@ -63,7 +86,9 @@ export class AccountPage implements OnInit, AfterViewInit {
       $(this).prev('label').text(file);
     });
 
-
+    for (let i = 18; i < 99; i++) {
+      this.ages.push(i);
+    }
 
     this.userRef = this.userService.getUser(this.authService.authState.email);
     this.userRef.get().subscribe(doc => {
@@ -72,11 +97,13 @@ export class AccountPage implements OnInit, AfterViewInit {
       } else {
         console.log('Document data:', doc.data());
         this.user = doc.data();
-        this.loadPhotos();
       }
+      this.loadPhotos();
     }, (err => {
       // console.log('Error fetching document: ', err);
     }));
+
+
   }
 
   ngAfterViewInit() {
@@ -87,27 +114,21 @@ export class AccountPage implements OnInit, AfterViewInit {
     this.selectedFile = $('#file-upload')[0].files[0];
   }
 
-
   public loadPhotos(): void {
-    this.images = [];
     this.imageUrls = [];
-
     this.imageService
       .getUserImageList(this.authService.authState.email)
       .subscribe(imagesData => {
+        console.log("PicModalPage -> loadPhotos -> imagesData", imagesData)
         this.images = imagesData;
-        console.log("AccountPage -> loadPhotos -> imagesData", imagesData)
         for (const image of this.images) {
-          console.log("AccountPage -> loadPhotos -> image", image)
           const storage = firebase.storage();
-          const pathReference = storage.ref(`images/${this.authService.authState.email}/${image.photoName}`);
-          pathReference.getDownloadURL().then(url => {
-            const urlExist = this.imageUrls.filter(item => url === item);
-            if (urlExist.length !== 1) {
-              this.imageUrls.push(url);
-            }
+          const pathReference = storage.ref(`images/${this.authService.authState.email}/${image.image.photoName}`);
 
-          }).catch(function (error) {
+          pathReference.getDownloadURL().then(url => {
+            this.imageUrls.push(url);
+            console.log("AccountPage -> loadPhotos -> this.imageUrls$", this.imageUrls)
+          }).catch(error => {
             console.log('AccountPage -> loadPhotos -> error', error);
             // Handle any errors
           });
@@ -116,30 +137,28 @@ export class AccountPage implements OnInit, AfterViewInit {
   }
 
   public deleteImage(index: number): void {
-    const imageNameRef = this.imageService.getImages(this.authService.authState.email).subscribe(imagesData => {
-      this.imageService.deleteImage(imagesData[index].payload.doc.id, this.authService.authState.email);
+    this.imageNameRef = this.imageService.getImages(this.authService.authState.email).subscribe(payload => {
+      console.log('AccountPage -> deleteImage -> payload', payload[index].payload.doc.data().image.photoName);
+      this.imageService.deleteImage(payload[index].payload.doc.data().image.photoName, this.authService.authState.email);
 
       const storageRef = firebase.storage().ref();
-      const deleteRef = storageRef.child(`images/${this.user.email}/${this.images[index].images[0].photoName}`);
+      const deleteRef = storageRef.child(`images/${this.user.email}/${this.images[index].image.photoName}`);
       // Delete the file
       deleteRef.delete().then(function () {
         // File deleted successfully
-        this.images.splice(index, 1);
-        this.loadPhotos();
-      }).catch(function (error) {
+        // this.images.splice(index, 1);
+      }).catch(error => {
         console.log('AccountPage -> deleteImage -> error)', error);
-
       });
-    });
-    // delete document in collection
-
+    })
   }
+
 
   async launchPicModal() {
     const modal = await this.modalController.create({
       component: PicModalPage,
       componentProps: {
-        'email': this.authService.authState.email
+        email: this.authService.authState.email
       }
     });
     return await modal.present();
@@ -204,14 +223,14 @@ export class AccountPage implements OnInit, AfterViewInit {
             const storage = firebase.storage();
             const pathReference = storage.ref(`images/${this.authService.authState.email}/${this.selectedFile.name}`);
             pathReference.getDownloadURL().then(url => {
-              this.imageUrls.push(url);
+              // this.imageUrls.push(url);
             }).catch(function (error) {
               console.log('AccountPage -> loadPhotos -> error', error);
               // Handle any errors
             });
             const tmpImg: Image = {
               photoName: this.selectedFile.name
-            }
+            };
             this.imageService.addImageList(tmpImg, this.authService.authState.email);
           }
         });
@@ -239,7 +258,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   // clicking OK will update the username and display it
   // clicking Cancel will close the alert and do nothing
 
-  async changeAvatar() {
+  async updateAvatar() {
     const alert = await this.alertCtrl.create({
       header: 'Change Profile Picture',
       cssClass: 'globalAlert',
@@ -250,7 +269,6 @@ export class AccountPage implements OnInit, AfterViewInit {
           handler: (data: any) => {
             this.user.photoURL = data.url;
             this.updateUserData(this.user);
-            this.getUsername();
           }
         }
       ],
@@ -265,7 +283,7 @@ export class AccountPage implements OnInit, AfterViewInit {
     await alert.present();
   }
 
-  async changeUsername() {
+  async updateUsername() {
     const alert = await this.alertCtrl.create({
       header: 'Change Username',
       cssClass: 'globalAlert',
@@ -276,7 +294,6 @@ export class AccountPage implements OnInit, AfterViewInit {
           handler: (data: any) => {
             this.user.displayName = data.username;
             this.updateUserData(this.user);
-            this.getUsername();
           }
         }
       ],
@@ -290,7 +307,7 @@ export class AccountPage implements OnInit, AfterViewInit {
     });
     await alert.present();
   }
-  async changeTitle() {
+  async updateTitle() {
     const alert = await this.alertCtrl.create({
       header: 'Change Title',
       cssClass: 'globalAlert',
@@ -301,7 +318,6 @@ export class AccountPage implements OnInit, AfterViewInit {
           handler: (data: any) => {
             this.user.title = data.title;
             this.updateUserData(this.user);
-            this.getUsername();
           }
         }
       ],
@@ -316,82 +332,21 @@ export class AccountPage implements OnInit, AfterViewInit {
     await alert.present();
   }
 
-  async changeAge() {
-    const alert = await this.alertCtrl.create({
-      header: 'Change Age',
-      cssClass: 'globalAlert',
-      buttons: [
-        'Cancel',
-        {
-          text: 'Ok',
-          handler: (data: any) => {
-            this.user.age = data.age;
-            this.updateUserData(this.user);
-            this.getUsername();
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'text',
-          name: 'age',
-          placeholder: 'age'
-        }
-      ]
-    });
-    await alert.present();
-  }
-  async changeReligion() {
-    const alert = await this.alertCtrl.create({
-      header: 'Change Religion',
-      cssClass: 'globalAlert',
-      buttons: [
-        'Cancel',
-        {
-          text: 'Ok',
-          handler: (data: any) => {
-            this.user.religion = data.religion;
-            this.updateUserData(this.user);
-            this.getUsername();
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'text',
-          name: 'religion',
-          placeholder: 'Religion'
-        }
-      ]
-    });
-    await alert.present();
-  }
-  async changeHaveKids() {
-    const alert = await this.alertCtrl.create({
-      header: 'Change Have Kids',
-      cssClass: 'globalAlert',
-      buttons: [
-        'Cancel',
-        {
-          text: 'Ok',
-          handler: (data: any) => {
-            this.user.haveKids = data.haveKids;
-            this.updateUserData(this.user);
-            this.getUsername();
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'text',
-          name: 'haveKids',
-          placeholder: 'Have Kids?'
-        }
-      ]
-    });
-    await alert.present();
-  }
-  async changeHobbies() {
+  public updateAge(): void {
+    this.user.age = this.selectedAge;
+    this.updateUserData(this.user);
+  };
+
+  public updateReligion(): void {
+    this.user.religion = this.selectedReligion;
+    this.updateUserData(this.user);
+  };
+  public updateHaveKids(): void {
+    this.user.haveKids = this.selectedKids;
+    this.updateUserData(this.user);
+  };
+
+  async updateHobbies() {
     const alert = await this.alertCtrl.create({
       header: 'Change Hobbies',
       cssClass: 'globalAlert',
@@ -402,7 +357,6 @@ export class AccountPage implements OnInit, AfterViewInit {
           handler: (data: any) => {
             this.user.hobbies = data.hobbies;
             this.updateUserData(this.user);
-            this.getUsername();
           }
         }
       ],
@@ -416,9 +370,9 @@ export class AccountPage implements OnInit, AfterViewInit {
     });
     await alert.present();
   }
-  async changeDescription() {
+  async updateDescription() {
     const alert = await this.alertCtrl.create({
-      header: 'Change Description',
+      header: 'Update Description',
       cssClass: 'globalAlert',
       buttons: [
         'Cancel',
@@ -427,7 +381,6 @@ export class AccountPage implements OnInit, AfterViewInit {
           handler: (data: any) => {
             this.user.description = data.description;
             this.updateUserData(this.user);
-            this.getUsername();
           }
         }
       ],
@@ -446,15 +399,9 @@ export class AccountPage implements OnInit, AfterViewInit {
   }
 
 
-  // changePassword() {
-  //   console.log('Clicked to change password');
+  // updatePassword() {
+  //   console.log('Clicked to update password');
   // }
-
-  public logout() { }
-
-  public support() {
-    this.navCtrl.navigateForward('/support');
-  }
 
   async existsAlert() {
     const alert = await this.alertController.create({
@@ -465,7 +412,4 @@ export class AccountPage implements OnInit, AfterViewInit {
     await alert.present();
   }
 
-  // public upload(event: any) {
-  //   this.afStorage.upload('/upload/', event.target.files[0]);
-  // }
 }

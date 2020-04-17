@@ -14,37 +14,65 @@
       <img [src]="this.user.photoURL" alt="avatar">
       <h2>{{this.user.displayName}}</h2>
       <h5>{{this.user.title}}</h5>
-      <p><i><u>Age: </u></i><span class="span-4em">{{this.user.age}}</span></p>
-      <p><i><u>Religion: </u></i><span class="span-2em">{{this.user.religion}}</span></p>
-      <p><i><u>Have Kids? </u></i><span>{{this.user.haveKids}}</span></p>
-      <p><i><u>Hobbies: </u></i><span class="span-2em">{{this.user.hobbies}}</span></p>
-      <p><i><u>Description: </u></i><span>{{this.user.description}}</span></p>
-      <ion-list inset>
-        <ion-item lines="none">
-          <form>
-            <ion-button>
+      <p><i><u>Age: </u></i><span class="span-info">{{this.user.age}}</span></p>
+      <p><i><u>Religion: </u></i><span class="span-info">{{this.user.religion}}</span></p>
+      <p><i><u>Want Kids? </u></i><span class="span-info">{{this.user.haveKids}}</span></p>
+      <p><i><u>Hobbies: </u></i><span class="span-info">{{this.user.hobbies}}</span></p>
+      <p><i><u>Description: </u></i><span class="span-info">{{this.user.description}}</span></p>
+      <ion-list>
+        <ion-item (click)="updateAvatar()">Change Profile Picture</ion-item>
+        <ion-item (click)="updateUsername()">Change Username</ion-item>
+        <ion-item (click)="updateTitle()">Change Title</ion-item>
+        <ion-item>
+          <ion-label>Update Age</ion-label>
+          <ion-select [(ngModel)]="selectedAge" name="selectAge" [interfaceOptions]="ageActionSheetOptions"
+            (ionChange)="updateAge()" interface="action-sheet" multiple="false"
+            [placeholder]="selectedAge?selectedAge:'Tap to update'">
+            <ion-select-option *ngFor="let age of ages" value="{{age}}">{{age}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Update Religion</ion-label>
+          <ion-select [(ngModel)]="selectedReligion" name="selectReligion"
+            [interfaceOptions]="religionActionSheetOptions" (ionChange)="updateReligion()" interface="action-sheet"
+            multiple="false" [placeholder]="selectedReligion?selectedReligion:'Tap to update'">
+            <ion-select-option *ngFor="let religion of religions" value="{{religion}}">{{religion}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Update Have Kids</ion-label>
+          <ion-select [(ngModel)]="selectedKids" name="selectKids" [interfaceOptions]="kidsActionSheetOptions"
+            (ionChange)="updateHaveKids()" interface="action-sheet" multiple="false"
+            [placeholder]="selectedKids?selectedKids:'Tap to update'">
+            <ion-select-option *ngFor="let kidsOption of kidsOptions" value="{{kidsOption}}">{{kidsOption}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item (click)="updateHobbies()">Update Hobbies</ion-item>
+        <ion-item (click)="updateDescription()">Update Description</ion-item>
+
+      </ion-list>
+      <div class="buttons">
+        <ion-row>
+          <h3>Add Photo</h3>
+        </ion-row>
+        <ion-row>
+          <ion-col fxLayout="row" fxLayoutAlign="center center">
+            <a class="btn btn-primary button-hover">
               <label for="file-upload" class="custom-file-upload">
-                <i class="fa fa-cloud-upload"></i>Upload Image
+                <i class="fa fa-cloud-upload"></i>Select file
               </label>
               <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"
                 (change)="onFileChanged($event)">
-            </ion-button>
-          </form>
-          <!-- <ion-button color=" primary" (click)="fileInput.click()">Select Photo</ion-button> -->
-          <ion-button color="success" (click)="onUpload()">Upload</ion-button>
-        </ion-item>
-        <ion-item (click)="changeAvatar()">Change Profile Picture</ion-item>
-        <ion-item (click)="changeUsername()">Change Username</ion-item>
-        <ion-item (click)="changeTitle()">Change Title</ion-item>
-        <ion-item (click)="changeAge()">Change Age</ion-item>
-        <ion-item (click)="changeReligion()">Change Religion</ion-item>
-        <ion-item (click)="changeHaveKids()">Change Have Kids</ion-item>
-        <ion-item (click)="changeHobbies()">Change Hobbies</ion-item>
-        <ion-item (click)="changeDescription()">Change Description</ion-item>
-        <ion-item (click)="support()">Support</ion-item>
-        <ion-item (click)="logout()">Logout</ion-item>
-
-      </ion-list>
+            </a>
+          </ion-col>
+          <ion-col fxLayout="row" fxLayoutAlign="space-around center">
+            <a class="btn btn-secondary button-hover" color="success" (click)="onUpload()">Upload</a>
+          </ion-col>
+        </ion-row>
+      </div>
       <h1> Photos </h1>
       <section fxLayout="column" fxLayoutAlign="start center">
         <ion-button shape="round" fill="outline" color="primary" (click)="launchPicModal()">
@@ -52,10 +80,11 @@
         </ion-button>
       </section>
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column">
-        <div *ngFor="let image of imageUrls;index as i">
+        <div *ngFor="let image of imageUrls; index as i; trackBy: imagesTrackFn">
           <span>
-            <ion-icon name="close-outline" (click)="deleteImage(i)"></ion-icon>
+            <ion-icon class="cancel-icon" name="close-outline" (click)="deleteImage(i)"></ion-icon>
           </span>
+          {{image | async}}
           <img class="all-images" [src]="image">
         </div>
       </div>

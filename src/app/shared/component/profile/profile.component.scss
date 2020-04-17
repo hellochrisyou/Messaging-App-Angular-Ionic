@@ -19,6 +19,7 @@ ion-text {
 }
 ion-toolbar {
   height: 3rem;
+  top: 0;
 }
 ion-back-button {
   color: white;
@@ -37,7 +38,7 @@ toolbar,
   position: absolute;
   width: 100%;
   left: 0;
-  top: 5vh;
+  top: 0;
 }
 
 #profile-pic {

@@ -1,3 +1,4 @@
+@import "_button";
 .signup-logo {
   padding: 20px 0;
   min-height: 200px;
@@ -14,6 +15,14 @@
 
 h4 {
   text-align: center;
+}
+
+div.fxlayout-support {
+  height: 100vh;
+}
+
+ion-input {
+  border-bottom: 0.5px solid grey;
 }
 
 @media screen and (min-width: 1024px) {

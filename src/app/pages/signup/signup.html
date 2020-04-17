@@ -39,8 +39,17 @@
         </ion-text>
       </ion-list>
 
-      <div class="ion-padding">
-        <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Create</ion-button>
+      <div class="ion-padding buttons">
+        <ion-row>
+          <ion-col fxLayout="row" fxLayoutAlign="space-around center">
+            <a class="btn btn-primary button-hover" (click)="onSignup(signupForm)" type="submit" shape="round"
+              fill="outline">
+              Create</a>
+            <a class="btn btn-secondary button-hover" (click)="navigateLogin()" color="medium" shape="round"
+              fill="outline">Login</a>
+          </ion-col>
+        </ion-row>
+
       </div>
     </form>
 

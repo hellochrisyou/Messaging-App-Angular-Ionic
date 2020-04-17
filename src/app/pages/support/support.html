@@ -3,35 +3,23 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Support</ion-title>
+    <ion-title>Dating App</ion-title>
   </ion-toolbar>
-
 </ion-header>
-<div class="fxlayout-support" fxLayout="row" fxLayoutAlign="center center">
 
-  <ion-content>
-    <div class="support-logo">
-      <img src="assets/img/appicon.svg" alt="Ionic Logo">
+<ion-content fullscreen="true">
+  <div class="flex-container" fxLayout="column" fxLayoutAlign="center center">
+    <h4>Support Page</h4>
+    <h3>Click the link to email the Support Team</h3>
+    <div class="buttons">
+      <ion-row>
+        <ion-col fxLayout="row" fxLayoutAlign="space-around center">
+          <a class="btn btn-primary button-hover" href="mailto: chris@chrisyou.com?subject=Support&body=Message"
+            color="medium" shape="round" fill="outline">Send Email</a>
+        </ion-col>
+      </ion-row>
     </div>
+  </div>
 
-    <form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
-      <ion-list lines="none">
-        <ion-item>
-          <ion-label position="floating" color="primary">Enter your support message below</ion-label>
-          <ion-textarea [autofocus]="true" [(ngModel)]="supportMessage" name="supportQuestion"
-            #supportQuestion="ngModel" rows="6" required></ion-textarea>
-        </ion-item>
-      </ion-list>
 
-      <ion-text color="danger">
-        <p [hidden]="supportQuestion.valid || submitted === false" class="ion-padding-start">
-          Support message is required
-        </p>
-      </ion-text>
-
-      <div class="ion-padding" fxLayout="row" fxLayoutAlign="space-around center">
-        <ion-button shape="round" fill="outline" type="submit">Submit</ion-button>
-      </div>
-    </form>
-  </ion-content>
-</div>
+</ion-content>

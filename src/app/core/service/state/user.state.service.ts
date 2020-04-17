@@ -86,10 +86,15 @@ export class UserStateService {
         const tmpPeopleArr = [];
         this._users.forEach(users => users.forEach(user => {
             this.messagingService.getUserMessages(this.authService.authState.email, user.email).subscribe(userDocuments => {
-                if (userDocuments.length !== 0) {
-                    tmpInboxArr.push(user);
-                } else {
-                    tmpPeopleArr.push(user);
+                if (user.photoURL === undefined || user.photoURL === '' || user.photoURL === null) {
+                    user.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
+                }
+                if (user.email !== this.authService.authState.email) {
+                    if (userDocuments.length !== 0) {
+                        tmpInboxArr.push(user);
+                    } else {
+                        tmpPeopleArr.push(user);
+                    }
                 }
             });
         }));

@@ -1,3 +1,4 @@
+@import "_action-button";
 @import "_title-text";
 @import "_table";
 @import "_color";
@@ -12,10 +13,6 @@ tr td.mat-cell {
 
 .icon-pending {
     color: black;
-}
-
-h4 {
-    margin-left: 47%;
 }
 
 table {
@@ -71,6 +68,13 @@ h4 {
     margin-top: 5vh;
 }
 
+#proposal-flex-container {
+    background-image: url("../../../assets/img/bg/bg-4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
 @media screen and (max-width: 1024px) {
     tr.mat-header-row {
         background-color: transparent;
@@ -95,6 +99,11 @@ ion-title {
     color: white;
 }
 
+mat-label,
+input {
+    color: white;
+}
+
 @media screen and (max-width: 600px) {
     tr td.mat-cell {
         font-size: 0.55rem;
@@ -106,8 +115,5 @@ ion-title {
     .paginator--centered {
         display: flex;
         justify-content: center;
-    }
-    h4 {
-        margin-left: 35%;
     }
 }

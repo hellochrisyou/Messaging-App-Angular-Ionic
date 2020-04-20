@@ -1,10 +1,10 @@
 <ion-content fullscreen="true">
   <ion-header>
-    <ion-toolbar>
+    <mat-toolbar>
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/inbox">Back</ion-back-button>
       </ion-buttons>
-    </ion-toolbar>
+    </mat-toolbar>
   </ion-header>
   <ion-refresher slot="fixed" (ionRefresh)="reloadItems($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -16,15 +16,13 @@
   <ion-card class="speaker-card">
     <ion-card-header>
       <ion-item detail="false" lines="none" class="friend-item">
-
-        <ion-item id="h5-item" lines="none" fxLayout="column" fxLayoutAlign="center center">
-          <h5>{{otherEmail}}</h5>
-        </ion-item>
+        <h5>{{otherUserName}}</h5>
+        <h5>{{otherEmail}}</h5>
       </ion-item>
       <ion-item lines="none">
-        <ion-button shape="round" fill="outline" color="warning" (click)="sendMessage()">
+        <a class="oval" (click)="sendMessage()" matTooltip="Send Message" matTooltipPosition="before">
           Message
-        </ion-button>
+        </a>
       </ion-item>
       <ng-container *ngFor="let message of messagingStateService.messages$ | async; trackBy: messagingTrackFn">
         <div class="container">

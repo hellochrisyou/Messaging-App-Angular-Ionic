@@ -1,10 +1,10 @@
 <div id="other-profile-flex">
   <div fxLayout="column" fxLayoutAlign="space-around center">
-    <ion-toolbar>
+    <mat-toolbar>
       <ion-buttons slot="start">
         <ion-button ion-button (click)="closeModal()">Close</ion-button>
       </ion-buttons>
-    </ion-toolbar>
+    </mat-toolbar>
     <section id="inbox-profile-section">
       <div fxLayout="column" fxLayoutAlign="center center">
         <ion-text id=" profile-description" color="dark">
@@ -28,9 +28,9 @@
       </div>
     </section>
     <section fxLayout="column" fxLayoutAlign="start center">
-      <ion-button shape="round" fill="outline" color="primary" (click)="launchPicModal()">
-        View Photos
-      </ion-button>
+      <a class="oval" (click)="launchPicModal()">
+        <i class="fas fa-camera fa-2x"></i>
+      </a>
     </section>
   </div>
 </div>

@@ -17,6 +17,16 @@ h3 {
   font-size: 1.5rem;
 }
 
+.button-hover {
+  color: white;
+}
+
+.flex-container {
+  background-image: url("../../../assets/img/bg/bg-5.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
 @media screen and (max-width: 600px) {
   h4 {
     margin-top: 5vh;

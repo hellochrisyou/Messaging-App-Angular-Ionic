@@ -1,3 +1,5 @@
+@import "_action-button";
+
 ion-card {
   width: 350px;
   margin: 0 auto;
@@ -29,11 +31,20 @@ p {
   }
 }
 
+h5 {
+  margin: 0 auto;
+}
+
 i {
   font-size: 0.725rem;
   color: darkgrey;
 }
-
+a.oval {
+  padding-left: 4%;
+  font-size: 0.7rem;
+  padding-top: 5%;
+  margin: 0 auto;
+}
 #h5-item {
   margin: 0 auto;
 }
@@ -53,6 +64,7 @@ i {
 .chat-bubble {
   background: #dedede;
   border-radius: 0.4em;
+  min-width: 45%;
   font-size: 14px;
   line-height: 1.4em;
   margin: 12px 24px;

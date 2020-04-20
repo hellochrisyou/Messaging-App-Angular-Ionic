@@ -94,10 +94,14 @@ ion-title {
 }
 
 ion-title#menu-title {
-  color: black;
+  color: white;
 }
 
 main {
   min-width: 100vw;
   height: 100%;
+}
+
+ion-label {
+  text-align: center;
 }

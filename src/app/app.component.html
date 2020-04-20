@@ -3,27 +3,63 @@
     <ng-container *ngIf="authService.isAuthenticated">
       <ion-menu role="navigation" contentId="main-content">
         <ion-header>
-          <ion-toolbar>
+          <mat-toolbar>
             <ion-title id="menu-title">Menu</ion-title>
-          </ion-toolbar>
+          </mat-toolbar>
         </ion-header>
         <ion-content>
           <ion-list lines="none">
             <ion-list-header>
               Dating
             </ion-list-header>
-            <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
-              <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="forward" detail="false">
-                <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
+            <ion-menu-toggle autoHide="false">
+              <ion-item button (click)="navigateInbox()" detail="false">
+                <i class="far fa-envelope"></i>
                 <ion-label>
-                  {{p.title}}
+                  Inbox
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle autoHide="false">
+              <ion-item button (click)="navigatePeople()" detail="false">
+                <i class="fas fa-user-friends"></i>
+                <ion-label>
+                  People
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle autoHide="false">
+              <ion-item button (click)="navigateProposal()" detail="false">
+                <i class="fas fa-lightbulb"></i>
+                <ion-label>
+                  Proposal
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle autoHide="false">
+              <ion-item button (click)="navigateAccount()" detail="false">
+                <i class="far fa-user"></i>
+                <ion-label>
+                  Account
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle autoHide="false">
+              <ion-item button (click)="navigateSupport()" detail="false">
+                <i class="fas fa-question"></i>
+                <ion-label>
+                  Support
                 </ion-label>
               </ion-item>
             </ion-menu-toggle>
 
             <ion-menu-toggle autoHide="false">
               <ion-item button (click)="logout()" detail="false">
-                <ion-icon slot="start" name="log-out-outline"></ion-icon>
+                <i class="fas fa-sign-out-alt"></i>
                 <ion-label>
                   Logout
                 </ion-label>

@@ -1,87 +1,94 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <mat-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button>
+        <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
+      </ion-menu-button>
     </ion-buttons>
     <ion-title class="title-padding">Dating App</ion-title>
-  </ion-toolbar>
+  </mat-toolbar>
 </ion-header>
-<h4>Proposals</h4>
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab label="Your Proposals">
-    <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
-      <ng-container *ngIf="theirProposals.length === 0">
-        <h3>None</h3>
-      </ng-container>
-      <mat-form-field [hidden]="myProposals.length === 0">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyTheirFilter($event)" placeholder="Search">
-      </mat-form-field>
-      <div class="table-wrapper mat-elevation-z8">
-        <table mat-table [dataSource]="theirProposalDataSource" matSort [hidden]="theirProposals.length === 0">
 
-          <ng-container matColumnDef="proposalDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-            <td mat-cell *matCellDef="let row"> {{row.proposalDate| date: 'short'}} </td>
+<ion-content fullscreen="true">
+  <div id="proposal-flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="center" fxLayoutAlign.lt-sm="center">
+    <h4>Proposal</h4>
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Your Proposals">
+        <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
+          <ng-container *ngIf="theirProposals.length === 0">
+            <h3>None</h3>
           </ng-container>
+          <mat-form-field [hidden]="myProposals.length === 0">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyTheirFilter($event)" placeholder="Search">
+          </mat-form-field>
+          <div class="table-wrapper mat-elevation-z8">
+            <table mat-table [dataSource]="theirProposalDataSource" matSort [hidden]="theirProposals.length === 0">
 
-          <ng-container matColumnDef="sender">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let row"> {{row.sender}} </td>
+              <ng-container matColumnDef="proposalDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let row"> {{row.proposalDate| date: 'short'}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="sender">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.sender}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.status}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="option">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
+                <td mat-cell *matCellDef="let row; let i=index">
+                  <mat-icon (click)="options(i)">subject</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr class="table-header" mat-header-row *matHeaderRowDef="theirDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: theirDisplayedColumns"></tr>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Your Accepted Proposals">
+        <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
+          <ng-container *ngIf="myProposals.length === 0">
+            <h3>None</h3>
           </ng-container>
+          <mat-form-field [hidden]="myProposals.length === 0">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyMyFilter($event)" placeholder="Search">
+          </mat-form-field>
+          <div class="table-wrapper mat-elevation-z8">
+            <table mat-table [dataSource]="myProposalDataSource" matSort [hidden]="myProposals.length === 0">
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
-            <td mat-cell *matCellDef="let row">
-              {{row.status}}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="option">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
-            <td mat-cell *matCellDef="let row; let i=index">
-              <mat-icon (click)="options(i)">subject</mat-icon>
-            </td>
-          </ng-container>
+              <ng-container matColumnDef="proposalDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let row"> {{row.proposalDate| date: 'short'}} </td>
+              </ng-container>
 
-          <tr class="table-header" mat-header-row *matHeaderRowDef="theirDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: theirDisplayedColumns"></tr>
-        </table>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab label="Your Accepted Proposals">
-    <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
-      <ng-container *ngIf="myProposals.length === 0">
-        <h3>None</h3>
-      </ng-container>
-      <mat-form-field [hidden]="myProposals.length === 0">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyMyFilter($event)" placeholder="Search">
-      </mat-form-field>
-      <div class="table-wrapper mat-elevation-z8">
-        <table mat-table [dataSource]="myProposalDataSource" matSort [hidden]="myProposals.length === 0">
+              <ng-container matColumnDef="sender">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.sender}} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="proposalDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-            <td mat-cell *matCellDef="let row"> {{row.proposalDate| date: 'short'}} </td>
-          </ng-container>
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+                <td mat-cell *matCellDef="let row; let i=index">
+                  <mat-icon class="icon-house" (click)="showAddress(i)">home</mat-icon>
+                </td>
+              </ng-container>
 
-          <ng-container matColumnDef="sender">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let row"> {{row.sender}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="address">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-            <td mat-cell *matCellDef="let row; let i=index">
-              <mat-icon class="icon-house" (click)="showAddress(i)">home</mat-icon>
-            </td>
-          </ng-container>
-
-          <tr class="table-header" mat-header-row *matHeaderRowDef="myDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: myDisplayedColumns"></tr>
-        </table>
-      </div>
-    </div>
-  </mat-tab>
-</mat-tab-group>
+              <tr class="table-header" mat-header-row *matHeaderRowDef="myDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: myDisplayedColumns"></tr>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</ion-content>

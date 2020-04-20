@@ -47,14 +47,16 @@ export class InboxComponent implements OnInit {
 
   }
 
-  public navigateMessages(userEmail: string) {
+  public navigateMessages(userEmail: string, displayNameArg: string) {
+    console.log("InboxComponent -> navigateMessages -> displayNameArg", displayNameArg)
     this.messagingStateService.setMessageUser(this.authService.authState.email, userEmail);
     const navigationExtras = {
       state: {
-        email: userEmail,
+        displayName: displayNameArg,
+        email: userEmail
       }
     };
-    this.navCtrl.navigateForward(['/inbox/inbox-details'], navigationExtras);
+    this.navCtrl.navigateForward(['app/tabs/inbox/inbox-details'], navigationExtras);
   }
 
   public navigateProfile(userEmail: string) {
@@ -62,7 +64,6 @@ export class InboxComponent implements OnInit {
   }
 
   async profileModal(userEmail: string) {
-    console.log("InboxComponent -> profileModal -> userEmail", userEmail)
     const modal = await this.modalController.create({
       component: ProfileModal,
       cssClass: 'profileModal',

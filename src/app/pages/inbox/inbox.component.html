@@ -1,37 +1,36 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <mat-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
     </ion-buttons>
     <ion-title class="title-padding">Dating App</ion-title>
-  </ion-toolbar>
+  </mat-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <h4>Inbox</h4>
-  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start center">
-    <shared-card-page *ngFor="let user of userStateService.inboxUsers$ | async; trackBy: usersTrackFn" [user]="user"
-      [option]="status">
-      <ng-template #messagesBtnTemplate let-i=index>
-        <ion-button mat-button (click)="navigateMessages(user.email)" shape="round" fill="outline"
-          matTooltip="View Messages" matTooltipPosition="below">
-          <ion-icon matTooltip="Message" matTooltipPosition="before" name="mail-outline">
-          </ion-icon>
-        </ion-button>
-      </ng-template>
-      <ng-template #profileBtnTemplate let-i=index>
-        <ion-button mat-button (click)="navigateProfile(user.email)" shape="round" fill="outline"
-          matTooltip="View Profile" matTooltipPosition="below">
-          <ion-icon name="reader-outline"></ion-icon>
-        </ion-button>
-      </ng-template>
-      <ng-template #proposalBtnTemplate let-i=index>
-        <ion-button mat-button (click)="submitProposal(user.displayName, user.email)" shape="round" fill="outline"
-          matTooltip="Submit Proposal" matTooltipPosition="below">
-          <ion-icon name="bulb-outline"></ion-icon>
-        </ion-button>
-      </ng-template>
-    </shared-card-page>
+  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="center" fxLayoutAlign.lt-sm="center">
+    <h4>Inbox</h4>
+    <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start">
+
+      <shared-card-page *ngFor="let user of userStateService.inboxUsers$ | async; trackBy: usersTrackFn" [user]="user"
+        [option]="status">
+        <ng-template #messagesBtnTemplate let-i=index>
+          <a class="oval" (click)="navigateMessages(user.email, user.displayName)" matTooltip="View Messages"
+            matTooltipPosition="below">
+            <i class="fa fa-inbox fa-2x" aria-hidden="true"></i>
+          </a>
+        </ng-template>
+        <ng-template #profileBtnTemplate let-i=index>
+          <a class="oval" (click)="navigateProfile(user.email)" matTooltip="View Profile" matTooltipPosition="below">
+            <i class="fas fa-user-friends fa-2x"></i>
+          </a>
+        </ng-template>
+        <ng-template #proposalBtnTemplate let-i=index>
+          <a class="oval" (click)="submitProposal(user.displayName, user.email)" matTooltip="Submit Proposal"
+            matTooltipPosition="below">
+            <i class="fas fa-lightbulb fa-2x"></i> </a>
+        </ng-template>
+      </shared-card-page>
+    </div>
   </div>
-  <!-- </ng-container> -->
 </ion-content>

@@ -42,6 +42,10 @@ ion-button {
   margin: 0 auto;
 }
 
+.buttons {
+  margin-top: 5vh;
+}
+
 .fa-google {
   background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg)
     73% 55%/150% 150% no-repeat;
@@ -81,6 +85,10 @@ a:active {
 
 h4#google-sign-in {
   font-size: 2rem;
+}
+
+.fxlayout-support {
+  background-image: url("../../../assets/img/bg/bg-1.jpg");
 }
 
 @media screen and (max-width: 550px) {

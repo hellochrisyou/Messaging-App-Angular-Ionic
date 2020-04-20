@@ -45,10 +45,11 @@ export class PeoplePage implements OnInit {
   //   ionViewDidEnter() {
   //   }
 
-  async sendMessage(userEmail: string) {
+  async sendMessage(userEmail: string, displayName: string) {
     const alert = await this.alertCtrl.create({
       header: 'Send Message to:',
-      // subHeader: this.users[index].payload.doc.data().displayName,
+
+      subHeader: displayName,
       buttons: [
         {
           text: 'Cancel',

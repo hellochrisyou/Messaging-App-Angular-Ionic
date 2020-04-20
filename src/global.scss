@@ -61,7 +61,9 @@ ion-title {
   transform: none !important;
   width: 100% !important;
 }
-
+.mat-toolbar {
+  background-image: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(153, 0, 0, 1) 100%);
+}
 .toolbar-title {
   text-align: center;
 }
@@ -149,10 +151,13 @@ ion-menu-button {
   color: whitesmoke;
 }
 
-ion-button {
-  color: aqua !important;
+.mat-tab-label-content {
+  color: white;
 }
 
+h4 {
+  margin: 0 auto;
+}
 @media screen and (max-width: 600px) {
   ion-title.title-padding {
     padding-right: 25vw;

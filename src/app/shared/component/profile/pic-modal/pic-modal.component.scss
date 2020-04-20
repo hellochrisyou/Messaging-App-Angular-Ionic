@@ -87,3 +87,9 @@ h3 {
     top: 5vh;
   }
 }
+
+@media screen and (max-width: 600px) {
+  #modal-toolbar {
+    margin-top: 5vh !important;
+  }
+}

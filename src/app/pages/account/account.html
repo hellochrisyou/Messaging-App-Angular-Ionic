@@ -1,30 +1,34 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <mat-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="title-padding">Dating App</ion-title>
-  </ion-toolbar>
+  </mat-toolbar>
 </ion-header>
-<div class="fxlayout-support" fxLayout="row" fxLayoutAlign="space-around center">
 
-  <ion-content>
+<ion-content>
+  <div class="fxlayout-support" fxLayout="row" fxLayoutAlign="space-around center">
 
     <div class="ion-padding-top ion-text-center">
       <img [src]="this.user.photoURL" alt="avatar">
       <h2>{{this.user.displayName}}</h2>
       <h5>{{this.user.title}}</h5>
-      <p><i><u>Age: </u></i><span class="span-info">{{this.user.age}}</span></p>
-      <p><i><u>Religion: </u></i><span class="span-info">{{this.user.religion}}</span></p>
-      <p><i><u>Want Kids? </u></i><span class="span-info">{{this.user.haveKids}}</span></p>
-      <p><i><u>Hobbies: </u></i><span class="span-info">{{this.user.hobbies}}</span></p>
-      <p><i><u>Description: </u></i><span class="span-info">{{this.user.description}}</span></p>
+      <p><span class="start-text">Age:</span><span class="span-info">{{this.user.age}}</span></p>
+      <p><span class="start-text">Religion:</span><span class="span-info">{{this.user.religion}}</span></p>
+      <p><span class="start-text">Want Kids?</span><span class="span-info">{{this.user.haveKids}}</span></p>
+      <p><span class="start-text">Hobbies:</span><span class="span-info">{{this.user.hobbies}}</span></p>
+      <div><span class="start-text">Description:</span>
+        <div id="description-info">{{this.user.description}}</div>
+      </div>
+      <br>
+      <br>
       <ion-list>
         <ion-item (click)="updateAvatar()">Change Profile Picture</ion-item>
         <ion-item (click)="updateUsername()">Change Username</ion-item>
         <ion-item (click)="updateTitle()">Change Title</ion-item>
         <ion-item>
-          <ion-label>Update Age</ion-label>
+          <ion-label class="start-text">Update Age</ion-label>
           <ion-select [(ngModel)]="selectedAge" name="selectAge" [interfaceOptions]="ageActionSheetOptions"
             (ionChange)="updateAge()" interface="action-sheet" multiple="false"
             [placeholder]="selectedAge?selectedAge:'Tap to update'">
@@ -33,7 +37,7 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label>Update Religion</ion-label>
+          <ion-label class="start-text">Update Religion</ion-label>
           <ion-select [(ngModel)]="selectedReligion" name="selectReligion"
             [interfaceOptions]="religionActionSheetOptions" (ionChange)="updateReligion()" interface="action-sheet"
             multiple="false" [placeholder]="selectedReligion?selectedReligion:'Tap to update'">
@@ -42,7 +46,7 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label>Update Have Kids</ion-label>
+          <ion-label class="start-text">Update Have Kids</ion-label>
           <ion-select [(ngModel)]="selectedKids" name="selectKids" [interfaceOptions]="kidsActionSheetOptions"
             (ionChange)="updateHaveKids()" interface="action-sheet" multiple="false"
             [placeholder]="selectedKids?selectedKids:'Tap to update'">
@@ -76,9 +80,9 @@
       <h1> Photos </h1>
       <br>
       <section fxLayout="column" fxLayoutAlign="start center">
-        <ion-button shape="round" fill="outline" color="primary" (click)="launchPicModal()">
-          View Photos
-        </ion-button>
+        <a class="oval" color="primary" (click)="launchPicModal()">
+          <i class="fas fa-camera fa-2x"></i>
+        </a>
       </section>
       <br>
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column">
@@ -90,6 +94,5 @@
         </div>
       </div>
     </div>
-  </ion-content>
-
-</div>
+  </div>
+</ion-content>

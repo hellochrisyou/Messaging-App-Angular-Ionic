@@ -94,7 +94,27 @@ export class AppComponent implements OnInit {
     });
   }
 
-  logout() {
+  public navigateInbox(): void {
+    this.router.navigateByUrl('app/tabs/inbox');
+  }
+
+  public navigatePeople(): void {
+    this.router.navigateByUrl('app/tabs/people');
+  }
+
+  public navigateProposal(): void {
+    this.router.navigateByUrl('app/tabs/proposal');
+  }
+
+  public navigateAccount(): void {
+    this.router.navigateByUrl('app/tabs/account');
+  }
+
+  public navigateSupport(): void {
+    this.router.navigateByUrl('app/tabs/support');
+  }
+
+  public logout(): void {
     this.authService.signOut();
   }
 

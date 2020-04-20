@@ -1,31 +1,33 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <mat-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button>
+        <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
+      </ion-menu-button>
     </ion-buttons>
     <ion-title class="title-padding">Dating App</ion-title>
-  </ion-toolbar>
+  </mat-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <h4>People</h4>
-  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start center">
-    <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"
-      [user]="user">
-      <ng-template #messagesBtnTemplate let-i=index>
-        <ion-button shape="round" fill="outline" (click)="sendMessage(user.email)" matTooltip="Send Message"
-          matTooltipPosition="before">
-          <ion-icon name="mail-outline">
-          </ion-icon>
-        </ion-button>
-      </ng-template>
-      <ng-template #profileBtnTemplate let-i=index>
-        <ion-button shape="round" fill="outline" (click)="navigateProfile(user.email)" matTooltip="View Profile"
-          matTooltipPosition="after">
-          <ion-icon name="reader-outline">
-          </ion-icon>
-        </ion-button>
-      </ng-template>
-    </shared-card-page>
+  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="center" fxLayoutAlign.lt-sm="center">
+    <h4>People</h4>
+    <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start">
+      <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"
+        [user]="user">
+        <ng-template #messagesBtnTemplate let-i=index>
+          <a class="oval" (click)="sendMessage(user.email, user.displayName)" matTooltip="Send Message"
+            matTooltipPosition="below">
+            <i class="far fa-envelope fa-2x"></i>
+          </a>
+        </ng-template>
+        <ng-template #profileBtnTemplate let-i=index>
+          <a class="oval" (click)="navigateProfile(user.email)" matTooltip="View Profile" matTooltipPosition="below">
+            <i class="fas fa-user-friends fa-2x"></i>
+
+          </a>
+        </ng-template>
+      </shared-card-page>
+    </div>
   </div>
 </ion-content>

@@ -1,3 +1,10 @@
+@import "_action-button";
+
+.flex-container {
+    background-image: url("../../../assets/img/bg/bg-3.jpeg");
+    height: 100vh;
+}
+
 @media screen and (min-width: 601px) {
     shared-card-page {
         flex-grow: 1;

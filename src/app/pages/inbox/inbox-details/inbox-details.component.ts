@@ -24,6 +24,7 @@ export class InboxDetailsComponent implements AfterContentInit {
   date: string;
   messages: any[] = [];
   messageRef: AngularFirestoreDocument<any>;
+  otherUserName: string;
   otherEmail: string;
   sender: string;
   thisMessage: Message = {};
@@ -47,6 +48,7 @@ export class InboxDetailsComponent implements AfterContentInit {
   ) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
+        this.otherUserName = this.router.getCurrentNavigation().extras.state.displayName;
         this.otherEmail = this.router.getCurrentNavigation().extras.state.email;
       }
     });
@@ -86,7 +88,7 @@ export class InboxDetailsComponent implements AfterContentInit {
 
     const alert = await this.alertCtrl.create({
       header: 'Send Message to:',
-      // subHeader: this.users[index].payload.doc.data().displayName,
+      subHeader: this.otherUserName,
       buttons: [
         {
           text: 'Cancel',

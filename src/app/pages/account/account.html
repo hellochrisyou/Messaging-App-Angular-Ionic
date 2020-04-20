@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Account</ion-title>
+    <ion-title class="title-padding">Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
 <div class="fxlayout-support" fxLayout="row" fxLayoutAlign="space-around center">
@@ -62,7 +62,7 @@
           <ion-col fxLayout="row" fxLayoutAlign="center center">
             <a class="btn btn-primary button-hover">
               <label for="file-upload" class="custom-file-upload">
-                <i class="fa fa-cloud-upload"></i>Select file
+                <i class="fa fa-cloud-upload"></i>{{selectedFileName}}
               </label>
               <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"
                 (change)="onFileChanged($event)">
@@ -74,17 +74,18 @@
         </ion-row>
       </div>
       <h1> Photos </h1>
+      <br>
       <section fxLayout="column" fxLayoutAlign="start center">
         <ion-button shape="round" fill="outline" color="primary" (click)="launchPicModal()">
           View Photos
         </ion-button>
       </section>
+      <br>
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column">
-        <div *ngFor="let image of imageUrls; index as i; trackBy: imagesTrackFn">
+        <div *ngFor="let image of imageUrls; index as i">
           <span>
             <ion-icon class="cancel-icon" name="close-outline" (click)="deleteImage(i)"></ion-icon>
           </span>
-          {{image | async}}
           <img class="all-images" [src]="image">
         </div>
       </div>

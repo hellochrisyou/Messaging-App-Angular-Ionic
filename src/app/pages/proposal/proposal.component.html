@@ -3,22 +3,85 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Dating App</ion-title>
+    <ion-title class="title-padding">Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
-<div class="flex-container" fxLayout="column" fxLayoutAlign="center center">
-  <h4>Proposals</h4>
-  <ng-container *ngIf="pendingProposals.length === 0">
-    <h3>None</h3>
-  </ng-container>
-</div>
-<ng-container *ngIf="pendingProposals.length > 0">
-  <base-table [columnObjects]="PEND_PROPOSAL_COL_OBJ" [colDisplay]="PEND_PROPOSAL_DISPLAY"
-    [dataArray]="pendingProposals">
-    <ng-template #buttonTemplate let-i=index>
-      <mat-icon id="accept-icon" (click)="actionProposal(i)" matTooltip="Act on Proposal" matTooltipPosition="before">
-        arrow_right_alt
-      </mat-icon>
-    </ng-template>
-  </base-table>
-</ng-container>
+<h4>Proposals</h4>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Your Proposals">
+    <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
+      <ng-container *ngIf="theirProposals.length === 0">
+        <h3>None</h3>
+      </ng-container>
+      <mat-form-field [hidden]="myProposals.length === 0">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyTheirFilter($event)" placeholder="Search">
+      </mat-form-field>
+      <div class="table-wrapper mat-elevation-z8">
+        <table mat-table [dataSource]="theirProposalDataSource" matSort [hidden]="theirProposals.length === 0">
+
+          <ng-container matColumnDef="proposalDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let row"> {{row.proposalDate| date: 'short'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="sender">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.sender}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.status}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="option">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
+            <td mat-cell *matCellDef="let row; let i=index">
+              <mat-icon (click)="options(i)">subject</mat-icon>
+            </td>
+          </ng-container>
+
+          <tr class="table-header" mat-header-row *matHeaderRowDef="theirDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: theirDisplayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Your Accepted Proposals">
+    <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
+      <ng-container *ngIf="myProposals.length === 0">
+        <h3>None</h3>
+      </ng-container>
+      <mat-form-field [hidden]="myProposals.length === 0">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyMyFilter($event)" placeholder="Search">
+      </mat-form-field>
+      <div class="table-wrapper mat-elevation-z8">
+        <table mat-table [dataSource]="myProposalDataSource" matSort [hidden]="myProposals.length === 0">
+
+          <ng-container matColumnDef="proposalDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let row"> {{row.proposalDate| date: 'short'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="sender">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.sender}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+            <td mat-cell *matCellDef="let row; let i=index">
+              <mat-icon class="icon-house" (click)="showAddress(i)">home</mat-icon>
+            </td>
+          </ng-container>
+
+          <tr class="table-header" mat-header-row *matHeaderRowDef="myDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: myDisplayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

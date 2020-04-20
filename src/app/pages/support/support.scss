@@ -16,3 +16,9 @@ h3 {
   top: 15vh;
   font-size: 1.5rem;
 }
+
+@media screen and (max-width: 600px) {
+  h4 {
+    margin-top: 5vh;
+  }
+}

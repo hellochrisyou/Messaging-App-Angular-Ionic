@@ -22,12 +22,15 @@ export class AuthService {
   public get user(): Observable<User> {
     return this._user;
   }
+
   public set user(value: Observable<User>) {
     this._user = value;
   }
+
   public get authState(): any {
     return this._authState;
   }
+
   public set authState(value: any) {
     this._authState = value;
   }
@@ -149,14 +152,6 @@ export class AuthService {
           this.userService.createUser(credential.user);
         } else {
           console.log('Document data:', doc.data());
-          this.authState.email = doc.data().email;
-          this.authState.displayName = doc.data().displayName;
-          this.authState.photoURL = doc.data().photoURL;
-          this.authState.title = doc.data().title;
-          this.authState.uId = doc.data().uId;
-          if (doc.data().photoUrl === undefined) {
-            this.authState.photoURL = 'https://www.kindpng.com/picc/m/285-2855863_a-festival-celebrating-tractors-round-profile-picture-placeholder.png';
-          }
         }
       }, (err => {
         // console.log('Error fetching document: ', err);
@@ -230,8 +225,7 @@ export class AuthService {
 
   public signOut() {
     this.afAuth.auth.signOut().then(() => {
-      this.confirmToast('You are logged out');
-      this.navCtrl.navigateForward(['/login']);
+      location.reload();
     });
   }
 
@@ -244,7 +238,9 @@ export class AuthService {
         this.confirmToast('You are signed in with your email account');
         this.navCtrl.navigateForward('/app/tabs/people');
       })
-      .catch(err => { });
+      .catch(err => {
+        this.failToast(err);
+      });
   }
 
   async errorProviderAlert() {
@@ -267,6 +263,15 @@ export class AuthService {
   public async confirmToast(messageArg: string) {
     const toast = await this.alertController.create({
       header: 'Success',
+      message: messageArg,
+      cssClass: 'center-alert',
+      buttons: ['OK']
+    });
+    toast.present();
+  }
+  public async failToast(messageArg: string) {
+    const toast = await this.alertController.create({
+      header: 'Failed Login',
       message: messageArg,
       cssClass: 'center-alert',
       buttons: ['OK']

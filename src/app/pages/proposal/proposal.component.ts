@@ -1,5 +1,5 @@
 import { User } from 'firebase';
-import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Proposal } from '../../shared/interface/models';
 import { FILTER_PENDING_PROPOSALS } from './proposal.util';
 import { UserStateService } from '../../core/service/state/user.state.service';
@@ -10,6 +10,9 @@ import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { PEND_PROPOSAL_COL_OBJ, PEND_PROPOSAL_DISPLAY } from '../../shared/const/columns.const';
 import { AlertController, ToastController } from '@ionic/angular';
 import { GET_DATE } from '../inbox/inbox.util';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'proposal',
@@ -20,33 +23,33 @@ import { GET_DATE } from '../inbox/inbox.util';
 })
 export class ProposalComponent implements OnInit {
 
-  proposalRef: AngularFirestoreDocument<any>;
-  private _pendingProposals: Proposal[] = [];
+  today = new Date();
+  theirDisplayedColumns: string[] = ['proposalDate', 'sender', 'status', 'option'];
+  myDisplayedColumns: string[] = ['proposalDate', 'sender', 'address'];
 
+
+  index: number;
+  theirProposals: Proposal[] = [];
+  myProposals: Proposal[] = [];
+  theirProposalDataSource: MatTableDataSource<any>;
+  myProposalDataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator, { static: true }) theirPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) theirSort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) myPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) mySort: MatSort;
   readonly PEND_PROPOSAL_COL_OBJ = PEND_PROPOSAL_COL_OBJ;
   readonly PEND_PROPOSAL_DISPLAY = PEND_PROPOSAL_DISPLAY;
 
-  @Input()
-  public get pendingProposals(): any[] {
-    return this._pendingProposals;
-  }
-  public set pendingProposals(value: any[]) {
-    this._pendingProposals = value;
-    this.cdr.markForCheck();
-  }
-
   constructor(
-    private proposalStateService: ProposalsStateService,
     private proposalService: ProposalService,
     public alertCtrl: AlertController,
     public toastController: ToastController,
-    private userStateService: UserStateService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    public alertController: AlertController,
+    private changeDetectorRefs: ChangeDetectorRef
   ) {
-    this.proposalService.getUserProposals(this.authService.authState.email).subscribe((proposalsData: any[]) => {
-      this.pendingProposals = proposalsData;
-    });
+
   }
 
   ionViewDidEnter() {
@@ -54,36 +57,32 @@ export class ProposalComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.getUserProposal();
+    this.getUserAcceptedProposals();
+  }
+  public getUserProposal(): void {
+    this.proposalService.getUserProposals(this.authService.authState.email).subscribe((proposalsData: any[]) => {
+      this.theirProposals = proposalsData;
+      for (let i = 0; i < this.theirProposals.length; i++) {
+        if (this.theirProposals[i] && this.theirProposals[i].proposalDate > this.today) {
+          this.theirProposals.splice(i, 1);
+        }
+      }
+      this.refreshTheirProposals(this.theirProposals);
+    });
   }
 
-  async actionProposal(index: number) {
-
-    const alert = await this.alertCtrl.create({
-      header: 'Action on Proposal',
-      cssClass: 'globalAlert',
-      buttons: [
-        {
-          text: 'Accept',
-          handler: () => {
-            this.proposalService.getUserProposalsSnapshot(this.authService.authState.email).subscribe((proposalsData: any[]) => {
-              this.proposalService.updateProposal('Accepted', this.authService.authState.email, proposalsData[index].payload.doc.id);
-              this.toast('Your have accepted this proposal');
-            });
-          }
-        },
-        {
-          text: 'Reject',
-          handler: () => {
-            this.proposalService.getUserProposalsSnapshot(this.authService.authState.email).subscribe((proposalsData: any[]) => {
-              this.proposalService.updateProposal('Rejected', this.authService.authState.email, proposalsData[index].payload.doc.id);
-              this.toast('Your have rejected this proposal');
-            });
-          }
+  public getUserAcceptedProposals(): void {
+    this.proposalService.getUserAcceptedProposals(this.authService.authState.email).subscribe((proposalsData: any[]) => {
+      this.myProposals = proposalsData;
+      console.log("ProposalComponent -> getUserAcceptedProposals ->  this.myProposals", this.myProposals)
+      for (let i = 0; i < this.myProposals.length; i++) {
+        if (this.myProposals[i] && this.myProposals[i].proposalDate > this.today) {
+          this.myProposals.splice(i, 1);
         }
-      ]
+      }
+      this.refreshMyProposals(this.myProposals);
     });
-    await alert.present();
   }
 
   public async toast(messageArg: string) {
@@ -103,5 +102,91 @@ export class ProposalComponent implements OnInit {
       ]
     });
     toast.present();
+  }
+  public refreshTheirProposals(dataArray: any): void {
+    this.theirProposalDataSource = new MatTableDataSource<any>(dataArray);
+    this.theirProposalDataSource.paginator = this.theirPaginator;
+    this.theirProposalDataSource.sort = this.theirSort;
+    this.changeDetectorRefs.detectChanges();
+  }
+
+  public refreshMyProposals(dataArray: any): void {
+    this.myProposalDataSource = new MatTableDataSource<any>(dataArray);
+    this.myProposalDataSource.paginator = this.myPaginator;
+    this.myProposalDataSource.sort = this.mySort;
+    this.changeDetectorRefs.detectChanges();
+  }
+
+  public changeStatus(event: string, index: number) {
+    this.proposalService.getUserProposalsSnapshot(this.authService.authState.email).subscribe((proposalsData: any[]) => {
+      this.proposalService.updateProposal(event, this.authService.authState.email, proposalsData[index].payload.doc.id);
+    });
+    this.proposalService.acceptProposal(this.theirProposals[index], this.theirProposals[index].sender);
+  }
+
+  async options(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Address',
+      message: this.theirProposals[index].street + ' ' + this.theirProposals[index].city + ' ' + this.theirProposals[index].zipcode,
+      buttons: [
+        {
+          text: 'Accept',
+          handler: () => {
+            this.changeStatus('Accepted', index);
+            this.theirProposals[index].status = 'Accepted';
+            this.getUserProposal();
+          }
+        }, {
+          text: 'Decline',
+          handler: () => {
+            this.changeStatus('Rejected', index);
+            this.theirProposals[index].status = 'Rejected';
+            this.getUserAcceptedProposals();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async showAddress(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Address',
+      message: this.theirProposals[index].street + ' ' + this.theirProposals[index].city + ' ' + this.theirProposals[index].zipcode,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+          }
+        }
+      ]
+    });
+  }
+
+
+  // SORTING
+  public applyTheirFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.theirProposalDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.theirProposalDataSource.paginator) {
+      this.theirProposalDataSource.paginator.firstPage();
+    }
+  }
+
+  public applyMyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.myProposalDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.myProposalDataSource.paginator) {
+      this.myProposalDataSource.paginator.firstPage();
+    }
   }
 }

@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Dating App</ion-title>
+    <ion-title class="title-padding">Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
   <h4>People</h4>
-  <div class="flex-container" fxLayout="row wrap" fxLayout.lt-sm="column">
+  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start center">
     <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"
       [user]="user">
       <ng-template #messagesBtnTemplate let-i=index>

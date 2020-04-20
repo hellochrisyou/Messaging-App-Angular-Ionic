@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
-
-import { MenuController, Platform, ToastController, NavController } from '@ionic/angular';
-
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
+import { MenuController, NavController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
-import { UserData } from './providers/user-data';
 import { AuthService } from './core/service/auth.service';
 
 @Component({
@@ -27,7 +23,27 @@ export class AppComponent implements OnInit {
     {
       title: 'Inbox',
       url: '/app/tabs/inbox',
+      icon: 'albums'
+    },
+    {
+      title: 'Proposals',
+      url: '/app/tabs/proposal',
       icon: 'map'
+    },
+    {
+      title: 'People',
+      url: '/app/tabs/people',
+      icon: 'keypad'
+    },
+    {
+      title: 'Account',
+      url: '/app/tabs/account',
+      icon: 'man'
+    },
+    {
+      title: 'Support',
+      url: '/app/tabs/support',
+      icon: 'mail'
     }
   ];
 
@@ -41,7 +57,6 @@ export class AppComponent implements OnInit {
     private storage: Storage,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private userData: UserData,
     public authService: AuthService,
     public router: Router
   ) {
@@ -49,9 +64,6 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.checkLoginStatus();
-    this.listenForLoginEvents();
-
     this.router.navigateByUrl('login');
 
     this.swUpdate.available.subscribe(async res => {
@@ -79,32 +91,6 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-    });
-  }
-
-  checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
-      return this.updateLoggedInStatus(loggedIn);
-    });
-  }
-
-  updateLoggedInStatus(loggedIn: boolean) {
-    setTimeout(() => {
-      this.loggedIn = loggedIn;
-    }, 300);
-  }
-
-  listenForLoginEvents() {
-    window.addEventListener('user:login', () => {
-      this.updateLoggedInStatus(true);
-    });
-
-    window.addEventListener('user:signup', () => {
-      this.updateLoggedInStatus(true);
-    });
-
-    window.addEventListener('user:logout', () => {
-      this.updateLoggedInStatus(false);
     });
   }
 

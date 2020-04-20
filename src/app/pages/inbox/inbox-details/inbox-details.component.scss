@@ -143,3 +143,9 @@ p {
 ion-card {
   margin: 4vw auto 4vw;
 }
+
+@media screen and (max-width: 600px) {
+  ion-toolbar {
+    margin-top: 5vh;
+  }
+}

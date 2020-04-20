@@ -1,0 +1,18 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.ionicframework.conferenceapp"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.ionicframework.conferenceapp"
+    }
+  },
+  "dependent_plugins": {}
+}

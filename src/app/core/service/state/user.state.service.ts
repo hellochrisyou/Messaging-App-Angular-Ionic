@@ -63,15 +63,6 @@ export class UserStateService {
     readonly images$ = this._images.asObservable();
     readonly proposals$ = this._proposals.asObservable();
 
-    //  = this.users$.pipe(
-    //     map(users => users.filter(user => user.messageCount > 0 && user.email !== this.authService.authState.email))
-    // );
-
-    //  = this.users$.pipe(
-    //     map(users => users.filter(user => user.messageCount === 0 && user.email !== this.authService.authState.email))
-    // );
-
-
     public setUser(userEmail: string) {
         this._users.forEach((users: any) => {
             this.selectedUser = users.find(user => userEmail === user.email);

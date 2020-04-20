@@ -3,6 +3,11 @@
     <ion-button ion-button (click)="closeModal()">Close</ion-button>
   </ion-buttons>
 </ion-toolbar>
+<ng-container *ngIf="tabs.length === 0">
+  <div id="photo-flexbox" fxLayout="column" fxLayoutAlign="center">
+    <h3>No Photos</h3>
+  </div>
+</ng-container>
 <mat-tab-group mat-align-tabs="center">
   <mat-tab *ngFor="let tab of tabs; let i = index" [label]="tab">
     <img [src]="this.imageUrls[i]">

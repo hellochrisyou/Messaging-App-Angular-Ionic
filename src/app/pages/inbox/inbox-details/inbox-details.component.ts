@@ -2,7 +2,6 @@ import { MessagingStateService } from './../../../core/service/state/messaging.s
 import { AfterContentInit, Component } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation/ngx';
 import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
 
 import { MessagingService } from '../../../core/service/messaging.service';
@@ -41,7 +40,6 @@ export class InboxDetailsComponent implements AfterContentInit {
     public actionSheetController: ActionSheetController,
     public alertCtrl: AlertController,
     public emitService: EmitService,
-    public geolocation: Geolocation,
     public messagingService: MessagingService,
     public toastController: ToastController,
     public userService: UserService,

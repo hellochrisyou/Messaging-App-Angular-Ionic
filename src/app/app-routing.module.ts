@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/guard/auth.guard';
-import { CheckTutorial } from './providers/check-tutorial.service';
-import { SharedModule } from './shared/shared.module';
 
 const routes: Routes = [
   {
@@ -36,11 +34,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'maps',
-    loadChildren: () => import('./pages/map/map.module').then(m => m.MapModule),
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'support',
     loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule),
     canActivate: [AuthGuard]
@@ -62,12 +55,6 @@ const routes: Routes = [
   {
     path: 'shared',
     loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'tutorial',
-    loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
-    canLoad: [CheckTutorial],
     canActivate: [AuthGuard]
   }
 ];

@@ -36,7 +36,7 @@ export class InboxComponent implements OnInit {
     public toastController: ToastController,
     public proposalService: ProposalService,
     public modalController: ModalController,
-    public emitService: EmitService, private changeDetector: ChangeDetectorRef,
+    public emitService: EmitService,
 
   ) { }
 
@@ -119,8 +119,8 @@ export class InboxComponent implements OnInit {
             this.thisProposal.state = dataProposal.state;
             this.thisProposal.zipcode = dataProposal.zipcode;
             this.thisProposal.proposalDate = dataProposal.proposalDate;
-            this.thisProposal.sender = this.authService.authState.email;
-            this.thisProposal.status = 'pending';
+            this.thisProposal.sender = this.authService.authState.displayName;
+            this.thisProposal.status = 'Pending';
 
             // this.proposalService.sendProposal(this.thisProposal, this.authService.authState.email);
             this.proposalService.sendProposal(this.thisProposal, userEmail);

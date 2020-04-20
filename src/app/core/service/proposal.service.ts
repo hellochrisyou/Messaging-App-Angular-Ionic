@@ -38,8 +38,24 @@ export class ProposalService {
   }
 
   public updateProposal(statusArg: string, email: string, id: any) {
-    console.log("ProposalService -> updateProposal -> statusArg", statusArg)
     this.afs.collection('users').doc(email).collection('proposals').doc(id).set({ status: statusArg }, { merge: true });
-
   }
+
+  public acceptProposal(proposal: Proposal, email): void {
+    this.afs.collection('users').doc(email).collection('proposals-accepted').add({
+      city: proposal.city,
+      proposalDate: proposal.proposalDate,
+      select: 'Select',
+      sender: proposal.sender,
+      state: proposal.state,
+      status: proposal.status,
+      street: proposal.street,
+      zipcode: proposal.zipcode
+    });
+  }
+
+  public getUserAcceptedProposals(email: string): any {
+    return this.afs.collection('users').doc(email).collection('proposals-accepted').valueChanges();
+  }
+
 }

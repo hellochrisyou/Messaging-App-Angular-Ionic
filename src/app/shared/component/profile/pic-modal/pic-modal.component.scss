@@ -70,6 +70,17 @@ mat-tab-group {
   transition: 0s 0.2s ease-in-out;
 }
 
+#photo-flexbox {
+  position: absolute;
+  top: 25vh;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h3 {
+  text-align: center;
+}
+
 @media screen and (max-width: 1024px) {
   mat-tab-group {
     position: absolute;

@@ -27,7 +27,27 @@ export class AppComponent implements OnInit {
     {
       title: 'Inbox',
       url: '/app/tabs/inbox',
+      icon: 'albums'
+    },
+    {
+      title: 'Proposals',
+      url: '/app/tabs/proposal',
       icon: 'map'
+    },
+    {
+      title: 'People',
+      url: '/app/tabs/people',
+      icon: 'keypad'
+    },
+    {
+      title: 'Account',
+      url: '/app/tabs/account',
+      icon: 'man'
+    },
+    {
+      title: 'Support',
+      url: '/app/tabs/support',
+      icon: 'mail'
     }
   ];
 

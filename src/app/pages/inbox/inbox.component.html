@@ -9,35 +9,29 @@
 
 <ion-content fullscreen="true">
   <h4>Inbox</h4>
-  <ng-container *ngIf="userStateService.inboxUsers === undefined">
-    <div class="flex-container" fxLayout="column" fxLayoutAlign="start center">
-      <h3>Empty</h3>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="userStateService.inboxUsers !== undefined">
-    <div class="flex-container" fxLayout="row wrap" fxLayout.lt-sm="column">
-      <shared-card-page *ngFor="let user of userStateService.inboxUsers$ | async; trackBy: usersTrackFn" [user]="user"
-        [option]="status">
-        <ng-template #messagesBtnTemplate let-i=index>
-          <ion-button mat-button (click)="navigateMessages(user.email)" shape="round" fill="outline"
-            matTooltip="View Messages" matTooltipPosition="below">
-            <ion-icon matTooltip="Message" matTooltipPosition="before" name="mail-outline">
-            </ion-icon>
-          </ion-button>
-        </ng-template>
-        <ng-template #profileBtnTemplate let-i=index>
-          <ion-button mat-button (click)="navigateProfile(user.email)" shape="round" fill="outline"
-            matTooltip="View Profile" matTooltipPosition="below">
-            <ion-icon name="reader-outline"></ion-icon>
-          </ion-button>
-        </ng-template>
-        <ng-template #proposalBtnTemplate let-i=index>
-          <ion-button mat-button (click)="submitProposal(user.displayName, user.email)" shape="round" fill="outline"
-            matTooltip="Submit Proposal" matTooltipPosition="below">
-            <ion-icon name="bulb-outline"></ion-icon>
-          </ion-button>
-        </ng-template>
-      </shared-card-page>
-    </div>
-  </ng-container>
+  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start center">
+    <shared-card-page *ngFor="let user of userStateService.inboxUsers$ | async; trackBy: usersTrackFn" [user]="user"
+      [option]="status">
+      <ng-template #messagesBtnTemplate let-i=index>
+        <ion-button mat-button (click)="navigateMessages(user.email)" shape="round" fill="outline"
+          matTooltip="View Messages" matTooltipPosition="below">
+          <ion-icon matTooltip="Message" matTooltipPosition="before" name="mail-outline">
+          </ion-icon>
+        </ion-button>
+      </ng-template>
+      <ng-template #profileBtnTemplate let-i=index>
+        <ion-button mat-button (click)="navigateProfile(user.email)" shape="round" fill="outline"
+          matTooltip="View Profile" matTooltipPosition="below">
+          <ion-icon name="reader-outline"></ion-icon>
+        </ion-button>
+      </ng-template>
+      <ng-template #proposalBtnTemplate let-i=index>
+        <ion-button mat-button (click)="submitProposal(user.displayName, user.email)" shape="round" fill="outline"
+          matTooltip="Submit Proposal" matTooltipPosition="below">
+          <ion-icon name="bulb-outline"></ion-icon>
+        </ion-button>
+      </ng-template>
+    </shared-card-page>
+  </div>
+  <!-- </ng-container> -->
 </ion-content>

@@ -25,6 +25,7 @@ h3 {
 
 ion-content {
   max-width: 25vw;
+  overflow-y: hidden;
 }
 
 .fxlayout-support {
@@ -41,14 +42,6 @@ ion-button {
   margin: 0 auto;
 }
 
-.fa-facebook {
-  color: #3b5998;
-}
-
-.fa-twitter {
-  color: #08a0e9;
-}
-
 .fa-google {
   background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg)
     73% 55%/150% 150% no-repeat;
@@ -56,6 +49,38 @@ ion-button {
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+}
+.social {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0.2em;
+  background-size: 0 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  font-size: 2.5em;
+  transition: background-size 0.3s ease-out, color 0.1s 0.1s, transform 0.3s;
+}
+
+.social:hover {
+  color: #fff;
+  background-size: 150% 150%;
+  transform: rotate(360deg) scale(1.1);
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+h4#google-sign-in {
+  font-size: 2rem;
 }
 
 @media screen and (max-width: 550px) {

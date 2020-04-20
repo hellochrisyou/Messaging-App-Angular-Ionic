@@ -140,3 +140,13 @@ img.all-images {
   height: 70vh;
   width: 100vw;
 }
+
+ion-title.title-padding {
+  color: whitesmoke;
+}
+
+@media screen and (max-width: 600px) {
+  ion-title.title-padding {
+    padding-right: 25vw;
+  }
+}

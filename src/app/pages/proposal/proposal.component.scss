@@ -1,14 +1,113 @@
 @import "_title-text";
+@import "_table";
+@import "_color";
 
-base-table {
-    position: absolute;
-    top: 10vh;
+tr td.mat-cell {
+    font-size: 1rem;
+}
+
+.icon-accepted {
+    color: crimson;
+}
+
+.icon-pending {
+    color: black;
+}
+
+h4 {
+    margin-left: 47%;
+}
+
+table {
+    width: 30vw;
 }
 
 mat-icon {
+    cursor: pointer;
+}
+
+tr td.mat-cell {
+    font-size: 0.8rem;
+}
+
+tr td.mat-cell:nth-child(3),
+tr th.mat-header-cell:nth-child(3),
+tr td.mat-cell:nth-child(4),
+tr th.mat-header-cell:nth-child(4) {
+    padding-left: 1rem;
+}
+
+.mat-row:nth-child(even) {
+    background-color: whitesmoke;
+}
+
+tr.mat-header-row th {
+    background-color: rgb(32, 34, 37) !important;
+    color: whitesmoke !important;
+}
+
+th {
+    color: whitesmoke !important;
+}
+
+.icon-house {
     color: green;
+}
+
+mat-form-field {
+    width: 125px;
+}
+
+.mat-tab-group {
+    position: absolute;
+    top: 15vh;
+}
+
+.table-wrapper {
+    margin-top: 5vh;
+}
+
+h4 {
+    margin-top: 5vh;
+}
+
+@media screen and (max-width: 1024px) {
+    tr.mat-header-row {
+        background-color: transparent;
+    }
+    tr.mat-header-row th {
+        color: black;
+    }
+    table,
+    mat-paginator {
+        max-width: 100%;
+        left: 1vw;
+        color: black;
+    }
+
+    #search-field {
+        left: 1vw;
+        top: 8vh;
+    }
 }
 
 ion-title {
     color: white;
+}
+
+@media screen and (max-width: 600px) {
+    tr td.mat-cell {
+        font-size: 0.55rem;
+    }
+    .mat-table {
+        width: 85vw;
+        left: 0;
+    }
+    .paginator--centered {
+        display: flex;
+        justify-content: center;
+    }
+    h4 {
+        margin-left: 35%;
+    }
 }

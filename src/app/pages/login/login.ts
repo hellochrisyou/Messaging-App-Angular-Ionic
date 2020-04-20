@@ -51,12 +51,6 @@ export class LoginPage implements OnInit {
   public loginGoogle(): void {
     this.authService.signinGoogle();
   }
-  public loginFacebook(): void {
-    this.authService.signinFacebook();
-  }
-  public loginTwitter(): void {
-    this.authService.signinTwitter();
-  }
   public onSignup(): void {
     this.navCtrl.navigateForward('/signup');
   }

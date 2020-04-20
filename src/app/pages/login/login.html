@@ -6,22 +6,18 @@
     <ion-title>Dating App</ion-title>
   </ion-toolbar>
 </ion-header>
-<div class="fxlayout-support" fxLayout="row" fxLayoutAlign="center center">
+<div class="fxlayout-support" fxLayout="column" fxLayoutAlign="center center">
 
   <ion-content>
     <div class="login-logo">
       <img src="assets/img/appicon.svg" alt="Ionic logo">
     </div>
-    <h4>Social Media</h4>
+    <h4 id="google-sign-in">Google Sign In</h4>
 
-    <div id="social-flex" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1em">
-      <i class="fab fa-google fa-3x" (click)="loginGoogle()"></i>
-      <i class="fab fa-facebook fa-3x" (click)="loginFacebook()"></i>
-      <i class="fab fa-twitter fa-3x" (click)="loginTwitter()"></i>
+    <div class="social fb"><a (click)="loginGoogle()"><i class="fa fa-google"></i></a></div>
 
-    </div>
     <form #loginForm="ngForm" novalidate>
-      <h4>Email</h4>
+      <h4>Email Sign In</h4>
       <ion-list>
         <ion-item>
           <ion-label position="floating" color="primary">Email</ion-label>

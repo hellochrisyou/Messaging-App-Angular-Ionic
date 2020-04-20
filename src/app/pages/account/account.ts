@@ -1,14 +1,12 @@
-import { AfterViewInit, Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
-import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import * as firebase from 'firebase';
-
 import { AuthService } from '../../core/service/auth.service';
 import { ImageService } from '../../core/service/image.service';
 import { UserService } from '../../core/service/user.service';
-import { UserData } from '../../providers/user-data';
 import { Image, User } from '../../shared/interface/models';
 import { PicModalPage } from './../../shared/component/profile/pic-modal/pic-modal.component';
 
@@ -37,7 +35,6 @@ export class AccountPage implements OnInit, AfterViewInit {
     public imageService: ImageService,
     public alertController: AlertController,
     public router: Router,
-    public userData: UserData,
     public userService: UserService,
     public modalController: ModalController,
   ) {
@@ -431,5 +428,4 @@ export class AccountPage implements OnInit, AfterViewInit {
 
     await alert.present();
   }
-
 }

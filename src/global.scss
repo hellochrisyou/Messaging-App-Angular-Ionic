@@ -145,6 +145,14 @@ ion-title.title-padding {
   color: whitesmoke;
 }
 
+ion-menu-button {
+  color: whitesmoke;
+}
+
+ion-button {
+  color: aqua !important;
+}
+
 @media screen and (max-width: 600px) {
   ion-title.title-padding {
     padding-right: 25vw;

@@ -15,9 +15,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CoreModule } from '@angular/flex-layout';
-import { DropzoneDirective } from './dropzone.directive';
 import { SharedModule } from './shared/shared.module';
 import { InboxModule } from './pages/inbox/inbox.module';
 
@@ -40,8 +38,8 @@ import { InboxModule } from './pages/inbox/inbox.module';
     BrowserAnimationsModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, DropzoneDirective],
-  providers: [InAppBrowser, SplashScreen, StatusBar, Geolocation, AngularFirestore],
+  declarations: [AppComponent],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

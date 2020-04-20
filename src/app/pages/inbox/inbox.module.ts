@@ -5,7 +5,6 @@ import { InboxComponent } from './inbox.component';
 import { IonAvatar, IonicModule } from '@ionic/angular';
 import { SharedModule } from '../../shared/shared.module';
 import { InboxDetailsComponent } from './inbox-details/inbox-details.component';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 @NgModule({
@@ -15,9 +14,6 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     SharedModule,
     IonicModule,
     InboxRoutingModule
-  ],
-  providers: [
-    Geolocation
   ]
 })
 export class InboxModule { }

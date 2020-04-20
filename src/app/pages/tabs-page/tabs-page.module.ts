@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 import { InboxModule } from '../inbox/inbox.module';
-import { MapModule } from '../map/map.module';
 import { TabsPage } from './tabs-page';
 import { TabsPageRoutingModule } from './tabs-page-routing.module';
 
@@ -11,7 +10,6 @@ import { TabsPageRoutingModule } from './tabs-page-routing.module';
   imports: [
     CommonModule,
     IonicModule,
-    MapModule,
     InboxModule,
     TabsPageRoutingModule
   ],

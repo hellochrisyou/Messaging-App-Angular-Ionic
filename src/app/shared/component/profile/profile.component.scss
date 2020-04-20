@@ -50,4 +50,12 @@ toolbar,
   #other-profile-flex {
     top: 15vh;
   }
+  ion-toolbar {
+    margin-top: 10vh;
+  }
+}
+@media screen and (max-width: 600px) {
+  ion-toolbar {
+    margin-top: 5vh;
+  }
 }

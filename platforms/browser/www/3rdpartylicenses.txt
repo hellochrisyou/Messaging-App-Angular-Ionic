@@ -139,6 +139,8 @@ THE SOFTWARE.
 
 @angular/material/tabs
 
+@angular/material/toolbar
+
 @angular/material/tooltip
 
 @angular/platform-browser

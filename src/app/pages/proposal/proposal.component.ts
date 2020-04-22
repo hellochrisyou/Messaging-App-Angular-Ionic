@@ -13,6 +13,7 @@ import { GET_DATE } from '../inbox/inbox.util';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+declare var $: any;
 
 @Component({
   selector: 'proposal',
@@ -38,6 +39,7 @@ export class ProposalComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) theirSort: MatSort;
   @ViewChild(MatPaginator, { static: true }) myPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) mySort: MatSort;
+
   readonly PEND_PROPOSAL_COL_OBJ = PEND_PROPOSAL_COL_OBJ;
   readonly PEND_PROPOSAL_DISPLAY = PEND_PROPOSAL_DISPLAY;
 
@@ -57,6 +59,9 @@ export class ProposalComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.menu-collapsed').click(function () {
+      $(this).toggleClass('menu-expanded');
+    });
     this.getUserProposal();
     this.getUserAcceptedProposals();
   }
@@ -75,7 +80,6 @@ export class ProposalComponent implements OnInit {
   public getUserAcceptedProposals(): void {
     this.proposalService.getUserAcceptedProposals(this.authService.authState.email).subscribe((proposalsData: any[]) => {
       this.myProposals = proposalsData;
-      console.log("ProposalComponent -> getUserAcceptedProposals ->  this.myProposals", this.myProposals)
       for (let i = 0; i < this.myProposals.length; i++) {
         if (this.myProposals[i] && this.myProposals[i].proposalDate > this.today) {
           this.myProposals.splice(i, 1);
@@ -137,37 +141,28 @@ export class ProposalComponent implements OnInit {
             this.getUserProposal();
           }
         }, {
-          text: 'Decline',
+          text: 'Cancel',
           handler: () => {
-            this.changeStatus('Rejected', index);
-            this.theirProposals[index].status = 'Rejected';
-            this.getUserAcceptedProposals();
           }
         }
       ]
     });
-
     await alert.present();
   }
 
   async showAddress(index: number) {
     const alert = await this.alertController.create({
       header: 'Address',
-      message: this.theirProposals[index].street + ' ' + this.theirProposals[index].city + ' ' + this.theirProposals[index].zipcode,
+      message: this.myProposals[index].street + ' ' + this.myProposals[index].city + ' ' + this.myProposals[index].zipcode,
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-          }
-        }, {
           text: 'Okay',
           handler: () => {
           }
         }
       ]
     });
+    await alert.present();
   }
 
 

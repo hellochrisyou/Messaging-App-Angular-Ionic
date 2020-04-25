@@ -3,9 +3,9 @@
  <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating0.png" width="100%"/>
 <br/>
 <p align="center">
- <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating1.png" width="100%"/>
+ <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating1.png" width="50%"/>
 </p>
 <br/>
   <p align="center">
- <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating2.png" width="100%"/>
+ <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating2.png" width="50%"/>
 </p>

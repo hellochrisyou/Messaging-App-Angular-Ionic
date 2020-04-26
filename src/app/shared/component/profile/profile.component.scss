@@ -46,16 +46,12 @@ toolbar,
   margin: 0 auto;
 }
 
+#inbox-profile-section {
+  margin-top: 3vh;
+}
+
 @media screen and (max-width: 1024px) {
   #other-profile-flex {
-    top: 15vh;
-  }
-  ion-toolbar {
-    margin-top: 10vh;
-  }
-}
-@media screen and (max-width: 600px) {
-  ion-toolbar {
-    margin-top: 5vh;
+    top: 11vh;
   }
 }

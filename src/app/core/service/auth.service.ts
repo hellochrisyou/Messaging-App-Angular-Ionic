@@ -112,7 +112,7 @@ export class AuthService {
 
         }));
         this.confirmToast('You have registered an account');
-        this.navCtrl.navigateForward('/app/tabs/people');
+        this.navCtrl.navigateForward('/app/tabs/account');
       })
       .catch(error => {
         this.signupErrorPopup(error);

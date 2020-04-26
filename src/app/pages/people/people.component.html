@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="center" fxLayoutAlign.lt-sm="center">
+  <div class="people-flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start center">
     <h4>People</h4>
     <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start">
       <shared-card-page *ngFor="let user of userStateService.peopleUsers$ | async; index as i; trackBy: usersTrackFn"

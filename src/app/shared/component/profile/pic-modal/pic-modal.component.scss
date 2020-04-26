@@ -81,15 +81,13 @@ h3 {
   text-align: center;
 }
 
+.mat-tab-label-content {
+  color: black;
+}
+
 @media screen and (max-width: 1024px) {
   mat-tab-group {
     position: absolute;
     top: 5vh;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  #modal-toolbar {
-    margin-top: 5vh !important;
   }
 }

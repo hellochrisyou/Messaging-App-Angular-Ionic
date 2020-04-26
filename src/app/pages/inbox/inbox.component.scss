@@ -8,7 +8,7 @@ ion-content {
   height: 90vh;
 }
 
-.flex-container {
+.inbox-flex-container {
   background-image: url("../../../assets/img/bg/bg-2.jpg");
   height: 100vh;
 }
@@ -16,6 +16,9 @@ ion-content {
 @media screen and (min-width: 601px) {
   shared-card-page {
     flex-grow: 1;
+  }
+  h4 {
+    padding-top: 5vh;
   }
 }
 

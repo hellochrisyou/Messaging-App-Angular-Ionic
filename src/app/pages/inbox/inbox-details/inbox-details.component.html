@@ -1,9 +1,10 @@
 <ion-content fullscreen="true">
   <ion-header>
-    <mat-toolbar>
+    <mat-toolbar color="dark">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/inbox">Back</ion-back-button>
+        <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
       </ion-buttons>
+      <ion-title class="title-padding">Dating App</ion-title>
     </mat-toolbar>
   </ion-header>
   <ion-refresher slot="fixed" (ionRefresh)="reloadItems($event)">
@@ -17,7 +18,6 @@
     <ion-card-header>
       <ion-item detail="false" lines="none" class="friend-item">
         <h5>{{otherUserName}}</h5>
-        <h5>{{otherEmail}}</h5>
       </ion-item>
       <ion-item lines="none">
         <a class="oval" (click)="sendMessage()" matTooltip="Send Message" matTooltipPosition="before">

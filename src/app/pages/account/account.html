@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
     </ion-buttons>
-    <ion-title class="title-padding">Dating App</ion-title>
+    <ion-title class="title-padding">Dating Props</ion-title>
   </mat-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="fxlayout-support" fxLayout="row" fxLayoutAlign="space-around center">
+  <div class="fxlayout-support" fxLayout="row" fxLayoutAlign="center start">
 
-    <div class="ion-padding-top ion-text-center">
+    <div class="mat-elevation-z7 ion-padding-top ion-text-center">
       <img [src]="this.user.photoURL" alt="avatar">
       <h2>{{this.user.displayName}}</h2>
       <h5>{{this.user.title}}</h5>
@@ -23,39 +23,40 @@
       </div>
       <br>
       <br>
+      <h4>Edit Profile</h4>
       <ion-list>
-        <ion-item (click)="updateAvatar()">Change Profile Picture</ion-item>
-        <ion-item (click)="updateUsername()">Change Username</ion-item>
-        <ion-item (click)="updateTitle()">Change Title</ion-item>
+        <ion-item (click)="updateAvatar()">Profile Picture</ion-item>
+        <ion-item (click)="updateUsername()">Username</ion-item>
+        <ion-item (click)="updateTitle()">Title</ion-item>
         <ion-item>
-          <ion-label class="start-text">Update Age</ion-label>
+          <ion-label class="start-text">Age</ion-label>
           <ion-select [(ngModel)]="selectedAge" name="selectAge" [interfaceOptions]="ageActionSheetOptions"
             (ionChange)="updateAge()" interface="action-sheet" multiple="false"
-            [placeholder]="selectedAge?selectedAge:'Tap to update'">
+            [placeholder]="selectedAge?selectedAge:'Tap'">
             <ion-select-option *ngFor="let age of ages" value="{{age}}">{{age}}
             </ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label class="start-text">Update Religion</ion-label>
+          <ion-label class="start-text">Religion</ion-label>
           <ion-select [(ngModel)]="selectedReligion" name="selectReligion"
             [interfaceOptions]="religionActionSheetOptions" (ionChange)="updateReligion()" interface="action-sheet"
-            multiple="false" [placeholder]="selectedReligion?selectedReligion:'Tap to update'">
+            multiple="false" [placeholder]="selectedReligion?selectedReligion:'Tap'">
             <ion-select-option *ngFor="let religion of religions" value="{{religion}}">{{religion}}
             </ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label class="start-text">Update Have Kids</ion-label>
+          <ion-label class="start-text">Have Kids</ion-label>
           <ion-select [(ngModel)]="selectedKids" name="selectKids" [interfaceOptions]="kidsActionSheetOptions"
             (ionChange)="updateHaveKids()" interface="action-sheet" multiple="false"
-            [placeholder]="selectedKids?selectedKids:'Tap to update'">
+            [placeholder]="selectedKids?selectedKids:'Tap'">
             <ion-select-option *ngFor="let kidsOption of kidsOptions" value="{{kidsOption}}">{{kidsOption}}
             </ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item (click)="updateHobbies()">Update Hobbies</ion-item>
-        <ion-item (click)="updateDescription()">Update Description</ion-item>
+        <ion-item (click)="updateHobbies()">Hobbies</ion-item>
+        <ion-item (click)="updateDescription()">Description</ion-item>
 
       </ion-list>
       <div class="buttons">
@@ -66,14 +67,11 @@
           <ion-col fxLayout="row" fxLayoutAlign="center center">
             <a class="btn btn-primary button-hover">
               <label for="file-upload" class="custom-file-upload">
-                <i class="fa fa-cloud-upload"></i>
+                File
               </label>
               <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"
                 (change)="onFileChanged($event)">
             </a>
-          </ion-col>
-          <ion-col fxLayout="row" fxLayoutAlign="space-around center">
-            <a class="btn btn-secondary button-hover" color="success" (click)="onUpload()">Upload</a>
           </ion-col>
         </ion-row>
       </div>

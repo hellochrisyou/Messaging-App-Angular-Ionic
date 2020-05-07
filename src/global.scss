@@ -49,7 +49,7 @@ h4 {
   font-weight: 100;
 }
 ion-title.title-padding {
-  padding-right: 6.5vw;
+  padding-right: 3vw;
 }
 ion-title {
   color: whitesmoke;
@@ -139,10 +139,16 @@ img.all-images {
 }
 
 .flex-container {
-  height: 70vh;
+  height: 100%;
+  padding-bottom: 5vh;
   width: 100vw;
 }
-
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: white;
+}
+.mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: whitesmoke;
+}
 ion-title.title-padding {
   color: whitesmoke;
 }
@@ -160,6 +166,6 @@ h4 {
 }
 @media screen and (max-width: 600px) {
   ion-title.title-padding {
-    padding-right: 25vw;
+    padding-right: 23vw;
   }
 }

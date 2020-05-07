@@ -141,7 +141,8 @@ export class ProposalComponent implements OnInit {
             this.theirProposals[index].status = 'Accepted';
             this.getUserProposal();
           }
-        }, {
+        },
+        {
           text: 'Cancel',
           handler: () => {
           }

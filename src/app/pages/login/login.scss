@@ -3,7 +3,7 @@
 
 .login-logo {
   padding: 20px 0;
-  min-height: 200px;
+  min-height: 100px;
   text-align: center;
 }
 
@@ -91,8 +91,12 @@ h4#google-sign-in {
   background-image: url("../../../assets/img/bg/bg-1.jpg");
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
   ion-content {
     max-width: 100vw;
+  }
+  ion-item {
+    width: 75vw;
+    margin: 0 auto;
   }
 }

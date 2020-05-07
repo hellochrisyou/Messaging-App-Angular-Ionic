@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
     </ion-buttons>
-    <ion-title class="title-padding">Dating App</ion-title>
+    <ion-title class="title-padding">Dating Props</ion-title>
   </mat-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="center" fxLayoutAlign.lt-sm="center">
+  <div class="inbox-flex-container" fxLayout="row wrap" fxLayoutAlign.lt-sm="center">
     <h4>Inbox</h4>
-    <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start" fxLayoutAlign.lt-sm="start">
+    <div class="flex-container" fxLayout="row wrap" fxLayoutAlign.gt-xs="start start" fxLayoutAlign.lt-sm="start">
 
       <shared-card-page *ngFor="let user of userStateService.inboxUsers$ | async; trackBy: usersTrackFn" [user]="user"
         [option]="status">

@@ -62,8 +62,9 @@ a.oval {
 }
 
 .chat-bubble {
+  cursor: none;
   background: #dedede;
-  border-radius: 0.4em;
+  border-radius: 1em;
   min-width: 45%;
   font-size: 14px;
   line-height: 1.4em;
@@ -91,7 +92,6 @@ a.oval {
   border-right-color: #dedede;
   border-left: 0;
   border-bottom: 0;
-  margin-top: -10px;
   margin-left: -20px;
 }
 .chat-bubble.mine {

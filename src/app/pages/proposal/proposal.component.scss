@@ -23,6 +23,10 @@ mat-icon {
     cursor: pointer;
 }
 
+mat-icon#home-icon {
+    padding-left: 1rem;
+}
+
 tr td.mat-cell {
     font-size: 0.8rem;
 }
@@ -34,17 +38,12 @@ tr th.mat-header-cell:nth-child(4) {
     padding-left: 1rem;
 }
 
-.mat-row:nth-child(even) {
+.mat-row:nth-child(odd) {
     background-color: whitesmoke;
 }
 
 tr.mat-header-row th {
-    background-color: rgb(32, 34, 37) !important;
-    color: whitesmoke !important;
-}
-
-th {
-    color: whitesmoke !important;
+    color: black;
 }
 
 .icon-house {
@@ -76,14 +75,7 @@ h4 {
 }
 
 @media screen and (max-width: 1024px) {
-    tr.mat-header-row {
-        background-color: transparent;
-    }
-    tr.mat-header-row th {
-        color: black;
-    }
-    table,
-    mat-paginator {
+    table {
         max-width: 100%;
         left: 1vw;
         color: black;
@@ -104,6 +96,10 @@ input {
     color: white;
 }
 
+.mat-tab-label-content {
+    color: white;
+}
+
 @media screen and (max-width: 600px) {
     tr td.mat-cell {
         font-size: 0.55rem;
@@ -115,5 +111,8 @@ input {
     .paginator--centered {
         display: flex;
         justify-content: center;
+    }
+    h4 {
+        margin: 5vh auto 0;
     }
 }

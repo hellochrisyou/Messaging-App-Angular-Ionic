@@ -109,7 +109,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   public onFileChanged($event): void {
     this.selectedFileName = $event.target.value.split('C:\\fakepath\\').pop();
     this.changeDetectorRefs.detectChanges();
-    console.log("AccountPage -> onFileChanged -> this.selectedFileName", this.selectedFileName)
+    this.onUpload();
   }
 
   public onUpload(): void {
@@ -231,33 +231,6 @@ export class AccountPage implements OnInit, AfterViewInit {
     return await modal.present();
   }
 
-  async updatePicture() {
-    const alert = await this.alertCtrl.create({
-      header: 'Change Picture',
-      buttons: [
-        'Cancel',
-        {
-          text: 'Ok',
-          handler: (data: any) => {
-            this.user.photoURL = data.photoUrl;
-            this.userService.updateUser(this.user);
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'url',
-          name: 'photoUrl',
-          placeholder: 'photoUrl'
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-
-
-
   public updateUserData(user) {
     // Sets user data to firestore on login
     const data: User = {
@@ -281,7 +254,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async updateAvatar() {
     const alert = await this.alertCtrl.create({
       header: 'Change Profile Picture',
-      cssClass: 'globalAlert',
+      cssClass: 'center-alert',
       buttons: [
         'Cancel',
         {
@@ -296,7 +269,7 @@ export class AccountPage implements OnInit, AfterViewInit {
         {
           type: 'text',
           name: 'url',
-          placeholder: 'url'
+          placeholder: this.user.photoURL
         }
       ]
     });
@@ -306,7 +279,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async updateUsername() {
     const alert = await this.alertCtrl.create({
       header: 'Change Username',
-      cssClass: 'globalAlert',
+      cssClass: 'center-alert',
       buttons: [
         'Cancel',
         {
@@ -321,7 +294,7 @@ export class AccountPage implements OnInit, AfterViewInit {
         {
           type: 'text',
           name: 'username',
-          placeholder: 'username'
+          placeholder: this.user.displayName
         }
       ]
     });
@@ -330,7 +303,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async updateTitle() {
     const alert = await this.alertCtrl.create({
       header: 'Change Title',
-      cssClass: 'globalAlert',
+      cssClass: 'center-alert',
       buttons: [
         'Cancel',
         {
@@ -345,7 +318,7 @@ export class AccountPage implements OnInit, AfterViewInit {
         {
           type: 'text',
           name: 'title',
-          placeholder: 'title'
+          placeholder: this.user.title
         }
       ]
     });
@@ -366,7 +339,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async updateHobbies() {
     const alert = await this.alertCtrl.create({
       header: 'Change Hobbies',
-      cssClass: 'globalAlert',
+      cssClass: 'center-alert',
       buttons: [
         'Cancel',
         {
@@ -381,7 +354,7 @@ export class AccountPage implements OnInit, AfterViewInit {
         {
           type: 'textarea',
           name: 'hobbies',
-          placeholder: 'Hobbies'
+          placeholder: this.user.hobbies
         }
       ]
     });
@@ -390,7 +363,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async updateDescription() {
     const alert = await this.alertCtrl.create({
       header: 'Update Description',
-      cssClass: 'globalAlert',
+      cssClass: 'center-alert',
       buttons: [
         'Cancel',
         {
@@ -405,16 +378,12 @@ export class AccountPage implements OnInit, AfterViewInit {
         {
           type: 'textarea',
           name: 'description',
-          placeholder: 'Description'
+          placeholder: this.user.description
         }
       ]
     });
     await alert.present();
   }
-  private getUsername() {
-    this.username = this.authService.authState.displayName;
-  }
-
 
   // updatePassword() {
   //   console.log('Clicked to update password');
@@ -423,6 +392,7 @@ export class AccountPage implements OnInit, AfterViewInit {
   async existsAlert() {
     const alert = await this.alertController.create({
       header: 'Image Upload Error',
+      cssClass: 'center-alert',
       message: 'Image already exists'
     });
 

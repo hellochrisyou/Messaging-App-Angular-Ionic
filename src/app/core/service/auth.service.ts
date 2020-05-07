@@ -112,7 +112,7 @@ export class AuthService {
 
         }));
         this.confirmToast('You have registered an account');
-        this.navCtrl.navigateForward('/app/tabs/people');
+        this.navCtrl.navigateForward('/app/tabs/account');
       })
       .catch(error => {
         this.signupErrorPopup(error);
@@ -141,7 +141,7 @@ export class AuthService {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
       this.confirmToast('You have signed in with your Google account');
-      this.navCtrl.navigateForward('/app/tabs/people');
+      this.navCtrl.navigateForward('/app/tabs/account');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -163,7 +163,7 @@ export class AuthService {
     this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((credential) => {
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
       this.confirmToast('You have signed in with your Facebook account');
-      this.navCtrl.navigateForward('/app/tabs/people');
+      this.navCtrl.navigateForward('/app/tabs/account');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -197,7 +197,7 @@ export class AuthService {
 
       this.messageRef = this.afs.doc(`users/${credential.user.email}`);
       this.confirmToast('You have signed in with your Twitter account');
-      this.navCtrl.navigateForward('/app/tabs/people');
+      this.navCtrl.navigateForward('/app/tabs/account');
 
       this.messageRef.get().subscribe(doc => {
         if (!doc.exists) {
@@ -236,7 +236,7 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
         this.confirmToast('You are signed in with your email account');
-        this.navCtrl.navigateForward('/app/tabs/people');
+        this.navCtrl.navigateForward('/app/tabs/account');
       })
       .catch(err => {
         this.failToast(err);
@@ -248,6 +248,7 @@ export class AuthService {
       header: 'Email Duplicate',
       subHeader: 'You have the same email registered w/ a different provider',
       message: 'Please use a different provider to login.',
+      cssClass: 'center-alert',
       buttons: [{
         text: 'Okay',
         handler: () => {

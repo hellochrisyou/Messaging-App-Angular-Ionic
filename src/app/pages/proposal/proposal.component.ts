@@ -131,6 +131,7 @@ export class ProposalComponent implements OnInit {
   async options(index: number) {
     const alert = await this.alertController.create({
       header: 'Address',
+      cssClass: 'center-alert',
       message: this.theirProposals[index].street + ' ' + this.theirProposals[index].city + ' ' + this.theirProposals[index].zipcode,
       buttons: [
         {
@@ -140,7 +141,8 @@ export class ProposalComponent implements OnInit {
             this.theirProposals[index].status = 'Accepted';
             this.getUserProposal();
           }
-        }, {
+        },
+        {
           text: 'Cancel',
           handler: () => {
           }
@@ -153,7 +155,8 @@ export class ProposalComponent implements OnInit {
   async showAddress(index: number) {
     const alert = await this.alertController.create({
       header: 'Address',
-      message: this.myProposals[index].street + ' ' + this.myProposals[index].city + ' ' + this.myProposals[index].zipcode,
+      cssClass: 'center-alert',
+      message: this.myProposals[index].street + ', ' + this.myProposals[index].city + this.myProposals[index].state + ', ' + this.myProposals[index].zipcode,
       buttons: [
         {
           text: 'Okay',

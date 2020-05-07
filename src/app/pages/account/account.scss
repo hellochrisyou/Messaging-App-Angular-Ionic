@@ -15,10 +15,6 @@ h3 {
 ion-content {
   max-width: 100vw;
 }
-.ion-padding-top {
-  max-width: 25vw;
-  margin: 0 auto;
-}
 
 div.ion-padding-top {
   background-color: white;
@@ -28,11 +24,10 @@ div.ion-padding-top {
 
 .fxlayout-support {
   width: 100vw;
-  height: 150vh;
-  margin-top: -10vh;
+  height: 200vh;
+  align-items: flex-start;
   background-image: url("../../../assets/img/bg/bg-6.jpg");
-  background-size: cover;
-  background-repeat: repeat-y;
+  background-repeat: repeat;
 }
 ion-button {
   max-width: 200px;
@@ -86,6 +81,9 @@ a.btn {
   font-size: 0.625rem;
   width: 10rem;
 }
+h4 {
+  height: 10vh;
+}
 
 @media screen and (max-width: 812px) {
   .ion-padding-top {
@@ -93,11 +91,9 @@ a.btn {
   }
 }
 @media screen and (max-width: 600px) {
-  .fxlayout-support {
-    padding-top: 35vh;
-  }
   div.ion-padding-top {
     width: 100vw;
-    padding: 2rem 1rem 2rem;
-  }
+    position: absolute;
+    top: 5vh;
+ } 
 }

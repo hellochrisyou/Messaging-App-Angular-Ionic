@@ -5,7 +5,7 @@
         <ion-menu-button><i class="fas fa-bars"></i></ion-menu-button>
       </ion-menu-button>
     </ion-buttons>
-    <ion-title class="title-padding">Dating App</ion-title>
+    <ion-title class="title-padding">Dating Props</ion-title>
   </mat-toolbar>
 </ion-header>
 
@@ -18,10 +18,6 @@
           <ng-container *ngIf="theirProposals.length === 0">
             <h3>None</h3>
           </ng-container>
-          <mat-form-field [hidden]="myProposals.length === 0">
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyTheirFilter($event)" placeholder="Search">
-          </mat-form-field>
           <div class="table-wrapper mat-elevation-z8">
             <table mat-table [dataSource]="theirProposalDataSource" matSort [hidden]="theirProposals.length === 0">
 
@@ -79,7 +75,8 @@
               <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
                 <td mat-cell *matCellDef="let row; let i=index">
-                  <mat-icon class="icon-house" (click)="showAddress(i)">home</mat-icon>
+                  <mat-icon id="home-icon" matTooltip="View Address" class="icon-house" (click)="showAddress(i)">home
+                  </mat-icon>
                 </td>
               </ng-container>
 

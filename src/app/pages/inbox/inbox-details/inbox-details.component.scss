@@ -5,19 +5,11 @@ ion-card {
   margin: 0 auto;
 }
 span {
-  word-break: break-all;
   width: 20px !important;
-}
-
-.over-flow {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
 }
 
 p {
   word-wrap: normal;
-  word-break: break-all;
   white-space: normal;
   display: block;
   height: auto;
@@ -40,7 +32,7 @@ i {
   color: darkgrey;
 }
 a.oval {
-  padding-left: 4%;
+  padding-left: 9%;
   font-size: 0.7rem;
   padding-top: 5%;
   margin: 0 auto;

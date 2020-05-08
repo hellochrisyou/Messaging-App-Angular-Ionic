@@ -28,7 +28,7 @@ export const SET_PROPOSAL_DATA = (proposals: Proposal[], proposalsData: any[]): 
             state: '',
             zipcode: 1,
             proposalDate: null,
-            status: '',
+            status: false,
             sender: '',
             recipient: ''
         };

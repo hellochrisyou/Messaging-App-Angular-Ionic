@@ -115,10 +115,6 @@ img.all-images {
   height: 620px;
 }
 
-.profileModal div.modal-wrapper {
-  height: 1000px;
-}
-
 .globalAlert {
   .alert-title {
     text-align: center;
@@ -144,7 +140,7 @@ img.all-images {
   width: 100vw;
 }
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-    background-color: white;
+  background-color: white;
 }
 .mat-tab-group.mat-primary .mat-ink-bar {
   background-color: whitesmoke;
@@ -164,8 +160,20 @@ ion-menu-button {
 h4 {
   margin: 0 auto;
 }
+
+.sc-ion-buttons-md-s ion-button:not(.button-round) {
+  color: white;
+}
+.modal-wrapper {
+  height: 800px;
+}
 @media screen and (max-width: 600px) {
   ion-title.title-padding {
     padding-right: 23vw;
+  }
+}
+@media only screen and (min-height: 768px) and (min-width: 768px) {
+  .sc-ion-modal-md-h {
+    --height: 800px;
   }
 }

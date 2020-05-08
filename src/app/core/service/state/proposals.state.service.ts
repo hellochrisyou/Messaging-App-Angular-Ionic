@@ -20,8 +20,8 @@ export class ProposalsStateService {
     public setProposal(thisEmail: string) {
         this.proposalService.getUserProposals(thisEmail).subscribe((proposalsData: any[]) => {
             this.proposals = proposalsData;
-            this.pendingProposals = this.proposals.filter(proposal => proposal.status === 'pending').map((proposal: any) => proposal.proposals);
-            this.historyProposals = this.proposals.filter(proposal => proposal.status !== 'pending').map((proposal: any) => proposal.proposals);
+            this.pendingProposals = this.proposals.filter(proposal => proposal.status === null).map((proposal: any) => proposal.proposals);
+            this.historyProposals = this.proposals.filter(proposal => proposal.status === true).map((proposal: any) => proposal.proposals);
         });
     }
 }

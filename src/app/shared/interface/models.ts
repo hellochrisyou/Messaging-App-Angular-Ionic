@@ -15,13 +15,14 @@ export interface User {
 
 export interface Proposal {
     select?: string;
+    email?: string;
     sender?: string;
     street?: string;
     city?: string;
     state?: string;
     zipcode?: number;
     proposalDate?: Date;
-    status?: string;
+    status?: boolean;
 }
 
 export interface Message {

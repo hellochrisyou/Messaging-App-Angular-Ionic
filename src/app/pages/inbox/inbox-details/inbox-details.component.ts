@@ -1,5 +1,5 @@
 import { MessagingStateService } from './../../../core/service/state/messaging.state.service';
-import { AfterContentInit, Component } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
@@ -11,14 +11,14 @@ import { GET_DATE, ORDER_MESSAGES } from '../inbox.util';
 import { AuthService } from './../../../core/service/auth.service';
 import { EmitService } from './../../../core/service/emit.service';
 import { UserStateService } from '../../../core/service/state/user.state.service';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-inbox-details',
   templateUrl: './inbox-details.component.html',
   styleUrls: ['./inbox-details.component.scss'],
 })
-export class InboxDetailsComponent implements AfterContentInit {
-
+export class InboxDetailsComponent implements OnInit {
 
   data: any[];
   date: string;
@@ -31,12 +31,18 @@ export class InboxDetailsComponent implements AfterContentInit {
   tmpMessages: Message[] = [];
   users: User[];
 
+  messageGroup: FormGroup;
+
   messagingTrackFn = (i, message) => message.email;
 
+  public nameControl(): AbstractControl {
+    return this.messageGroup.get('nameCtrl');
+  }
   constructor(
     private activatedRoute: ActivatedRoute,
     public authService: AuthService,
     private router: Router,
+    public fb: FormBuilder,
     private userStateService: UserStateService,
     public actionSheetController: ActionSheetController,
     public alertCtrl: AlertController,
@@ -54,12 +60,21 @@ export class InboxDetailsComponent implements AfterContentInit {
     });
   }
 
+
   public ionViewDidEnter(): void {
     this.messagingStateService.setMessageUser(this.authService.authState.email, this.otherEmail);
   }
 
-  public ngAfterContentInit(): void {
+  public ngOnInit(): void {
+    this.buildForm();
   }
+
+  public buildForm(): void {
+    this.messageGroup = this.fb.group({
+      nameCtrl: ['', Validators.required],
+    });
+  }
+
 
   // public navigateMaps(index: number) {
   //   const navigationExtras: NavigationExtras = {
@@ -84,47 +99,19 @@ export class InboxDetailsComponent implements AfterContentInit {
   //   await actionSheet.present();
   // }
 
-  async sendMessage() {
+  public sendMessage(): void {
+    this.thisMessage.email = this.authService.authState.email;
+    this.thisMessage.message = this.nameControl().value;
+    this.thisMessage.date = GET_DATE();
+    this.thisMessage.sender = this.authService.authState.email;
+    this.thisMessage.receiver = this.otherEmail;
+    this.messagingService.sendMessage(this.thisMessage, this.authService.authState.email, this.otherEmail);
+    this.messagingService.sendMessage(this.thisMessage, this.otherEmail, this.authService.authState.email);
+    this.userStateService.setPartitionedUsers();
 
-    const alert = await this.alertCtrl.create({
-      header: 'Send Message to:',
-      subHeader: this.otherUserName,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        },
-        {
-          text: 'Ok',
-          handler: (dataMessage: any) => {
-            this.thisMessage.email = this.authService.authState.email;
-            this.thisMessage.message = dataMessage.message;
-            this.thisMessage.date = GET_DATE();
-            this.thisMessage.sender = this.authService.authState.email;
-            this.thisMessage.receiver = this.otherEmail;
-            this.messagingService.sendMessage(this.thisMessage, this.authService.authState.email, this.otherEmail);
-            this.messagingService.sendMessage(this.thisMessage, this.otherEmail, this.authService.authState.email);
-            this.userStateService.setPartitionedUsers();
-
-            this.successToast('Your message has been sent');
-          }
-        }
-      ],
-      inputs: [
-        {
-          type: 'text',
-          name: 'message',
-          placeholder: 'message'
-        }
-      ]
-    });
-    await alert.present();
+    this.successToast('Your message has been sent');
+    this.messageGroup.get('nameCtrl').setValue('');
   }
-
 
   public async successToast(messageArg: string) {
     const toast = await this.toastController.create({

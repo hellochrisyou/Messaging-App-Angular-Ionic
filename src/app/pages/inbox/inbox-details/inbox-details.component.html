@@ -19,11 +19,6 @@
       <ion-item detail="false" lines="none" class="friend-item">
         <h5>{{otherUserName}}</h5>
       </ion-item>
-      <ion-item lines="none">
-        <a class="oval" (click)="sendMessage()" matTooltip="Send Message" matTooltipPosition="before">
-          Message
-        </a>
-      </ion-item>
       <ng-container *ngFor="let message of messagingStateService.messages$ | async; trackBy: messagingTrackFn">
         <div class="container">
           <ion-item lines="none">
@@ -48,7 +43,17 @@
           </ion-item>
         </div>
       </ng-container>
-
+      <!-- Textarea in an item with a floating label -->
+      <ion-item>
+        <ion-label position="floating">Message</ion-label>
+        <ion-textarea type="text" [formControl]="messageGroup.controls.nameCtrl"></ion-textarea>
+      </ion-item>
+      <br>
+      <ion-item lines="none">
+        <a class="oval" (click)="sendMessage(nameControl().value)">
+          Send
+        </a>
+      </ion-item>
     </ion-card-header>
   </ion-card>
 

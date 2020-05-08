@@ -60,18 +60,23 @@ mat-form-field {
 }
 
 .table-wrapper {
-    margin-top: 5vh;
+    margin-top: 1vh;
 }
 
 h4 {
     margin-top: 5vh;
 }
 
+h4,
+h3 {
+    color: white;
+}
+
 #proposal-flex-container {
-    background-image: url("../../../assets/img/bg/bg-4.jpg");
-    background-repeat: no-repeat;
+    width: 100vw;
+    height: 90vh;
     background-size: cover;
-    height: 100vh;
+    background-image: url("../../../assets/img/bg/bg-4.jpg");
 }
 
 @media screen and (max-width: 1024px) {
@@ -114,5 +119,10 @@ input {
     }
     h4 {
         margin: 5vh auto 0;
+    }
+    #proposal-flex-container {
+        height: 200vh;
+        background-size: auto;
+        background-repeat: repeat-y;
     }
 }

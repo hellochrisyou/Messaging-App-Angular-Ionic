@@ -28,10 +28,7 @@ export class PeoplePage implements OnInit {
   constructor(
     public alertCtrl: AlertController,
     public userStateService: UserStateService,
-    private userService: UserService,
     private authService: AuthService,
-    private navCtrl: NavController,
-    private messagingService: MessagingService,
     private modalController: ModalController,
     public toastController: ToastController,
 
@@ -48,15 +45,13 @@ export class PeoplePage implements OnInit {
   async sendMessage(userEmail: string, displayName: string) {
     const alert = await this.alertCtrl.create({
       header: 'Send Message to:',
-
       subHeader: displayName,
+      cssClass: 'center-alert',
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+          handler: () => {
           }
         },
         {

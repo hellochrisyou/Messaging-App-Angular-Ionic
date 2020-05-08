@@ -121,35 +121,24 @@ export class ProposalComponent implements OnInit {
     this.changeDetectorRefs.detectChanges();
   }
 
-  public changeStatus(event: string, index: number) {
-    this.proposalService.getUserProposalsSnapshot(this.authService.authState.email).subscribe((proposalsData: any[]) => {
-      this.proposalService.updateProposal(event, this.authService.authState.email, proposalsData[index].payload.doc.id);
+  public changeStatus(statusValue: boolean, index: number) {
+    const tmpSnapshot = this.proposalService.getUserProposalsSnapshot(this.authService.authState.email).subscribe((proposalsData: any[]) => {
+      this.proposalService.updateProposal(statusValue, this.authService.authState.email, proposalsData[index].payload.doc.id);
+      if (statusValue) {
+        this.proposalService.acceptProposal(this.theirProposals[index], this.theirProposals[index].email);
+      }
+      this.theirProposals[index].status = statusValue;
+      tmpSnapshot.unsubscribe();
     });
-    this.proposalService.acceptProposal(this.theirProposals[index], this.theirProposals[index].sender);
   }
 
-  async options(index: number) {
-    const alert = await this.alertController.create({
-      header: 'Address',
-      cssClass: 'center-alert',
-      message: this.theirProposals[index].street + ' ' + this.theirProposals[index].city + ' ' + this.theirProposals[index].zipcode,
-      buttons: [
-        {
-          text: 'Accept',
-          handler: () => {
-            this.changeStatus('Accepted', index);
-            this.theirProposals[index].status = 'Accepted';
-            this.getUserProposal();
-          }
-        },
-        {
-          text: 'Cancel',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    await alert.present();
+  public options(index: number): void {
+    const statusVal = this.returnStatus(index);
+    this.changeStatus(statusVal, index);
+  }
+
+  public returnStatus(index: number): boolean {
+    return this.theirProposals[index].status ? false : true;
   }
 
   async showAddress(index: number) {

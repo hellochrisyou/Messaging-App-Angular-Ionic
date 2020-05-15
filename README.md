@@ -10,5 +10,8 @@
  <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating2.png" width="50%"/>
 </p>
   <p align="center">
- <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/Dating-People.png" width="50%"/>
+ <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating-inbox-details.png" width="50%"/>
+</p>
+  <p align="center">
+ <img  src="https://chrisyou-backup-website.s3.amazonaws.com/assets/github-preview/dating/dating2.png" width="50%"/>
 </p>

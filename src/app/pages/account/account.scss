@@ -84,21 +84,3 @@ a.btn {
 h4 {
   height: 10vh;
 }
-
-@media screen and (max-width: 812px) {
-  .ion-padding-top {
-    max-width: 94vw;
-  }
-}
-@media screen and (max-width: 600px) {
-  div.ion-padding-top {
-    width: 100vw;
-    position: absolute;
-    top: 5vh;
-  }
-  .fxlayout-support {
-    height: 200vh;
-    background-size: auto;
-    background-repeat: repeat-y;
-  }
-}
